@@ -22,6 +22,9 @@ typedef struct {
 } Container;
 
 typedef struct {
+  int width;
+  int height;
+  int rectsize;
   Container field;
   Container friend_spawner;
   Container enemy_spawner;
@@ -134,7 +137,6 @@ typedef struct {
   Friend_Spawner friend_spawners[NB_FRIENDS];
   Enemy_Spawner enemy_spawners[NB_ENEMIES];
   Row rows[NB_ROWS];
-  int rectsize;
 } Game_Manager;
 
 typedef struct {

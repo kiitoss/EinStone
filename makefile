@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainC.o gameManagerM.o textureManagerM.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o gameManagerM.o textureManagerM.o `pkg-config --libs-only-l MLV` -o output
+output: mainC.o gameManagerM.o textureManagerM.o windowM.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o gameManagerM.o textureManagerM.o windowM.o `pkg-config --libs-only-l MLV` -o output
 
 mainC.o: ./game/controllers/mainC.c
 	$(CC) $(CFLAGS) ./game/controllers/mainC.c -c -I ./
@@ -14,6 +14,9 @@ gameManagerM.o: ./game/models/gameManagerM.c
 
 textureManagerM.o: ./game/models/textureManagerM.c
 	$(CC) $(CFLAGS) ./game/models/textureManagerM.c -c -I ./
+
+windowM.o: ./game/models/windowM.c
+	$(CC) $(CFLAGS) ./game/models/windowM.c -c -I ./
 
 clean:
 	rm -rf *.o
