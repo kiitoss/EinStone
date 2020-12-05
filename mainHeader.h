@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <MLV/MLV_all.h>
 
-
+/* Reproduction de la variable booléen */
 enum bool {false, true};
 typedef bool bool;
 
