@@ -4,7 +4,7 @@
 
 
 enum bool {false, true};
-typedef bool bool;
+typedef enum bool bool;
 
 typedef struct {
   MLV_Keyboard_button key_pressed;

@@ -12,7 +12,7 @@
 #define MAX_GOLDS 100
 
 enum friend_abilities {ATTACk, DEFENSE, MONEY};
-typedef friend_abilities friend_abilities;
+typedef enum friend_abilities friend_abilities;
 
 typedef struct {
   int posX;
