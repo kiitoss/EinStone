@@ -44,12 +44,6 @@ MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
   return get_image_with_path(path);
 }
 
-MLV_Image **get_friend_spawners_sprites() {
-  MLV_Image *friend_spawners_sprites[NB_FRIENDS];
-  int i;
-  
-  return friend_spawners_sprites;
-}
 
 /* GLOBAL */
 Texture_Manager init_TM() {

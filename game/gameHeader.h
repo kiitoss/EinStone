@@ -4,7 +4,7 @@
 #define NB_ENEMIES 3
 #define NB_ROWS 5
 #define NB_COLUMNS 8
-/* MAX_ENEMIES est le nombre maximum d'enemies par ligne */
+/* MAX_ENEMIES est le nombre maximum d'ennemis par ligne */
 #define MAX_ENEMIES 100
 /* MAX_SHOTS est le nombre maximum de flèches par ligne */
 #define MAX_SHOTS 100
@@ -52,7 +52,7 @@ typedef struct {
   char *name;
   int chosen_friend;
   int money;
-  char *money_str[10];
+  char *money_str;
   int last_free_gold;
   int delay_free_gold;
   int score;
@@ -63,7 +63,7 @@ typedef struct {
   int chosen_enemy;
   int chosen_row;
   int money;
-  char *money_str[10];
+  char *money_str;
   int last_free_gold;
   int delay_free_gold;
   int score;
@@ -93,6 +93,7 @@ typedef struct {
   char *price_str[5];
   int delay_frame_attack;
   int delay_attack;
+  int range;
 } Enemy_Spawner;
 
 typedef struct {
@@ -106,6 +107,7 @@ typedef struct {
   int delay_ability;
   int range;
   int posX;
+  int posY;
   bool is_passive;
 } Friend;
 
@@ -117,7 +119,9 @@ typedef struct {
   int speed;
   int delay_frame_attack;
   int delay_attack;
+  int range;
   int posX;
+  int posY;
   bool is_walking;
 } Enemy;
 
@@ -137,6 +141,8 @@ typedef struct {
   Friend_Spawner friend_spawners[NB_FRIENDS];
   Enemy_Spawner enemy_spawners[NB_ENEMIES];
   Row rows[NB_ROWS];
+  Player_1 p1;
+  Player_2 p2;
 } Game_Manager;
 
 typedef struct {
@@ -148,6 +154,8 @@ typedef struct {
   MLV_Image *enemy_home_background;
   MLV_Image *friend_spawners_sprites[NB_FRIENDS];
   MLV_Image *enemy_spawners_sprites[NB_ENEMIES];
+  MLV_Image *friend_spawners_imgs[NB_FRIENDS];
+  MLV_Image *enemy_spawners_imgs[NB_ENEMIES];
   MLV_Image *gold_img;
   MLV_Image *shot_img;
 } Texture_Manager;
