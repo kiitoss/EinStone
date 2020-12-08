@@ -20,24 +20,23 @@ Après une action du joueur, le contrôleur en déduit l'action à effectuer, et
 
 ## Convention de nommage des fonctions
 
-### Les fonctions [...]_init(paramètres...)
-Les fonctions [...]_init() retourne une structure initialisée.
+### Les fonctions *...*_init(*paramètres*)
+Les fonctions *..._init(paramètres)* retourne une structure initialisée.
 Ces fonctions se retrouvent dans les modèles.
 Retourné: Une structure initialisée.
 
-### Les fonctions get_new_[...](paramètres...)
+### Les fonctions get_new_*...*(*paramètres*)
 Ce type de fonctions créé et retourne un nouvel objet. On retrouve ces fonctions dans les modèles.
 Retourné: le nouvel objet.
 
-### Les fonctions set_[...](paramètres...)
+### Les fonctions set_*...*(*paramètres*)
 Ce type de fonctions met à jour certaines valeurs d'un objet. On retrouve ces fonctions dans les modèles.
 Retourné: rien.
 
-### Les fonctions get_[...](paramètres...)
-Similaire aux fonctions get_new[...](paramètres...) mais sans pour autant être spécifique aux objets. Peut se retrouver dans les contrôleurs, les vues ou les modèles. Ce type de fonction sert à trouver des valeurs.
+### Les fonctions get_*...*(*paramètres*)
+Similaire aux fonctions *get_new...(paramètres)* mais sans pour autant être spécifique aux objets. Peut se retrouver dans les contrôleurs, les vues ou les modèles. Ce type de fonction sert à trouver des valeurs.
 Retourné: une structure, un objet ou une variable.
 
-### Les fonctions update_[...](paramètres...)
+### Les fonctions update_*...*(*paramètres*)
 Les fonctions de mise à jour se retrouvent dans les contrôleurs et vont dans leur corps appeler diverses méthodes de diverses classes.
 Retourné: rien.
-
