@@ -25,7 +25,6 @@ Button get_new_button(Geometry g, char *text, MLV_Color color, char *font_path, 
 
 
   btn.posX = g.posX + (g.width - btn.width)/2;
-  printf("%d, %d, %d\n", g.width, btn.width, btn.posX);
   btn.posY = g.posY + (g.height - btn.height)/2;
   btn.width = g.width;
   btn.height = g.height;

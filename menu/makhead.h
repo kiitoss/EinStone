@@ -19,6 +19,7 @@ void set_object_dimension(char *text, char *font_path, int font_size, int *objec
 int get_object_font_size(char *text, char *font_path, int max_width, int max_height);
 
 /* models/pages/mainPageM.c */
+mainPage init_main_page(int width, int height);
 Button *get_main_page_hover_btn(mainPage *this, int posX, int posY);
 
 /* views/objectV.c */
