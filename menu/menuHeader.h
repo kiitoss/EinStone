@@ -14,8 +14,10 @@ typedef struct {
   MLV_Event event;
   int mouseX;
   int mouseY;
-  MLV_Button_state button_state;
-  MLV_Keyboard_button touche;
+  MLV_Button_state btn_state;
+  MLV_Keyboard_button touch;
+  char *text_input;
+  MLV_Input_box *input_box;
 } Event_Manager;
 
 typedef struct {
@@ -40,6 +42,7 @@ typedef struct {
 } Label;
 
 typedef struct {
+  Geometry container;
   int width;
   int height;
   int posX;
@@ -103,4 +106,5 @@ typedef struct {
   Button resume_btn;
   Button score_btn;
   Button quit_btn;
+  Button *hover_btn;
 } mainPage;
