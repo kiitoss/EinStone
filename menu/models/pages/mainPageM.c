@@ -7,6 +7,7 @@ mainPage init_main_page(int width, int height) {
   Geometry g;
   int margin = 5;
   int row_height = height / 6 - margin;
+  char *font_path = "res/font/Amatic-Bold.ttf";
 
   mp.hover_btn = NULL;
   
@@ -21,16 +22,16 @@ mainPage init_main_page(int width, int height) {
   /* mp.title_lbl = ; */
   g.posY += row_height*2 + margin;
   
-  mp.newgame_btn = get_new_button(g, "New Game", MLV_COLOR_RED, "res/font/Amatic-Bold.ttf", NEWGAME);
+  mp.newgame_btn = get_new_button(g, "New Game", MLV_COLOR_RED, font_path, NEWGAME);
   g.posY += row_height + margin;
   
-  mp.resume_btn = get_new_button(g, "Resume", MLV_COLOR_RED, "res/font/Amatic-Bold.ttf", RESUME);
+  mp.resume_btn = get_new_button(g, "Resume", MLV_COLOR_RED, font_path, RESUME);
   g.posY += row_height + margin;
   
-  mp.score_btn = get_new_button(g, "Score", MLV_COLOR_RED, "res/font/Amatic-Bold.ttf", SCORE);
+  mp.score_btn = get_new_button(g, "Score", MLV_COLOR_RED, font_path, SCORE);
   g.posY += row_height + margin;
   
-  mp.quit_btn = get_new_button(g, "Quit", MLV_COLOR_RED, "res/font/Amatic-Bold.ttf", BACK);
+  mp.quit_btn = get_new_button(g, "Quit", MLV_COLOR_RED, font_path, BACK);
 
   return mp;
 }

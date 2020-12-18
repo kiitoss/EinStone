@@ -8,6 +8,9 @@ MAKMAK from path: ./
 /* controllers/mainPageC.c */
 void launch_main_page(int width, int height);
 
+/* controllers/newGamePageC.c */
+void launch_newgame_page(int width, int height);
+
 /* models/objects/buttonM.c */
 bool is_btn_hover(Button *this, int posX, int posY);
 Button get_new_button(Geometry g, char *text, MLV_Color color, char *font_path, menu_choice value);
@@ -22,10 +25,14 @@ int get_object_font_size(char *text, char *font_path, int max_width, int max_hei
 mainPage init_main_page(int width, int height);
 Button *get_main_page_hover_btn(mainPage *this, int posX, int posY);
 
+/* models/pages/newgamePageM.c */
+newgamePage init_newgame_page(int width, int height);
+
 /* views/objectV.c */
 void draw_button(Button *this);
 
 /* views/pageV.c */
 Event_Manager get_event();
 void draw_main_page(mainPage *mp);
+void draw_newgame_page(newgamePage *ngp);
 

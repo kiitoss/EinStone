@@ -7,7 +7,7 @@
 
 enum bool {false, true};
 typedef enum bool bool;
-enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, DUO, EASY, MEDIUM, HARD, LAUNCH};
+enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH};
 typedef enum menu_choices menu_choice;
 
 typedef struct {
@@ -84,23 +84,6 @@ typedef struct {
 typedef struct {
   int width;
   int height;
-  Label title;
-  Label labels[MAX_LABELS];
-  int nb_labels;
-  Input inputs[MAX_INPUTS];
-  int nb_inputs;
-  Button buttons[MAX_BUTTONS];
-  int nb_buttons;
-  Section sections[MAX_SECTIONS];
-  int nb_sections;
-  Button *hover_button;
-  Section *hover_section;
-  Section *select_section;
-} Page;
-
-typedef struct {
-  int width;
-  int height;
   Label title_lbl;
   Button newgame_btn;
   Button resume_btn;
@@ -108,3 +91,17 @@ typedef struct {
   Button quit_btn;
   Button *hover_btn;
 } mainPage;
+
+typedef struct {
+  int width;
+  int height;
+  Label title_lbl;
+  Button solo_btn;
+  Button multi_btn;
+  Button easy_btn;
+  Button medium_btn;
+  Button hard_btn;
+  Button launch_btn;
+  Button back_btn;
+  Button *hover_btn;
+} newgamePage;

@@ -17,20 +17,30 @@ void update_hover_btn(mainPage *mp, int posX, int posY) {
   }
 }
 
+void change_page(mainPage *mp) {
+  switch (mp->hover_btn->value) {
+  case NEWGAME:
+    launch_newgame_page(mp->width, mp->height);
+    break;
+  default:
+    break;
+  } 
+}
+
 void update_main_page(mainPage *mp) {
   Event_Manager em;
   draw_main_page(mp);
   em = get_event();
-  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED)) {
+  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
-  if (em.event == MLV_MOUSE_BUTTON) {
-    printf("clique\n");
+  if (em.event == MLV_MOUSE_BUTTON && mp->hover_btn != NULL) {
+    change_page(mp);
   }
-  else {
+  else if (em.event != MLV_KEY) {
     update_hover_btn(mp, em.mouseX, em.mouseY);
+    update_main_page(mp);
   }
-  update_main_page(mp);
 }
 
 /* GLOBAL */
@@ -45,8 +55,7 @@ int main(int argc, char *argv[]) {
   width = 700;
   height = 700;
   MLV_create_window("TEST", "TEST", width, height);
-  launch_main_page(width, height);
-  MLV_wait_seconds(2);
+  launch_newgame_page(width, height);
   MLV_free_window();
   exit(0);
 }
