@@ -3,12 +3,18 @@
 
 void update_newgame_page(newgamePage *ngp);
 
-void select_newgame_page_hover_btn(newgamePage *ngp) {
-  printf("%s\n", ngp->hover_btn->value);
-  update_newgame_page(ngp);
+static void select_hover_btn(newgamePage *ngp) {
+  switch (ngp->hover_btn->value) {
+  case BACK:
+    launch_main_page(ngp->width, ngp->height);
+    break;
+  default:
+    printf("%d\n", ngp->hover_btn->value);
+    break;
+  }
 }
 
-void update_newgame_page_hover_btn(newgamePage *ngp, int posX, int posY) {
+static void update_hover_btn(newgamePage *ngp, int posX, int posY) {
   Button *hover_btn = get_newgame_page_hover_btn(ngp, posX, posY);
   if (ngp->hover_btn != hover_btn) {
     if (ngp->hover_btn != NULL) {
@@ -30,21 +36,23 @@ void update_newgame_page(newgamePage *ngp) {
   while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
     if (MLV_get_time() > launch_time + 200) {
-      MLV_flush_event_queue();
-      update_newgame_page(ngp);
+      em.event = MLV_NONE;
       break;
     }
   }
   MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_BUTTON && ngp->hover_btn != NULL) {
-    select_newgame_page_hover_btn(ngp);
+    select_hover_btn(ngp);
   }
-  else if (em.event != MLV_KEY) {
-    update_newgame_page_hover_btn(ngp, em.mouseX, em.mouseY);
-    update_newgame_page(ngp);
+  else if (em.event == MLV_MOUSE_MOTION) {
+    update_hover_btn(ngp, em.mouseX, em.mouseY);
   }
   else if (em.event == MLV_KEY) {
     launch_main_page(ngp->width, ngp->height);
+  }
+
+  if (em.event != MLV_KEY) {  
+    update_newgame_page(ngp);
   }
 }
 
@@ -52,5 +60,6 @@ void update_newgame_page(newgamePage *ngp) {
 void launch_newgame_page(int width, int height) {
   newgamePage ngp = init_newgame_page(width, height);
   draw_newgame_page(&ngp);
+  MLV_flush_event_queue();
   update_newgame_page(&ngp);
 }

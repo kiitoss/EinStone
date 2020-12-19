@@ -1,7 +1,7 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
-void update_main_page_hover_btn(mainPage *mp, int posX, int posY) {
+static void update_hover_btn(mainPage *mp, int posX, int posY) {
   Button *hover_btn = get_main_page_hover_btn(mp, posX, posY);
   if (mp->hover_btn != hover_btn) {
     if (mp->hover_btn != NULL) {
@@ -32,11 +32,12 @@ void update_main_page(mainPage *mp) {
   while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
+  MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_BUTTON && mp->hover_btn != NULL) {
     change_page(mp);
   }
   else if (em.event != MLV_KEY) {
-    update_main_page_hover_btn(mp, em.mouseX, em.mouseY);
+    update_hover_btn(mp, em.mouseX, em.mouseY);
     update_main_page(mp);
   }
 }
@@ -45,6 +46,7 @@ void update_main_page(mainPage *mp) {
 void launch_main_page(int width, int height) {
   mainPage mp = init_main_page(width, height);
   draw_main_page(&mp);
+  MLV_flush_event_queue();
   update_main_page(&mp);
 }
 
