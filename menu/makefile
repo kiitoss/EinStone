@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainPageC.o newGamePageC.o buttonM.o generalM.o mainPageM.o newgamePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainPageC.o newGamePageC.o buttonM.o generalM.o mainPageM.o newgamePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: mainPageC.o newGamePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainPageC.o newGamePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 mainPageC.o: ./controllers/mainPageC.c
 	$(CC) $(CFLAGS) ./controllers/mainPageC.c -c -I ./
@@ -17,6 +17,12 @@ buttonM.o: ./models/objects/buttonM.c
 
 generalM.o: ./models/objects/generalM.c
 	$(CC) $(CFLAGS) ./models/objects/generalM.c -c -I ./
+
+inputM.o: ./models/objects/inputM.c
+	$(CC) $(CFLAGS) ./models/objects/inputM.c -c -I ./
+
+labelM.o: ./models/objects/labelM.c
+	$(CC) $(CFLAGS) ./models/objects/labelM.c -c -I ./
 
 mainPageM.o: ./models/pages/mainPageM.c
 	$(CC) $(CFLAGS) ./models/pages/mainPageM.c -c -I ./

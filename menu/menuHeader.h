@@ -32,13 +32,10 @@ typedef struct {
   int height;
   int posX;
   int posY;
-  int last_posX;
-  int last_posY;
   char *text;
   char *font_path;
   int font_size;
   MLV_Color color;
-  bool is_hidden;
 } Label;
 
 typedef struct {
@@ -67,9 +64,8 @@ typedef struct {
   int font_size;
   MLV_Color color;
   MLV_Input_box *object;
-  bool is_hidden;
   MLV_Font *font;
-  Label *label;
+  bool is_hidden;
 } Input;
 
 typedef struct {
@@ -103,5 +99,7 @@ typedef struct {
   Button hard_btn;
   Button launch_btn;
   Button back_btn;
+  Input p1_input;
+  Input p2_input;
   Button *hover_btn;
 } newgamePage;

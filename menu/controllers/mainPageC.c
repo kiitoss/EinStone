@@ -1,7 +1,7 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
-void update_hover_btn(mainPage *mp, int posX, int posY) {
+void update_main_page_hover_btn(mainPage *mp, int posX, int posY) {
   Button *hover_btn = get_main_page_hover_btn(mp, posX, posY);
   if (mp->hover_btn != hover_btn) {
     if (mp->hover_btn != NULL) {
@@ -11,9 +11,7 @@ void update_hover_btn(mainPage *mp, int posX, int posY) {
     if (hover_btn != NULL) {
       set_hover_btn(hover_btn);
     }
-
     mp->hover_btn = hover_btn;
-    draw_main_page(mp);
   }
 }
 
@@ -38,7 +36,7 @@ void update_main_page(mainPage *mp) {
     change_page(mp);
   }
   else if (em.event != MLV_KEY) {
-    update_hover_btn(mp, em.mouseX, em.mouseY);
+    update_main_page_hover_btn(mp, em.mouseX, em.mouseY);
     update_main_page(mp);
   }
 }

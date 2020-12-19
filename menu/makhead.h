@@ -21,15 +21,25 @@ void unset_hover_btn(Button *this);
 void set_object_dimension(char *text, char *font_path, int font_size, int *object_width, int *object_height);
 int get_object_font_size(char *text, char *font_path, int max_width, int max_height);
 
+/* models/objects/inputM.c */
+Input get_new_input(Geometry g, char *placeholder, MLV_Color color, char *font_path);
+void free_input(Input *this);
+
+/* models/objects/labelM.c */
+Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path);
+
 /* models/pages/mainPageM.c */
 mainPage init_main_page(int width, int height);
 Button *get_main_page_hover_btn(mainPage *this, int posX, int posY);
 
 /* models/pages/newgamePageM.c */
 newgamePage init_newgame_page(int width, int height);
+Button *get_newgame_page_hover_btn(newgamePage *this, int posX, int posY);
 
 /* views/objectV.c */
 void draw_button(Button *this);
+void draw_label(Label *this);
+void draw_input(Input *this);
 
 /* views/pageV.c */
 Event_Manager get_event();

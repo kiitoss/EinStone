@@ -24,3 +24,20 @@ void draw_button(Button *this) {
   MLV_draw_adapted_text_box_with_font(this->posX, this->posY, this->text, font, 0, MLV_rgba(0,0,0,0), this->color, MLV_rgba(0,0,0,0), MLV_TEXT_CENTER);
   MLV_free_font(font);
 }
+
+/* GLOBAL */
+void draw_label(Label *this) {
+  MLV_Font* font;
+
+  if (this == NULL) {return;}
+
+  font = MLV_load_font(this->font_path , this->font_size);
+  MLV_draw_adapted_text_box_with_font(this->posX, this->posY, this->text, font, 0, MLV_rgba(0,0,0,0), this->color, MLV_rgba(0,0,0,0), MLV_TEXT_CENTER);
+  MLV_free_font(font);
+}
+
+/* GLOBAL */
+void draw_input(Input *this) {
+  if (this == NULL || this->is_hidden) {return;}
+  MLV_draw_input_box(this->object);
+}
