@@ -2,6 +2,56 @@
 #include "../../makhead.h"
 
 /* GLOBAL */
+void set_difficulty(newgamePage *this, menu_choice btn_value) {
+  if (this->select_difficulty != NULL && this->select_difficulty->value == btn_value) {return;}
+
+  unset_select_btn(this->select_difficulty);
+  
+  switch (btn_value) {
+  case EASY:
+    set_select_btn(&this->easy_btn);
+    this->select_difficulty = &this->easy_btn;
+    break;
+  case MEDIUM:
+    set_select_btn(&this->medium_btn);
+    this->select_difficulty = &this->medium_btn;
+    break;
+  case HARD:
+    set_select_btn(&this->hard_btn);
+    this->select_difficulty = &this->hard_btn;
+    break;
+  default:
+    break;
+  }
+}
+
+/* GLOBAL */
+void set_gamemode(newgamePage *this, menu_choice btn_value) {
+  if (this->select_gamemode != NULL && this->select_gamemode->value == btn_value) {return;}
+
+  unset_select_btn(this->select_gamemode);
+  
+  switch (btn_value) {
+  case SOLO:
+    set_select_btn(&this->solo_btn);
+    this->select_gamemode = &this->solo_btn;
+    unset_hidden_btn(&this->easy_btn);
+    unset_hidden_btn(&this->medium_btn);
+    unset_hidden_btn(&this->hard_btn);
+    break;
+  case MULTI:
+    set_select_btn(&this->multi_btn);
+    this->select_gamemode = &this->multi_btn;
+    set_hidden_btn(&this->easy_btn);
+    set_hidden_btn(&this->medium_btn);
+    set_hidden_btn(&this->hard_btn);
+    break;
+  default:
+    break;
+  }
+}
+
+/* GLOBAL */
 newgamePage init_newgame_page(int width, int height) {
   newgamePage ngp;
   Geometry g;
@@ -13,6 +63,8 @@ newgamePage init_newgame_page(int width, int height) {
   char *font_path = "res/font/Amatic-Bold.ttf";
 
   ngp.hover_btn = NULL;
+  ngp.select_gamemode = NULL;
+  ngp.select_difficulty = NULL;
   
   g.width = width;
   g.height = title_height;

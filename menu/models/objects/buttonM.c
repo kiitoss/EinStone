@@ -3,10 +3,15 @@
 
 /* GLOBAL */
 bool is_btn_hover(Button *this, int posX, int posY) {
-  if (posX >= this->container.posX && posX <= this->container.posX + this->container.width && posY >= this->container.posY && posY <= this->container.posY + this->container.height) {
+  if (this != NULL && posX >= this->container.posX && posX <= this->container.posX + this->container.width && posY >= this->container.posY && posY <= this->container.posY + this->container.height) {
     return true;
   }
   return false;
+}
+
+/* GLOBAL */
+bool is_btn_select(Button *this) {
+  return (this != NULL && this->is_select) ? true : false;
 }
 
 /* GLOBAL */
@@ -33,10 +38,36 @@ Button get_new_button(Geometry g, char *text, MLV_Color color, char *font_path, 
 
 /* GLOBAL */
 void set_hover_btn(Button *this) {
+  if (this == NULL) {return;}
   this->is_hover = true;
 }
 
 /* GLOBAL */
 void unset_hover_btn(Button *this) {
+  if (this == NULL) {return;}
   this->is_hover = false;
+}
+
+/* GLOBAL */
+void set_select_btn(Button *this) {
+  if (this == NULL) {return;}
+  this->is_select = true;
+}
+
+/* GLOBAL */
+void unset_select_btn(Button *this) {
+  if (this == NULL) {return;}
+  this->is_select = false;
+}
+
+/* GLOBAL */
+void set_hidden_btn(Button *this) {
+  if (this == NULL) {return;}
+  this->is_hidden = true;
+}
+
+/* GLOBAL */
+void unset_hidden_btn(Button *this) {
+  if (this == NULL) {return;}
+  this->is_hidden = false;
 }

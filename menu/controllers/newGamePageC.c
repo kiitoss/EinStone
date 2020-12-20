@@ -8,8 +8,22 @@ static void select_hover_btn(newgamePage *ngp) {
   case BACK:
     launch_main_page(ngp->width, ngp->height);
     break;
+  case SOLO:
+    set_gamemode(ngp, SOLO);
+    break;
+  case MULTI:
+    set_gamemode(ngp, MULTI);
+    break;
+  case EASY:
+    set_difficulty(ngp, EASY);
+    break;
+  case MEDIUM:
+    set_difficulty(ngp, MEDIUM);
+    break;
+  case HARD:
+    set_difficulty(ngp, HARD);
+    break;
   default:
-    printf("%d\n", ngp->hover_btn->value);
     break;
   }
 }
@@ -17,13 +31,8 @@ static void select_hover_btn(newgamePage *ngp) {
 static void update_hover_btn(newgamePage *ngp, int posX, int posY) {
   Button *hover_btn = get_newgame_page_hover_btn(ngp, posX, posY);
   if (ngp->hover_btn != hover_btn) {
-    if (ngp->hover_btn != NULL) {
-      unset_hover_btn(ngp->hover_btn);
-    }
-    
-    if (hover_btn != NULL) {
-      set_hover_btn(hover_btn);
-    }
+    unset_hover_btn(ngp->hover_btn);
+    set_hover_btn(hover_btn);
     ngp->hover_btn = hover_btn;
   }
 }
@@ -60,6 +69,8 @@ void update_newgame_page(newgamePage *ngp) {
 /* GLOBAL */
 void launch_newgame_page(int width, int height) {
   newgamePage ngp = init_newgame_page(width, height);
+  set_gamemode(&ngp, SOLO);
+  set_difficulty(&ngp, MEDIUM);
   draw_newgame_page(&ngp);
   MLV_flush_event_queue();
   update_newgame_page(&ngp);

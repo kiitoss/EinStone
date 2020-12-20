@@ -102,4 +102,6 @@ typedef struct {
   Input p1_input;
   Input p2_input;
   Button *hover_btn;
+  Button *select_gamemode;
+  Button *select_difficulty;
 } newgamePage;
