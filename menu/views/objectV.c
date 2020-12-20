@@ -3,12 +3,14 @@
 
 /* GLOBAL */
 void draw_button(Button *this) {
-  MLV_Font* font = MLV_load_font(this->font_path , this->font_size);
+  MLV_Font* font;
   MLV_Color background_color;
   int border_size = 5;
-  if (this->is_hidden) {
-    return;
-  }
+  
+  if (this->is_hidden) {return;}
+  
+  font = MLV_load_font(this->font_path , this->font_size);
+
   if (this->is_select || this->is_hover) {
     if (this->is_select) {
       background_color = MLV_COLOR_GREEN;
@@ -29,7 +31,7 @@ void draw_button(Button *this) {
 void draw_label(Label *this) {
   MLV_Font* font;
 
-  if (this == NULL) {return;}
+  if (this->is_hidden) {return;}
 
   font = MLV_load_font(this->font_path , this->font_size);
   MLV_draw_adapted_text_box_with_font(this->posX, this->posY, this->text, font, 0, MLV_rgba(0,0,0,0), this->color, MLV_rgba(0,0,0,0), MLV_TEXT_CENTER);
@@ -38,6 +40,17 @@ void draw_label(Label *this) {
 
 /* GLOBAL */
 void draw_input(Input *this) {
-  if (this == NULL || this->is_hidden) {return;}
+  if (this->is_hidden) {return;}
   MLV_draw_input_box(this->object);
+}
+
+
+/* GLOBAL */
+void draw_input_or_label(Input *input, Label *label) {
+  if (exist_input(input)) {
+    draw_input(input);
+  }
+  else {
+    draw_label(label);
+  }
 }

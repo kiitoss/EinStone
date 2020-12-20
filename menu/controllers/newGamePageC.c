@@ -42,7 +42,7 @@ void update_newgame_page(newgamePage *ngp) {
   int launch_time = MLV_get_time();
   draw_newgame_page(ngp);
   em = get_event();
-  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED || ngp->hover_btn == NULL) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
+  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED || ngp->hover_btn == NULL) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE) && em.event != MLV_INPUT_BOX) {
     em = get_event();
     if (MLV_get_time() > launch_time + 200) {
       em.event = MLV_NONE;
@@ -64,6 +64,10 @@ void update_newgame_page(newgamePage *ngp) {
   else if (em.event == MLV_NONE) {
     update_newgame_page(ngp);
   }
+  else if (em.event == MLV_INPUT_BOX) {
+    set_player_name(ngp, em.input_box, em.text_input);
+    update_newgame_page(ngp);
+  }
 }
 
 /* GLOBAL */
@@ -71,6 +75,8 @@ void launch_newgame_page(int width, int height) {
   newgamePage ngp = init_newgame_page(width, height);
   set_gamemode(&ngp, SOLO);
   set_difficulty(&ngp, MEDIUM);
+  set_hidden_lbl(&ngp.p1_lbl);
+  set_hidden_lbl(&ngp.p2_lbl);
   draw_newgame_page(&ngp);
   MLV_flush_event_queue();
   update_newgame_page(&ngp);

@@ -13,7 +13,24 @@ Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path) {
 
   lbl.posX = g.posX + (g.width - lbl.width)/2;
   lbl.posY = g.posY + (g.height - lbl.height)/2;
-  lbl.width = g.width;
-  lbl.height = g.height;
+
+  lbl.is_hidden = false;
   return lbl;
+}
+
+
+/* GLOBAL */
+void set_hidden_lbl(Label *this) {
+  this->is_hidden = true;
+}
+
+/* GLOBAL */
+void unset_hidden_lbl(Label *this) {
+  this->is_hidden = false;
+}
+
+/* GLOBAL */
+void set_label_geometry(Label *this, int posX) {
+  if (this->is_hidden) {return;}
+  this->posX = posX;
 }

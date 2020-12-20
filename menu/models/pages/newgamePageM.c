@@ -2,6 +2,33 @@
 #include "../../makhead.h"
 
 /* GLOBAL */
+void set_player_name(newgamePage *this, MLV_Input_box *input_box, char *text_input) {
+  char *font_path = "./res/font/Amatic-Bold.ttf";
+  Geometry g;
+  g.width = this->width/3;
+  if (input_box == this->p1_input.object) {
+    g.height = this->p1_input.height;
+    g.posX = 0;
+    g.posY = this->p1_input.posY;
+  
+    this->p1_lbl = get_new_label(g, text_input, MLV_COLOR_RED, font_path);
+    g.posX = (this->select_gamemode->value == MULTI) ? (this->width/2 - this->p1_lbl.width)/2  : (this->width - this->p1_lbl.width)/2;
+    set_label_geometry(&this->p1_lbl, g.posX);
+    unset_hidden_lbl(&this->p1_lbl);
+    free_input(&this->p1_input);
+  }
+  else if (input_box == this->p2_input.object) {
+    g.height = this->p2_input.height;
+    g.posX = this->width/2 + 10;
+    g.posY = this->p2_input.posY;
+    
+    this->p2_lbl = get_new_label(g, text_input, MLV_COLOR_RED, font_path);
+    unset_hidden_lbl(&this->p2_lbl);
+    free_input(&this->p2_input);
+  }
+}
+
+/* GLOBAL */
 void set_difficulty(newgamePage *this, menu_choice btn_value) {
   if (this->select_difficulty != NULL && this->select_difficulty->value == btn_value) {return;}
 
@@ -38,13 +65,54 @@ void set_gamemode(newgamePage *this, menu_choice btn_value) {
     unset_hidden_btn(&this->easy_btn);
     unset_hidden_btn(&this->medium_btn);
     unset_hidden_btn(&this->hard_btn);
+
+    if (exist_input(&this->p2_input)) {
+      set_hidden_input(&this->p2_input);
+    }
+    else {
+      set_hidden_lbl(&this->p2_lbl);
+    }
+
+    if (exist_input(&this->p1_input)) {
+      set_input_geometry(&this->p1_input, 3*this->width/8, this->width/4);
+    }
+    else {
+      set_label_geometry(&this->p1_lbl, (this->width-this->p1_lbl.width)/2);
+    }
+
+    if (exist_input(&this->p1_input)) {
+      MLV_activate_input_box(this->p1_input.object);
+    }
     break;
+
+    
   case MULTI:
     set_select_btn(&this->multi_btn);
     this->select_gamemode = &this->multi_btn;
     set_hidden_btn(&this->easy_btn);
     set_hidden_btn(&this->medium_btn);
     set_hidden_btn(&this->hard_btn);
+
+    if (exist_input(&this->p2_input)) {
+      unset_hidden_input(&this->p2_input);
+    }
+    else {
+      unset_hidden_lbl(&this->p2_lbl);
+    }
+
+    if (exist_input(&this->p1_input)) {
+      set_input_geometry(&this->p1_input, this->width/4 - 10, this->width/4);
+    }
+    else {
+      set_label_geometry(&this->p1_lbl, (this->width/2-this->p1_lbl.width)/2 - 10);
+    }
+
+     if (exist_input(&this->p2_input)) {
+       MLV_activate_input_box(this->p2_input.object);
+     }
+     else if (exist_input(&this->p1_input)) {
+       MLV_activate_input_box(this->p1_input.object);
+     }
     break;
   default:
     break;
@@ -60,7 +128,7 @@ newgamePage init_newgame_page(int width, int height) {
   
   int margin_row = 2*height/3 * 0.3/4;
   int row_height = 2*height/3 * 0.7/4;
-  char *font_path = "res/font/Amatic-Bold.ttf";
+  char *font_path = "./res/font/Amatic-Bold.ttf";
 
   ngp.hover_btn = NULL;
   ngp.select_gamemode = NULL;
@@ -85,10 +153,10 @@ newgamePage init_newgame_page(int width, int height) {
   ngp.multi_btn = get_new_button(g, "MULTI", MLV_COLOR_RED, font_path, MULTI);
 
   g.posY += row_height + margin_row;
-  g.width = 3*width/8 - 5;
-  g.posX = width/8;
+  g.width = width/4;
+  g.posX = width/4 - 10;
   ngp.p1_input = get_new_input(g, "Joueur 1: ", MLV_COLOR_RED, font_path);
-  g.posX += 3*width/8 + 5;
+  g.posX = width/2 + 10;
   ngp.p2_input = get_new_input(g, "Joueur 2: ", MLV_COLOR_RED, font_path);
   
   g.posY += row_height + margin_row;

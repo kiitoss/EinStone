@@ -29,15 +29,23 @@ int get_object_font_size(char *text, char *font_path, int max_width, int max_hei
 /* models/objects/inputM.c */
 Input get_new_input(Geometry g, char *placeholder, MLV_Color color, char *font_path);
 void free_input(Input *this);
+void set_hidden_input(Input *this);
+void unset_hidden_input(Input *this);
+void set_input_geometry(Input *this, int posX, int width);
+bool exist_input(Input *this);
 
 /* models/objects/labelM.c */
 Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path);
+void set_hidden_lbl(Label *this);
+void unset_hidden_lbl(Label *this);
+void set_label_geometry(Label *this, int posX);
 
 /* models/pages/mainPageM.c */
 mainPage init_main_page(int width, int height);
 Button *get_main_page_hover_btn(mainPage *this, int posX, int posY);
 
 /* models/pages/newgamePageM.c */
+void set_player_name(newgamePage *this, MLV_Input_box *input_box, char *text_input);
 void set_difficulty(newgamePage *this, menu_choice btn_value);
 void set_gamemode(newgamePage *this, menu_choice btn_value);
 newgamePage init_newgame_page(int width, int height);
@@ -47,6 +55,7 @@ Button *get_newgame_page_hover_btn(newgamePage *this, int posX, int posY);
 void draw_button(Button *this);
 void draw_label(Label *this);
 void draw_input(Input *this);
+void draw_input_or_label(Input *input, Label *label);
 
 /* views/pageV.c */
 Event_Manager get_event();
