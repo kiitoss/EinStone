@@ -10,6 +10,7 @@ void prepare_launching(newgamePage *ngp) {
   difficulty = ngp->select_difficulty->value;
   p1_name = get_input_or_label_value(&ngp->p1_input, &ngp->p1_lbl);
   p2_name = get_input_or_label_value(&ngp->p2_input, &ngp->p2_lbl);
+  printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
 }
 
 static void select_hover_btn(newgamePage *ngp) {
@@ -63,7 +64,9 @@ void update_newgame_page(newgamePage *ngp) {
   MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_BUTTON && em.btn_state == MLV_PRESSED && ngp->hover_btn != NULL) {
     select_hover_btn(ngp);
-    update_newgame_page(ngp);
+    if (ngp->hover_btn->value != BACK) {
+      update_newgame_page(ngp);
+    }
   }
   else if (em.event == MLV_KEY && em.touch == MLV_KEYBOARD_ESCAPE) {
     launch_main_page(ngp->width, ngp->height);
