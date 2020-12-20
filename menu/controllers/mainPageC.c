@@ -29,14 +29,17 @@ void update_main_page(mainPage *mp) {
   Event_Manager em;
   draw_main_page(mp);
   em = get_event();
-  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
+  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED ||  mp->hover_btn == NULL) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
   MLV_flush_event_queue();
-  if (em.event == MLV_MOUSE_BUTTON && mp->hover_btn != NULL) {
+  if (em.event == MLV_MOUSE_BUTTON && em.btn_state == MLV_PRESSED && mp->hover_btn != NULL) {
     change_page(mp);
   }
-  else if (em.event != MLV_KEY) {
+  else if (em.event == MLV_KEY && em.touch == MLV_KEYBOARD_ESCAPE) {
+    return;
+  }
+  else if (em.event == MLV_MOUSE_MOTION) {
     update_hover_btn(mp, em.mouseX, em.mouseY);
     update_main_page(mp);
   }
