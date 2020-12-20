@@ -25,6 +25,7 @@ void unset_hidden_btn(Button *this);
 /* models/objects/generalM.c */
 void set_object_dimension(char *text, char *font_path, int font_size, int *object_width, int *object_height);
 int get_object_font_size(char *text, char *font_path, int max_width, int max_height);
+char *get_input_or_label_value(Input *input, Label *label);
 
 /* models/objects/inputM.c */
 Input get_new_input(Geometry g, char *placeholder, MLV_Color color, char *font_path);

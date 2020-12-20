@@ -3,6 +3,15 @@
 
 void update_newgame_page(newgamePage *ngp);
 
+void prepare_launching(newgamePage *ngp) {
+  menu_choice gamemode, difficulty;
+  char *p1_name, *p2_name;
+  gamemode = ngp->select_gamemode->value;
+  difficulty = ngp->select_difficulty->value;
+  p1_name = get_input_or_label_value(&ngp->p1_input, &ngp->p1_lbl);
+  p2_name = get_input_or_label_value(&ngp->p2_input, &ngp->p2_lbl);
+}
+
 static void select_hover_btn(newgamePage *ngp) {
   switch (ngp->hover_btn->value) {
   case BACK:
@@ -23,6 +32,8 @@ static void select_hover_btn(newgamePage *ngp) {
   case HARD:
     set_difficulty(ngp, HARD);
     break;
+  case LAUNCH:
+    prepare_launching(ngp);
   default:
     break;
   }
