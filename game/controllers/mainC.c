@@ -30,7 +30,11 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
     break;
   case MLV_KEYBOARD_KP_ENTER:
   case MLV_KEYBOARD_RETURN:
-    printf("SELECT\n");
+    buy_enemy(&GM->p2,
+	      &GM->rows[GM->p2.chosen_row],
+	      &GM->enemy_spawners[GM->p2.chosen_enemy],
+	      GM->window.field.width,
+	      GM->p2.chosen_row * GM->window.rectsize);
     break;
   default:
     break;
@@ -55,8 +59,12 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
     if (GM->p1.chosen_friend == -1 || GM->rows[gridY].friends[gridX].id_friend != -1) {
       return;
     }
-    GM->rows[gridY].friends[gridX] = get_new_friend(&GM->friend_spawners[GM->p1.chosen_friend], gridX * GM->window.rectsize, gridY * GM->window.rectsize);
-    GM->p1.chosen_friend = -1;
+    
+    buy_friend(&GM->p1,
+	       &GM->rows[gridY],
+	       &GM->friend_spawners[GM->p1.chosen_friend],
+	       gridX,
+	       gridY);
   }
 }
 
