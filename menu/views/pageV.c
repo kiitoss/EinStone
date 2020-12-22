@@ -39,7 +39,7 @@ void draw_newgame_page(newgamePage *ngp) {
 }
 
 /* GLOBAL */
-void draw_resume_page(resumeäge *rp) {
+void draw_resume_page(resumePage *rp) {
   int i;
   MLV_clear_window(MLV_COLOR_BLACK);
 

@@ -1,4 +1,0 @@
-#include "../gameHeader.h"
-#include "../makhead.h"
-
-Enemy_Spawner init_ES(){}

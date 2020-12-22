@@ -1,7 +1,7 @@
 #include "../mainHeader.h"
 
 #define NB_FRIENDS 3
-#define NB_ENEMIES 3
+#define NB_ENEMIES 1
 #define NB_ROWS 5
 #define NB_COLUMNS 8
 /* MAX_ENEMIES est le nombre maximum d'ennemis par ligne */
@@ -10,8 +10,10 @@
 #define MAX_SHOTS 100
 /* MAX_GOLDS est le nombre maximum de pièces d'or par ligne */
 #define MAX_GOLDS 100
+/* MAX_FRAMES est le maximum de frames par animation */
+#define MAX_FRAMES 15
 
-enum friend_abilities {ATTACk, DEFENSE, MONEY};
+enum friend_abilities {ATTACK, DEFENSE, MONEY};
 typedef enum friend_abilities friend_abilities;
 
 typedef struct {
@@ -78,7 +80,7 @@ typedef struct {
   int life;
   int attack;
   int price;
-  char *price_str[5];
+  char *price_str;
   int delay_ability;
   int range;
 } Friend_Spawner;
@@ -90,7 +92,7 @@ typedef struct {
   int attack;
   int speed;
   int price;
-  char *price_str[5];
+  char *price_str;
   int delay_frame_attack;
   int delay_attack;
   int range;

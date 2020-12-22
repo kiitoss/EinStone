@@ -1,7 +1,7 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
-int main(int argc, char *argv[]) {
+int launch_menu() {
   int width, height;
   width = 700;
   height = 700;

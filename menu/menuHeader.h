@@ -130,6 +130,6 @@ typedef struct {
   Button launch_btn;
   Button back_btn;
   Button *hover_btn;
-  Section *select_section;
+  resumeSection *select_section;
   resumeSection *hover_section;
 } resumePage;

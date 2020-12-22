@@ -24,7 +24,7 @@ MLV_Image *get_friend_spawner_sprite(int id_friend) {
     break;
   default:
     printf("--> Id friend inconnu.\n");
-    exit(0);
+    exit(1);
     break;
   }
   return get_image_with_path(path);

@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   MLV_create_window("EinStone", "EinStone", window.width, window.height);
 
   TM = init_TM(window);
-  GM = init_GM(&window);
+  GM = init_GM(&window, &TM);
     
   MLV_enable_full_screen();
   MLV_wait_seconds(2);
