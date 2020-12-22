@@ -37,6 +37,27 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
   }
 }
 
+void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
+  int gridX;
+  if (mouseX < GM->field.posX || mouseX > GM->field.posX + GM->field.width) {
+    return;
+  }
+  gridX = (mouseX - GM->field.posX) / GM->window.rectsize;
+
+  if (mouseY < GM->field.posY) {
+    if (gridX > NB_FRIENDS || gridX == 0) {
+      return;
+    }
+    GM->p1.chosen_friend = gridX - 1;
+  }
+  else if (mouseY < GM->field.posX + GM->field.height) {
+    if (GM->p1.chosen_friend == -1) {
+      return;
+    }
+    
+  }
+}
+
 void update_game(Game_Manager *GM, Texture_Manager *TM) {
   Event_Manager em;
   em.event = MLV_NONE;
@@ -50,10 +71,9 @@ void update_game(Game_Manager *GM, Texture_Manager *TM) {
   }
   else if (em.event == MLV_KEY) {
     keyboard_action(GM, em.touch);
-    printf("CLAVIER\n");
   }
   else if (em.event == MLV_MOUSE_BUTTON) {
-    printf("SOURIS\n");
+    mouse_action(GM, em.mouseX, em.mouseY);
   }
   draw_game(GM, TM);
   update_game(GM, TM);
