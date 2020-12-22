@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainC.o animationM.o gameManagerM.o spawnersM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o animationM.o gameManagerM.o spawnersM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: mainC.o animationM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o animationM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 mainC.o: ./game/controllers/mainC.c
 	$(CC) $(CFLAGS) ./game/controllers/mainC.c -c -I ./
@@ -15,8 +15,14 @@ animationM.o: ./game/models/animationM.c
 gameManagerM.o: ./game/models/gameManagerM.c
 	$(CC) $(CFLAGS) ./game/models/gameManagerM.c -c -I ./
 
-spawnersM.o: ./game/models/spawnersM.c
-	$(CC) $(CFLAGS) ./game/models/spawnersM.c -c -I ./
+playerM.o: ./game/models/playerM.c
+	$(CC) $(CFLAGS) ./game/models/playerM.c -c -I ./
+
+rowM.o: ./game/models/rowM.c
+	$(CC) $(CFLAGS) ./game/models/rowM.c -c -I ./
+
+spawnerM.o: ./game/models/spawnerM.c
+	$(CC) $(CFLAGS) ./game/models/spawnerM.c -c -I ./
 
 textureManagerM.o: ./game/models/textureManagerM.c
 	$(CC) $(CFLAGS) ./game/models/textureManagerM.c -c -I ./

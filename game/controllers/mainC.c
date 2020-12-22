@@ -39,22 +39,23 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
 
 void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
   int gridX;
-  if (mouseX < GM->field.posX || mouseX > GM->field.posX + GM->field.width) {
+  if (mouseX < GM->window.field.posX || mouseX > GM->window.field.posX + GM->window.field.width) {
     return;
   }
-  gridX = (mouseX - GM->field.posX) / GM->window.rectsize;
+  gridX = (mouseX - GM->window.field.posX) / GM->window.rectsize;
 
-  if (mouseY < GM->field.posY) {
+  if (mouseY < GM->window.field.posY) {
     if (gridX > NB_FRIENDS || gridX == 0) {
       return;
     }
     GM->p1.chosen_friend = gridX - 1;
   }
-  else if (mouseY < GM->field.posX + GM->field.height) {
+  else if (mouseY < GM->window.field.posX + GM->window.field.height) {
     if (GM->p1.chosen_friend == -1) {
       return;
     }
-    
+    printf("ACHETE AMIS\n");
+    /* create_friend */
   }
 }
 

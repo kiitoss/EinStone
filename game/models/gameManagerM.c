@@ -16,7 +16,7 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM) {
   GM.p2 = init_p2();
   
   for (i=0; i<NB_ROWS; i++) {
-    GM.rows[i] = init_row();
+    GM.rows[i] = init_row(window->rectsize);
   }
   
   GM.last_refresh = MLV_get_time();

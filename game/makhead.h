@@ -11,7 +11,14 @@ MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation,
 /* models/gameManagerM.c */
 Game_Manager init_GM(Window *window, Texture_Manager *TM);
 
-/* models/spawnersM.c */
+/* models/playerM.c */
+Player_1 init_p1();
+Player_2 init_p2();
+
+/* models/rowM.c */
+Row init_row(int rectsize);
+
+/* models/spawnerM.c */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window);
 Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window);
 
