@@ -101,8 +101,8 @@ typedef struct {
 
 typedef struct {
   int id_friend;
-  MLV_Animation *animation_passive;
-  MLV_Animation *animation_ability;
+  MLV_Animation_player *animation_passive;
+  MLV_Animation_player *animation_ability;
   friend_abilities ability;
   int delay_frame_ability;
   int life;

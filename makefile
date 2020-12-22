@@ -3,14 +3,17 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainC.o animationM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o animationM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: mainC.o animationM.o friendM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o animationM.o friendM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 mainC.o: ./game/controllers/mainC.c
 	$(CC) $(CFLAGS) ./game/controllers/mainC.c -c -I ./
 
 animationM.o: ./game/models/animationM.c
 	$(CC) $(CFLAGS) ./game/models/animationM.c -c -I ./
+
+friendM.o: ./game/models/friendM.c
+	$(CC) $(CFLAGS) ./game/models/friendM.c -c -I ./
 
 gameManagerM.o: ./game/models/gameManagerM.c
 	$(CC) $(CFLAGS) ./game/models/gameManagerM.c -c -I ./
