@@ -37,3 +37,19 @@ void draw_newgame_page(newgamePage *ngp) {
   
   MLV_update_window();
 }
+
+/* GLOBAL */
+void draw_resume_page(resumeäge *rp) {
+  int i;
+  MLV_clear_window(MLV_COLOR_BLACK);
+
+  draw_label(&rp->title_lbl);
+  draw_button(&rp->launch_btn);
+
+  for (i=0; i<10; i++) {
+    draw_resume_section(&rp->sections[i]);
+  }
+  
+  MLV_update_window();
+}
+

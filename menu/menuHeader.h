@@ -69,6 +69,7 @@ typedef struct {
   bool is_hidden;
 } Input;
 
+/*
 typedef struct {
   int width;
   int height;
@@ -77,6 +78,7 @@ typedef struct {
   bool is_hover;
   bool is_select;
 } Section;
+*/
 
 typedef struct {
   int width;
@@ -108,3 +110,26 @@ typedef struct {
   Button *select_gamemode;
   Button *select_difficulty;
 } newgamePage;
+
+
+typedef struct {
+  int width;
+  int height;
+  int posX;
+  int posY;
+  Label section_lbl;
+  bool is_hover;
+  bool is_select;
+} resumeSection;
+
+typedef struct {
+  int width;
+  int height;
+  Label title_lbl;
+  resumeSection sections[5];
+  Button launch_btn;
+  Button back_btn;
+  Button *hover_btn;
+  Section *select_section;
+  resumeSection *hover_section;
+} resumePage;

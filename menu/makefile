@@ -3,14 +3,23 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainPageC.o newGamePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainPageC.o newGamePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 mainPageC.o: ./controllers/mainPageC.c
 	$(CC) $(CFLAGS) ./controllers/mainPageC.c -c -I ./
 
+menuC.o: ./controllers/menuC.c
+	$(CC) $(CFLAGS) ./controllers/menuC.c -c -I ./
+
 newGamePageC.o: ./controllers/newGamePageC.c
 	$(CC) $(CFLAGS) ./controllers/newGamePageC.c -c -I ./
+
+resumePageC.o: ./controllers/resumePageC.c
+	$(CC) $(CFLAGS) ./controllers/resumePageC.c -c -I ./
+
+scorePageC.o: ./controllers/scorePageC.c
+	$(CC) $(CFLAGS) ./controllers/scorePageC.c -c -I ./
 
 buttonM.o: ./models/objects/buttonM.c
 	$(CC) $(CFLAGS) ./models/objects/buttonM.c -c -I ./

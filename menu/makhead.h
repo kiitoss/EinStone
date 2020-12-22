@@ -11,6 +11,12 @@ void launch_main_page(int width, int height);
 /* controllers/newGamePageC.c */
 void launch_newgame_page(int width, int height);
 
+/* controllers/resumePageC.c */
+void launch_resume_page(int width, int height);
+
+/* controllers/scorePageC.c */
+void launch_score_page(int width, int height);
+
 /* models/objects/buttonM.c */
 bool is_btn_hover(Button *this, int posX, int posY);
 bool is_btn_select(Button *this);

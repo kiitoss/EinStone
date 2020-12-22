@@ -1,3 +1,4 @@
+#include <string.h>
 #include "../menuHeader.h"
 #include "../makhead.h"
 
@@ -7,9 +8,16 @@ void prepare_launching(newgamePage *ngp) {
   menu_choice gamemode, difficulty;
   char *p1_name, *p2_name;
   gamemode = ngp->select_gamemode->value;
-  difficulty = ngp->select_difficulty->value;
+  difficulty = (gamemode == SOLO) ? ngp->select_difficulty->value : MEDIUM;
   p1_name = get_input_or_label_value(&ngp->p1_input, &ngp->p1_lbl);
-  p2_name = get_input_or_label_value(&ngp->p2_input, &ngp->p2_lbl);
+  p2_name = (gamemode == MULTI) ? get_input_or_label_value(&ngp->p2_input, &ngp->p2_lbl) : "IA";
+
+  if (strlen(p1_name) == 0) {
+    p1_name = "Joueur 1";
+  }
+  if (strlen(p2_name) == 0) {
+    p2_name = "Joueur 2";
+  }
   printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
 }
 

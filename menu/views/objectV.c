@@ -54,3 +54,8 @@ void draw_input_or_label(Input *input, Label *label) {
     draw_label(label);
   }
 }
+
+
+/* GLOBAL */
+void draw_resume_section(resumeSection *this) {
+}

@@ -20,6 +20,12 @@ void change_page(mainPage *mp) {
   case NEWGAME:
     launch_newgame_page(mp->width, mp->height);
     break;
+  case RESUME:
+    launch_resume_page(mp->width, mp->height);
+    break;
+  case SCORE:
+    launch_score_page(mp->width, mp->height);
+    break;
   default:
     break;
   } 
@@ -51,14 +57,4 @@ void launch_main_page(int width, int height) {
   draw_main_page(&mp);
   MLV_flush_event_queue();
   update_main_page(&mp);
-}
-
-int main(int argc, char *argv[]) {
-  int width, height;
-  width = 700;
-  height = 700;
-  MLV_create_window("TEST", "TEST", width, height);
-  launch_newgame_page(width, height);
-  MLV_free_window();
-  exit(0);
 }

@@ -44,9 +44,16 @@ MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
   return get_image_with_path(path);
 }
 
+MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spawner_height) {
+  MLV_Image *spawner_img;
+  spawner_img = MLV_copy_partial_image(sprite, 0, 3*64, 64, 64); 
+  MLV_resize_image_with_proportions(spawner_img, rectsize, spawner_height);
+  return spawner_img;
+}
+
 
 /* GLOBAL */
-Texture_Manager init_TM() {
+Texture_Manager init_TM(Window window) {
   int i;
   Texture_Manager TM;
   TM.field_light_grass_img = get_image_with_path("resources/backgrounds/light_grass.png");
@@ -59,10 +66,11 @@ Texture_Manager init_TM() {
   TM.shot_img = get_image_with_path("resources/pops/arrow.png");
   for (i=0; i<NB_FRIENDS; i++) {
     TM.friend_spawners_sprites[i] = get_friend_spawner_sprite(i);
+    TM.friend_spawners_imgs[i] = get_spawner_img_from_sprite(TM.friend_spawners_sprites[i], window.rectsize, window.friend_spawner.height);
   }
   for (i=0; i<NB_ENEMIES; i++) {
     TM.enemy_spawners_sprites[i] = get_enemy_spawner_sprite(i);
+    TM.enemy_spawners_imgs[i] = get_spawner_img_from_sprite(TM.enemy_spawners_sprites[i], window.rectsize, window.enemy_spawner.height);
   }
-  printf("CA MARCHE\n");
   return TM;
 }
