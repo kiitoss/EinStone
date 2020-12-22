@@ -1,24 +1,10 @@
-/* #include "../global.h" */
-#include <MLV/MLV_all.h>
+#include "../mainHeader.h"
+
 #define MAX_BUTTONS 10
 #define MAX_INPUTS 10
 #define MAX_LABELS 10
 #define MAX_SECTIONS 10
 
-enum bool {false, true};
-typedef enum bool bool;
-enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH};
-typedef enum menu_choices menu_choice;
-
-typedef struct {
-  MLV_Event event;
-  int mouseX;
-  int mouseY;
-  MLV_Button_state btn_state;
-  MLV_Keyboard_button touch;
-  char *text_input;
-  MLV_Input_box *input_box;
-} Event_Manager;
 
 typedef struct {
   int posX;
@@ -68,17 +54,6 @@ typedef struct {
   MLV_Font *font;
   bool is_hidden;
 } Input;
-
-/*
-typedef struct {
-  int width;
-  int height;
-  int posX;
-  int posY;
-  bool is_hover;
-  bool is_select;
-} Section;
-*/
 
 typedef struct {
   int width;

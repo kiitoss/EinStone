@@ -74,3 +74,31 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   FS.animation_ability = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, row_animation_ability, first_frame_ability, last_frame_ability, time_ability);
   return FS;
 }
+
+
+
+
+
+/* GLOBAL */
+Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
+  Enemy_Spawner ES;
+  switch(index_enemy){
+  case 0:
+    ES.life = 100;
+    ES.attack = 20;
+    ES.speed = 1;
+    ES.price= 100;
+    ES.delay_frame_attack = 0;
+    ES.delay_attack = 60;
+    ES.range = window->rectsize*1;
+    break;
+  default:
+    printf("-->MAX atteint ! \n");
+    break;
+  }
+  sprintf(ES.price_str, "%d",ES.price);
+
+  ES.animation_attack = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize,13,0,6,10 );    
+  ES.animation_walking = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize,9,0,9,10 );
+  return ES;
+}

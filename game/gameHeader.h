@@ -80,7 +80,7 @@ typedef struct {
   int life;
   int attack;
   int price;
-  char *price_str;
+  char price_str[5];
   int delay_ability;
   int range;
 } Friend_Spawner;
@@ -92,7 +92,7 @@ typedef struct {
   int attack;
   int speed;
   int price;
-  char *price_str;
+  char price_str[5];
   int delay_frame_attack;
   int delay_attack;
   int range;
@@ -139,6 +139,8 @@ typedef struct {
 } Row;
 
 typedef struct {
+  menu_choice gamemode;
+  menu_choice difficulty;
   Window window;
   Friend_Spawner friend_spawners[NB_FRIENDS];
   Enemy_Spawner enemy_spawners[NB_ENEMIES];

@@ -10,8 +10,7 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM) {
     GM.friend_spawners[i] = init_FS(i, TM, window);
   }
   for (i=0; i<NB_ENEMIES; i++) {
-    /* GM.enemy_spawners[i] = init_ES(i, TM, window); */
+    GM.enemy_spawners[i] = init_ES(i, TM, window);
   }
-  printf("OK\n");
   return GM;
 }

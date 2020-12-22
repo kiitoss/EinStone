@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainC.o animationM.o friendSpawnerM.o gameManagerM.o textureManagerM.o windowM.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o animationM.o friendSpawnerM.o gameManagerM.o textureManagerM.o windowM.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: mainC.o animationM.o gameManagerM.o spawnersM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o animationM.o gameManagerM.o spawnersM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 mainC.o: ./game/controllers/mainC.c
 	$(CC) $(CFLAGS) ./game/controllers/mainC.c -c -I ./
@@ -12,17 +12,23 @@ mainC.o: ./game/controllers/mainC.c
 animationM.o: ./game/models/animationM.c
 	$(CC) $(CFLAGS) ./game/models/animationM.c -c -I ./
 
-friendSpawnerM.o: ./game/models/friendSpawnerM.c
-	$(CC) $(CFLAGS) ./game/models/friendSpawnerM.c -c -I ./
-
 gameManagerM.o: ./game/models/gameManagerM.c
 	$(CC) $(CFLAGS) ./game/models/gameManagerM.c -c -I ./
+
+spawnersM.o: ./game/models/spawnersM.c
+	$(CC) $(CFLAGS) ./game/models/spawnersM.c -c -I ./
 
 textureManagerM.o: ./game/models/textureManagerM.c
 	$(CC) $(CFLAGS) ./game/models/textureManagerM.c -c -I ./
 
 windowM.o: ./game/models/windowM.c
 	$(CC) $(CFLAGS) ./game/models/windowM.c -c -I ./
+
+gameV.o: ./game/views/gameV.c
+	$(CC) $(CFLAGS) ./game/views/gameV.c -c -I ./
+
+windowV.o: ./game/views/windowV.c
+	$(CC) $(CFLAGS) ./game/views/windowV.c -c -I ./
 
 mainPageC.o: ./menu/controllers/mainPageC.c
 	$(CC) $(CFLAGS) ./menu/controllers/mainPageC.c -c -I ./

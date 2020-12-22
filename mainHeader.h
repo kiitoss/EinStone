@@ -6,9 +6,15 @@
 enum bool {false, true};
 typedef enum bool bool;
 
+enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH};
+typedef enum menu_choices menu_choice;
+
 typedef struct {
-  MLV_Keyboard_button key_pressed;
+  MLV_Event event;
   int mouseX;
   int mouseY;
-  MLV_Button_state button_state;
+  MLV_Button_state btn_state;
+  MLV_Keyboard_button touch;
+  char *text_input;
+  MLV_Input_box *input_box;
 } Event_Manager;

@@ -5,7 +5,7 @@ MLV_Image *get_image_with_path(char *path) {
   MLV_Image *img = MLV_load_image(path);
   if (!img) {
     printf("--> L'image au chemin '%s' n'a pas pu être chargée.\n", path);
-    exit(0);
+    exit(1);
   }
   return img;
 }
@@ -51,13 +51,18 @@ MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spaw
   return spawner_img;
 }
 
+void set_img_size(MLV_Image *img, int width, int height) {
+  MLV_resize_image_with_proportions(img, width, height);
+}
 
 /* GLOBAL */
 Texture_Manager init_TM(Window window) {
   int i;
   Texture_Manager TM;
   TM.field_light_grass_img = get_image_with_path("resources/backgrounds/light_grass.png");
+  set_img_size(TM.field_light_grass_img, window.rectsize, window.rectsize);
   TM.field_dark_grass_img = get_image_with_path("resources/backgrounds/dark_grass.png");
+  set_img_size(TM.field_dark_grass_img, window.rectsize, window.rectsize);
   TM.enemy_spawner_background = get_image_with_path("resources/backgrounds/wood.png");
   TM.friend_spawner_background = get_image_with_path("resources/backgrounds/wood.png");
   TM.friend_home_background = get_image_with_path("resources/backgrounds/castle.jpg");
