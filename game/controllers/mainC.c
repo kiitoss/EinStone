@@ -97,17 +97,16 @@ int main(int argc, char *argv[]) {
   menu_choice gamemode = MULTI;
   
   MLV_get_desktop_size(&win_width, &win_height);
-  
-  window = init_window(win_width, win_height, gamemode);
 
+  window = init_window(win_width, win_height, gamemode);
+  
   MLV_create_window("EinStone", "EinStone", window.width, window.height);
 
   TM = init_TM(window);
   GM = init_GM(&window, &TM, gamemode);
 
-  /*
+
   MLV_enable_full_screen();
-  */
   
   update_game(&GM, &TM);
    

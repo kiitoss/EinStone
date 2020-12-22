@@ -22,6 +22,9 @@ MLV_Image *get_friend_spawner_sprite(int id_friend) {
   case 2:
     path = "resources/sprites/tank_sprite.png";
     break;
+  case 3:
+    path = "resources/sprites/bowgirl_sprite.png";
+    break;
   default:
     printf("--> Id friend inconnu.\n");
     exit(1);
@@ -36,6 +39,12 @@ MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
   case 0:
     path = "resources/sprites/skeleton_sprite.png";
     break;
+  case 1:
+    path = "resources/sprites/skeleton_armor_sprite.png";
+    break;
+  case 2:
+    path = "resources/sprites/orc_sprite.png";
+    break;
   default:
     printf("--> Id ennemi inconnu.\n");
     path = "resources/sprites/skeleton_sprite.png";
@@ -46,7 +55,7 @@ MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
 
 MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spawner_height) {
   MLV_Image *spawner_img;
-  spawner_img = MLV_copy_partial_image(sprite, 0, 3*64, 64, 64); 
+  spawner_img = MLV_copy_partial_image(sprite, 64, 3*64, 64, 64); 
   MLV_resize_image_with_proportions(spawner_img, rectsize, spawner_height);
   return spawner_img;
 }

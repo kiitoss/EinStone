@@ -14,11 +14,12 @@ Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   e.is_walking = true;
   e.delay_frame_attack = spawner->delay_frame_attack;
   e.delay_attack = spawner->delay_attack;
+  e.type_attack = spawner->type_attack;
 
 
   e.animation_attack = MLV_create_animation_player(spawner->animation_attack);
   e.animation_walking = MLV_create_animation_player(spawner->animation_walking);
-  e.animation = e.animation_walking;
+  e.animation = e.animation_attack;
   MLV_play_animation_player(e.animation);
   return e;
 }

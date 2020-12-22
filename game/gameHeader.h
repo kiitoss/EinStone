@@ -1,7 +1,7 @@
 #include "../mainHeader.h"
 
-#define NB_FRIENDS 3
-#define NB_ENEMIES 1
+#define NB_FRIENDS 4
+#define NB_ENEMIES 3
 #define NB_ROWS 5
 #define NB_COLUMNS 8
 /* MAX_ENEMIES est le nombre maximum d'ennemis par ligne */
@@ -15,6 +15,8 @@
 #define DELAY_REFRESH 20
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
+enum enemy_type_attacks {CAC, DISTANCE};
+typedef enum enemy_type_attacks enemy_type_attacks;
 typedef enum friend_abilities friend_abilities;
 
 typedef struct {
@@ -89,6 +91,7 @@ typedef struct {
 typedef struct {
   MLV_Animation *animation_attack;
   MLV_Animation *animation_walking;
+  enemy_type_attacks type_attack;
   int life;
   int attack;
   int speed;
@@ -119,6 +122,7 @@ typedef struct {
   MLV_Animation_player *animation_attack;
   MLV_Animation_player *animation_walking;
   MLV_Animation_player *animation;
+  enemy_type_attacks type_attack;
   int life;
   int attack;
   int speed;
