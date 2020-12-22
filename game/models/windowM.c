@@ -12,21 +12,34 @@ int get_rectsize(unsigned int win_width, unsigned int win_height, menu_choice ga
 /* GLOBAL */
 Window init_window(unsigned int win_width, unsigned int win_height, menu_choice gamemode) {
   Window window;
+
   window.rectsize = get_rectsize(win_width, win_height, gamemode);
   window.width = window.rectsize * (NB_COLUMNS + 4);
   window.height = (gamemode == SOLO) ? window.rectsize * (NB_ROWS + 1) : window.rectsize * (NB_ROWS + 2);
-  window.friend_spawner.posX = 2*window.rectsize;
+
+  window.friend_home.posX = 0;
+  window.friend_home.posY = 0;
+  window.friend_home.width = 2 * window.rectsize;
+  window.friend_home.height = (gamemode == SOLO) ? (NB_ROWS+1) * window.rectsize : (NB_ROWS+2) * window.rectsize;
+
+
+  window.friend_spawner.posX = window.friend_home.posX + window.friend_home.width;
   window.friend_spawner.posY = 0;
   window.friend_spawner.width = NB_COLUMNS * window.rectsize;
   window.friend_spawner.height = window.rectsize;
 
-  window.field.posX = 2*window.rectsize;
+  window.field.posX = window.friend_spawner.posX;
   window.field.posY = window.friend_spawner.height;
   window.field.width = NB_COLUMNS * window.rectsize;
-  window.field.height= NB_ROWS * window.rectsize;
+  window.field.height = NB_ROWS * window.rectsize;
+
+  window.enemy_home.posX = window.field.posX + window.field.width;
+  window.enemy_home.posY = 0;
+  window.enemy_home.width = 2 * window.rectsize;
+  window.enemy_home.height = (gamemode == SOLO) ? (NB_ROWS+1) * window.rectsize : (NB_ROWS+2) * window.rectsize;
   
   if (gamemode == MULTI) {
-    window.enemy_spawner.posX = 2*window.rectsize;
+    window.enemy_spawner.posX = window.friend_spawner.posX;
     window.enemy_spawner.posY = window.field.posY + window.field.height;
     window.enemy_spawner.width = NB_COLUMNS * window.rectsize;
     window.enemy_spawner.height = window.rectsize;
