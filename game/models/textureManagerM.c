@@ -52,21 +52,33 @@ MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spaw
 }
 
 void set_img_size(MLV_Image *img, int width, int height) {
-  MLV_resize_image_with_proportions(img, width, height);
+  MLV_resize_image(img, width, height);
 }
+void set_img_proportional_size(MLV_Image *img, int width, int height){
 
+}
 /* GLOBAL */
 Texture_Manager init_TM(Window window) {
   int i;
   Texture_Manager TM;
   TM.field_light_grass_img = get_image_with_path("resources/backgrounds/light_grass.png");
   set_img_size(TM.field_light_grass_img, window.rectsize, window.rectsize);
+
   TM.field_dark_grass_img = get_image_with_path("resources/backgrounds/dark_grass.png");
   set_img_size(TM.field_dark_grass_img, window.rectsize, window.rectsize);
+
   TM.enemy_spawner_background = get_image_with_path("resources/backgrounds/wood.png");
+  set_img_size(TM.enemy_spawner_background,window.enemy_spawner.width, window.rectsize);
+
   TM.friend_spawner_background = get_image_with_path("resources/backgrounds/wood.png");
+  set_img_size(TM.friend_spawner_background, window.friend_spawner.width, window.rectsize);
+
   TM.friend_home_background = get_image_with_path("resources/backgrounds/castle.jpg");
+  set_img_proportional_size(TM.friend_home_background, 2*window.friend_home.height, window.friend_home.width);
+  
   TM.enemy_home_background = get_image_with_path("resources/backgrounds/castle.jpg");
+  set_img_proportional_size(TM.enemy_home_background, 2*window.friend_home.height, window.friend_home.height);
+
   TM.gold_img = get_image_with_path("resources/pops/gold.png");
   TM.shot_img = get_image_with_path("resources/pops/arrow.png");
   for (i=0; i<NB_FRIENDS; i++) {
