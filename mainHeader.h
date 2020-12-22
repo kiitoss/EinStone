@@ -18,3 +18,11 @@ typedef struct {
   char *text_input;
   MLV_Input_box *input_box;
 } Event_Manager;
+
+
+/*
+CASTLE.posX = (HOME.width - CASTLE.width) / 2
+CASTLE.posY = (HOME.height - CASTLE.height) / 2
+ */
+
+/* MLV_resize_with_porp(X=WIN_HEIGHT, Y=WIN_HEIGHT); */

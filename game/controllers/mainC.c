@@ -1,10 +1,62 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
-void update_window(Game_Manager *GM, Texture_Manager *TM) {
+void pause() {
+  Event_Manager em;
+  em.event = MLV_NONE;
+  printf("PAUSE\n");
+  while (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE || em.btn_state != MLV_PRESSED) {
+    em = get_game_event();
+  }
+  printf("not pause\n");
+}
+
+void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
+  switch (touch) {
+  case MLV_KEYBOARD_UP:
+    GM->p2.chosen_row = (GM->p2.chosen_row - 1 + NB_ROWS) % NB_ROWS;
+    break;
+  case MLV_KEYBOARD_DOWN:
+    GM->p2.chosen_row = (GM->p2.chosen_row + 1) % NB_ROWS;
+    break;
+  case MLV_KEYBOARD_LEFT:
+    GM->p2.chosen_enemy = (GM->p2.chosen_enemy - 1 + NB_ENEMIES) % NB_ENEMIES;
+    break;
+  case MLV_KEYBOARD_RIGHT:
+    GM->p2.chosen_enemy = (GM->p2.chosen_enemy + 1) % NB_ENEMIES;
+    break;
+  case MLV_KEYBOARD_ESCAPE:
+    pause();
+    break;
+  case MLV_KEYBOARD_KP_ENTER:
+  case MLV_KEYBOARD_RETURN:
+    printf("SELECT\n");
+    break;
+  default:
+    break;
+  }
+}
+
+void update_game(Game_Manager *GM, Texture_Manager *TM) {
+  Event_Manager em;
+  em.event = MLV_NONE;
+  em.btn_state = MLV_RELEASED;
+  while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED)) {
+    em = get_game_event();
+  }
+  if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
+    /* update_row(GM, TM);*/
+    GM->last_refresh = MLV_get_time();
+  }
+  else if (em.event == MLV_KEY) {
+    keyboard_action(GM, em.touch);
+    printf("CLAVIER\n");
+  }
+  else if (em.event == MLV_MOUSE_BUTTON) {
+    printf("SOURIS\n");
+  }
   draw_game(GM, TM);
-  /*
-    update_window(GM, TM); */
+  update_game(GM, TM);
 }
 
 int main(int argc, char *argv[]) {
@@ -23,10 +75,11 @@ int main(int argc, char *argv[]) {
   TM = init_TM(window);
   GM = init_GM(&window, &TM);
 
+  /*
   MLV_enable_full_screen();
-
+  */
   
-  update_window(&GM, &TM);
+  update_game(&GM, &TM);
    
   MLV_wait_seconds(2);
   MLV_free_window();

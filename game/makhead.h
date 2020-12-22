@@ -23,6 +23,7 @@ Window init_window(unsigned int win_width, unsigned int win_height, menu_choice 
 
 /* views/gameV.c */
 void draw_game(Game_Manager *GM, Texture_Manager *TM);
+Event_Manager get_game_event();
 
 /* views/windowV.c */
 void draw_window(Game_Manager *GM, Texture_Manager *TM);

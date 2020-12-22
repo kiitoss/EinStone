@@ -12,6 +12,7 @@
 #define MAX_GOLDS 100
 /* MAX_FRAMES est le maximum de frames par animation */
 #define MAX_FRAMES 15
+#define DELAY_REFRESH 100
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 typedef enum friend_abilities friend_abilities;
@@ -147,6 +148,7 @@ typedef struct {
   Row rows[NB_ROWS];
   Player_1 p1;
   Player_2 p2;
+  int last_refresh;
 } Game_Manager;
 
 typedef struct {

@@ -12,5 +12,6 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM) {
   for (i=0; i<NB_ENEMIES; i++) {
     GM.enemy_spawners[i] = init_ES(i, TM, window);
   }
+  GM.last_refresh = MLV_get_time();
   return GM;
 }
