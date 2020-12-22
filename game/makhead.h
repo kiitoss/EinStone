@@ -5,11 +5,21 @@ MAKMAK from path: ./
 
 ------------------------------------------------------------
 */
+/* controllers/playerC.c */
+void update_player_money_str(int money, char money_str[10]);
+void buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
+void buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
+
 /* controllers/rowC.c */
+void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY);
+void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
 void update_rows(Game_Manager *GM, Texture_Manager *TM);
 
 /* models/animationM.c */
 MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation, int first_frame, int last_frame, int time);
+
+/* models/enemyM.c */
+Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY);
 
 /* models/friendM.c */
 Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY);

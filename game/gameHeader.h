@@ -55,7 +55,7 @@ typedef struct {
   char *name;
   int chosen_friend;
   int money;
-  char *money_str;
+  char money_str[10];
   int last_free_gold;
   int delay_free_gold;
   int score;
@@ -66,7 +66,7 @@ typedef struct {
   int chosen_enemy;
   int chosen_row;
   int money;
-  char *money_str;
+  char money_str[10];
   int last_free_gold;
   int delay_free_gold;
   int score;
@@ -116,8 +116,9 @@ typedef struct {
 } Friend;
 
 typedef struct {
-  MLV_Animation *animation_attack;
-  MLV_Animation *animation_walking;
+  MLV_Animation_player *animation_attack;
+  MLV_Animation_player *animation_walking;
+  MLV_Animation_player *animation;
   int life;
   int attack;
   int speed;
