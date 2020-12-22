@@ -1,0 +1,16 @@
+#include "../gameHeader.h"
+#include "../makhead.h"
+
+/* GLOBAL */
+Game_Manager init_GM(Window *window) {
+  Game_Manager GM;
+  GM.window = *window;
+
+  for (i=0;i<NB_FRIENDS;i++){
+    GM.friend_spawners[i] = init_FS(i,TM)
+  }
+  for (i=0;i<NB_ENNEMIES;i++){
+    GM.enemy_spawners[i] = init_FS(i,TM)
+      }
+  return GM;
+}
