@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
   Texture_Manager TM;
   Game_Manager GM;
   Window window;
-  menu_choice gamemode = MULTI;
+  menu_choice gamemode = SOLO;
   
   MLV_get_desktop_size(&win_width, &win_height);
 
