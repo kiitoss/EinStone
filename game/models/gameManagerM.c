@@ -2,9 +2,12 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-Game_Manager init_GM(Window *window, Texture_Manager *TM) {
+Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode) {
   Game_Manager GM;
   int i;
+  
+  GM.gamemode = gamemode;
+  
   GM.window = *window;
   for (i=0; i<NB_FRIENDS; i++) {
     GM.friend_spawners[i] = init_FS(i, TM, window);
