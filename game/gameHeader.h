@@ -12,7 +12,7 @@
 #define MAX_GOLDS 100
 /* MAX_FRAMES est le maximum de frames par animation */
 #define MAX_FRAMES 15
-#define DELAY_REFRESH 100
+#define DELAY_REFRESH 20
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 typedef enum friend_abilities friend_abilities;
@@ -103,6 +103,7 @@ typedef struct {
   int id_friend;
   MLV_Animation_player *animation_passive;
   MLV_Animation_player *animation_ability;
+  MLV_Animation_player *animation;
   friend_abilities ability;
   int delay_frame_ability;
   int life;

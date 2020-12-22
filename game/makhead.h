@@ -5,6 +5,9 @@ MAKMAK from path: ./
 
 ------------------------------------------------------------
 */
+/* controllers/rowC.c */
+void update_rows(Game_Manager *GM, Texture_Manager *TM);
+
 /* models/animationM.c */
 MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation, int first_frame, int last_frame, int time);
 

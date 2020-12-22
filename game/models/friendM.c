@@ -17,7 +17,8 @@ Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY) {
 
   f.animation_passive = MLV_create_animation_player(spawner->animation_passive);
   f.animation_ability = MLV_create_animation_player(spawner->animation_ability);
-  
+  f.animation = f.animation_passive;
+  MLV_play_animation_player(f.animation);
   f.is_passive = true;
   return f;
 }

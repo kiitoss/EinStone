@@ -68,7 +68,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM) {
     em = get_game_event();
   }
   if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
-    /* update_row(GM, TM);*/
+    update_rows(GM, TM);
     GM->last_refresh = MLV_get_time();
   }
   else if (em.event == MLV_KEY) {

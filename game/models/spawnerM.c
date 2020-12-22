@@ -70,7 +70,8 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     time_ability = 20;
     break;
   }
-  FS.animation_passive = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, 3, 0, 2, 20);
+  FS.animation_passive = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, 3, 0, 2, 15);
+  
   FS.animation_ability = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, row_animation_ability, first_frame_ability, last_frame_ability, time_ability);
   return FS;
 }
