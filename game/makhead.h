@@ -12,7 +12,7 @@ MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation,
 Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY);
 
 /* models/gameManagerM.c */
-Game_Manager init_GM(Window *window, Texture_Manager *TM);
+Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode);
 
 /* models/playerM.c */
 Player_1 init_p1();
