@@ -26,6 +26,7 @@ void pause(Window *window, Game_Manager *GM) {
     g[i].posY = (i+1)*(window->height/3 - g[i].height);
   }
 
+  MLV_draw_filled_rectangle(0, 0, window->width, window->height, MLV_rgba(255, 255, 200, 200));
   draw_pause(hover, line_size, font, g, play, save_quit, quit);
   
   while ((em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || hover == 0)) {
