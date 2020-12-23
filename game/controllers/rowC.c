@@ -1,6 +1,16 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
+
+/* GLOBAL */
+void remove_gold_from_row(Row *this, int index_gold) {
+  int i;
+  for (i=index_gold; i<this->nb_golds - 1; i++) {
+    this->golds[i] = this->golds[i+1];
+  }
+  this->nb_golds--;
+}
+
 /* GLOBAL */
 void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY) {
   this->friends[gridX] = get_new_friend(spawner,
@@ -15,6 +25,13 @@ void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY) {
 						    posY);
 }
 
+/* GLOBAL */
+void update_gold(Gold *this) {
+  if (this->radius < this->max_radius) {
+    this->radius += 10;
+  }
+  this->time_left--;
+}
 
 /* GLOBAL */
 void update_rows(Game_Manager *GM, Texture_Manager *TM) {
@@ -31,6 +48,9 @@ void update_rows(Game_Manager *GM, Texture_Manager *TM) {
     for (j=0; j<r->nb_enemies; j++) {
       update_enemy_animation(&r->enemies[j], r);
       move_enemy(&r->enemies[j]);
+    }
+    for (j=0; j<r->nb_golds; j++) {
+      update_gold(&r->golds[j]);
     }
   }
 }

@@ -60,6 +60,7 @@ MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spaw
   return spawner_img;
 }
 
+/* GLOBAL */
 void set_img_size(MLV_Image *img, int width, int height) {
   MLV_resize_image(img, width, height);
 }
@@ -89,6 +90,7 @@ Texture_Manager init_TM(Window window) {
   set_img_size(TM.enemy_home_background, window.enemy_home.width, window.enemy_home.height);
   
   TM.gold_img = get_image_with_path("resources/pops/gold.png");
+  set_img_size(TM.gold_img, window.rectsize/4, window.rectsize/4);
   TM.shot_img = get_image_with_path("resources/pops/arrow.png");
  
   for (i=0; i<NB_FRIENDS; i++) {

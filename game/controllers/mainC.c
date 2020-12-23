@@ -56,15 +56,16 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
   }
   else if (mouseY < GM->window.field.posX + GM->window.field.height) {
     gridY = (mouseY - GM->window.field.posY) / GM->window.rectsize;
-    if (GM->p1.chosen_friend == -1 || GM->rows[gridY].friends[gridX].id_friend != -1) {
-      return;
+    if (GM->p1.chosen_friend != -1 && GM->rows[gridY].friends[gridX].id_friend == -1) {
+      p1_buy_friend(&GM->p1,
+		    &GM->rows[gridY],
+		    &GM->friend_spawners[GM->p1.chosen_friend],
+		    gridX,
+		    gridY);
     }
-    
-    p1_buy_friend(&GM->p1,
-	       &GM->rows[gridY],
-	       &GM->friend_spawners[GM->p1.chosen_friend],
-	       gridX,
-	       gridY);
+    else {
+      check_click_gold(GM, mouseX, mouseY);
+    }
   }
 }
 
@@ -74,6 +75,9 @@ void update_game(Game_Manager *GM, Texture_Manager *TM) {
   em.btn_state = MLV_RELEASED;
   while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED)) {
     em = get_game_event();
+  }
+  if (MLV_get_time() >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
+    create_new_gold(GM, TM);
   }
   if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
     update_rows(GM, TM);
@@ -95,6 +99,8 @@ int main(int argc, char *argv[]) {
   Game_Manager GM;
   Window window;
   menu_choice gamemode = SOLO;
+
+  /* srand(time(NULL)); */
   
   MLV_get_desktop_size(&win_width, &win_height);
 

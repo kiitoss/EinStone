@@ -1,3 +1,4 @@
+#include <time.h>
 #include "../mainHeader.h"
 
 #define NB_FRIENDS 4
@@ -9,10 +10,12 @@
 /* MAX_SHOTS est le nombre maximum de flèches par ligne */
 #define MAX_SHOTS 100
 /* MAX_GOLDS est le nombre maximum de pièces d'or par ligne */
-#define MAX_GOLDS 100
+#define MAX_GOLDS 50
 /* MAX_FRAMES est le maximum de frames par animation */
 #define MAX_FRAMES 15
 #define DELAY_REFRESH 50
+#define DELAY_FREE_GOLD_P1 10000
+#define DELAY_FREE_GOLD_P2 1000
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
@@ -43,6 +46,8 @@ typedef struct {
   int time_left;
   int radius;
   int max_radius;
+  MLV_Image *original_img;
+  int value;
 } Gold;
 
 typedef struct {
@@ -59,7 +64,6 @@ typedef struct {
   int money;
   char money_str[10];
   int last_free_gold;
-  int delay_free_gold;
   int score;
 } Player_1;
 
@@ -70,7 +74,6 @@ typedef struct {
   int money;
   char money_str[10];
   int last_free_gold;
-  int delay_free_gold;
   int score;
 } Player_2;
 
