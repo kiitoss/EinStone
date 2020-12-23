@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 
 
   MLV_enable_full_screen();
-  
+ 
   update_game(&GM, &TM);
    
   MLV_wait_seconds(2);

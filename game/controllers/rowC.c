@@ -3,6 +3,11 @@
 
 
 /* GLOBAL */
+void remove_friend_from_row(Friend *f) {
+  f->id_friend = -1;
+}
+
+/* GLOBAL */
 void remove_gold_from_row(Row *this, int index_gold) {
   int i;
   for (i=index_gold; i<this->nb_golds - 1; i++) {

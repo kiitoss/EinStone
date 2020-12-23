@@ -70,7 +70,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     first_frame_ability = 0;
     last_frame_ability = 7;
     time_ability = 2;
-    FS.DELAY_ABILITY = 2000;
+    FS.DELAY_ABILITY = 700;
     break;
   default:
     row_animation_ability = 3;
@@ -98,10 +98,10 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
   case 0:
     ES.life = 100;
     ES.attack = 20;
-    ES.speed = 30;
+    ES.speed = 2;
     ES.price= 100;
     ES.delay_frame_attack = 0;
-    ES.delay_attack = 60;
+    ES.DELAY_ATTACK = 600;
     ES.range = window->rectsize/4;
     ES.padding = window->rectsize/2;
     ES.type_attack = CAC;
@@ -112,8 +112,8 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.speed = 2;
     ES.price = 150;
     ES.delay_frame_attack = 0;
-    ES.delay_attack = 60;
-    ES.range = window->rectsize/100;
+    ES.DELAY_ATTACK = 600;
+    ES.range = window->rectsize/4;
     ES.type_attack = DISTANCE;
     ES.padding = window->rectsize/2;
     break;
@@ -123,7 +123,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.speed = 1;
     ES.price = 200;
     ES.delay_frame_attack = 0;
-    ES.delay_attack = 60;
+    ES.DELAY_ATTACK = 600;
     ES.range = window->rectsize/4;
     ES.type_attack = CAC;
     ES.padding = window->rectsize/2;

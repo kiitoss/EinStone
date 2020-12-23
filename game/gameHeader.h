@@ -101,7 +101,7 @@ typedef struct {
   int price;
   char price_str[5];
   int delay_frame_attack;
-  int delay_attack;
+  int DELAY_ATTACK;
   int range;
   int padding;
 } Enemy_Spawner;
@@ -132,6 +132,7 @@ typedef struct {
   int attack;
   int speed;
   int delay_frame_attack;
+  int DELAY_ATTACK;
   int delay_attack;
   int range;
   int posX;

@@ -1,6 +1,22 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
+void attack_all_enemies_in_range(Friend *this, Row *row) {
+  int i = 0;
+  Enemy *e;
+  while (i<row->nb_enemies) {
+    e = &row->enemies[i];
+    if (e->posX + e->padding < this->posX + this->range + row->rectsize && e->posX + e->padding + row->rectsize > this->posX) {
+      e->life -= this->attack;
+      if (e->life <= 0) {
+	remove_enemy_from_row(row, i);
+	i--;
+      }
+    }
+    i++;
+  }
+}
+
 void switch_friend_behavior(Friend *this) {
   if (this->is_passive) {
     set_friend_animation(this, this->animation_ability);
@@ -15,6 +31,8 @@ void switch_friend_behavior(Friend *this) {
 void use_friend_ability(Friend *this, Row *row) {
   switch (this->ability) {
   case DEFENSE:
+    attack_all_enemies_in_range(this, row);
+    this->delay_ability = this->DELAY_ABILITY;
     break;
   case ATTACK:
     create_new_shot(row, this->posX/row->rectsize, this->posY/row->rectsize, this->attack);

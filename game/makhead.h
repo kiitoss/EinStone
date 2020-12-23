@@ -22,6 +22,7 @@ void check_click_gold(Game_Manager *GM, int mouseX, int mouseY);
 void create_new_shot(Row *row, int gridX, int gridY, int attack);
 
 /* controllers/rowC.c */
+void remove_friend_from_row(Friend *f);
 void remove_gold_from_row(Row *this, int index_gold);
 void remove_shot_from_row(Row *this, int index_shot);
 void remove_enemy_from_row(Row *this, int index_enemy);
