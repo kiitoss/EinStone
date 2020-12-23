@@ -25,3 +25,7 @@ typedef struct {
   int width;
   int height;
 } Geometry;
+
+typedef struct {
+  bool sound_works;
+} Sound_Manager;

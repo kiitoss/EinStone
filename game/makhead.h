@@ -62,6 +62,9 @@ Row init_row(int posX, int posY, int rectsize);
 /* models/shotM.c */
 Shot get_new_shot(int posX, int posY, int rectsize, int attack);
 
+/* models/soundManager.c */
+Sound_Manager init_game_SM();
+
 /* models/spawnerM.c */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window);
 Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window);
