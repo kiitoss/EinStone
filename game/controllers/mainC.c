@@ -71,13 +71,15 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
 
 void update_game(Game_Manager *GM, Texture_Manager *TM) {
   Event_Manager em;
+  int random_row;
   em.event = MLV_NONE;
   em.btn_state = MLV_RELEASED;
   while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED)) {
     em = get_game_event();
   }
   if (MLV_get_time() >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
-    create_p1_free_gold(&GM->p1, &GM->rows[rand() % NB_ROWS], rand() % NB_COLUMNS);
+    random_row = rand() % NB_ROWS;
+    create_p1_free_gold(&GM->p1, &GM->rows[random_row], rand() % NB_COLUMNS, random_row);
   }
   if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
     update_rows(GM, TM);

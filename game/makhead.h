@@ -12,17 +12,19 @@ void update_enemy_animation(Enemy *this, Row *row);
 void update_friend_animation(Friend *this, Row *row);
 
 /* controllers/playerC.c */
-void create_p1_free_gold(Player_1 *p1, Row *row, int gridX);
+void create_p1_free_gold(Player_1 *p1, Row *row, int gridX, int gridY);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
 
 /* controllers/popC.c */
-void create_new_gold(Row *row, int gridX);
+void create_new_gold(Row *row, int gridX, int gridY);
 void check_click_gold(Game_Manager *GM, int mouseX, int mouseY);
-void create_new_shot(Row *row, int gridX, int attack);
+void create_new_shot(Row *row, int gridX, int gridY, int attack);
 
 /* controllers/rowC.c */
 void remove_gold_from_row(Row *this, int index_gold);
+void remove_shot_from_row(Row *this, int index_shot);
+void remove_enemy_from_row(Row *this, int index_enemy);
 void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY);
 void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
 void update_rows(Game_Manager *GM, Texture_Manager *TM);
@@ -48,6 +50,7 @@ Gold get_new_gold(int centerX, int centerY, int rectsize);
 
 /* models/playerM.c */
 void set_player_money_str(int money, char money_str[10]);
+void set_player_life_str(int life, char life_str[10]);
 void p1_add_gold(Player_1 *this, int gold);
 Player_1 init_p1();
 Player_2 init_p2();

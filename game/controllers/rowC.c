@@ -12,6 +12,24 @@ void remove_gold_from_row(Row *this, int index_gold) {
 }
 
 /* GLOBAL */
+void remove_shot_from_row(Row *this, int index_shot) {
+  int i;
+  for (i=index_shot; i<this->nb_shots - 1; i++) {
+    this->shots[i] = this->shots[i+1];
+  }
+  this->nb_shots--;
+}
+
+/* GLOBAL */
+void remove_enemy_from_row(Row *this, int index_enemy) {
+  int i;
+  for (i=index_enemy; i<this->nb_enemies - 1; i++) {
+    this->enemies[i] = this->enemies[i+1];
+  }
+  this->nb_enemies--;
+}
+
+/* GLOBAL */
 void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY) {
   this->friends[gridX] = get_new_friend(spawner,
 					gridX * this->rectsize,
@@ -29,11 +47,42 @@ void update_gold(Gold *this) {
   if (this->radius < this->max_radius) {
     this->radius += 10;
   }
-  this->time_left--;
+  this->time_left -= DELAY_REFRESH;
 }
 
 void update_shot(Shot *this) {
   this->posX += this->speed;
+}
+
+void update_collision(Row *r) {
+  int i = 0;
+  int j;
+  Shot *s;
+  Enemy *e;
+  while (i<r->nb_shots) {
+    s = &r->shots[i];
+    for (j=0; j<r->nb_enemies; j++) {
+      e = &r->enemies[j];
+      if (s->posX + r->rectsize/2 >= e->posX + e->padding && s->posX <= e->posX + e->padding + r->rectsize) {
+	e->life -= s->attack;
+	remove_shot_from_row(r, i);
+	if (e->life <= 0) {
+	  remove_enemy_from_row(r, j);
+	}
+	break;
+      }
+    }
+    i++;
+  }
+}
+
+void remove_all_enemies_in_row(Row *r, Player_1 *p1) {
+  r->nb_enemies = 0;
+  p1->life--;
+  set_player_life_str(p1->life, p1->life_str);
+  if (p1->life == 0) {
+    printf("You loose\n");
+  }
 }
 
 /* GLOBAL */
@@ -48,15 +97,33 @@ void update_rows(Game_Manager *GM, Texture_Manager *TM) {
       }
       update_friend_animation(&r->friends[j], r);
     }
-    for (j=0; j<r->nb_enemies; j++) {
+    j = 0;
+    while (j<r->nb_enemies) {
       update_enemy_animation(&r->enemies[j], r);
       move_enemy(&r->enemies[j]);
+      if (r->enemies[j].posX <= -GM->window.rectsize) {
+	remove_all_enemies_in_row(r, &GM->p1);
+      }
+      j++;
     }
-    for (j=0; j<r->nb_golds; j++) {
-      update_gold(&r->golds[j]);
-    }
-    for (j=0; j<r->nb_shots; j++) {
+    j = 0;
+    while (j<r->nb_shots) {
       update_shot(&r->shots[j]);
+      if (r->shots[j].posX >= GM->window.field.width) {
+	remove_shot_from_row(r, j);
+	j--;
+      }
+      j++;
+    }
+    update_collision(r);
+    j = 0;
+    while (j<r->nb_golds) {
+      update_gold(&r->golds[j]);
+      if (r->golds[j].time_left <= 0) {
+	remove_gold_from_row(r, j);
+	j--;
+      }
+      j++;
     }
   }
 }

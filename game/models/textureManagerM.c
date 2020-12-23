@@ -90,7 +90,7 @@ Texture_Manager init_TM(Window window) {
   set_img_size(TM.enemy_home_background, window.enemy_home.width, window.enemy_home.height);
   
   TM.gold_img = get_image_with_path("resources/pops/gold.png");
-  set_img_size(TM.gold_img, window.rectsize/4, window.rectsize/4);
+  set_img_size(TM.gold_img, window.rectsize/2, window.rectsize/2);
   TM.shot_img = get_image_with_path("resources/pops/arrow.png");
   set_img_proportional_size(TM.shot_img, window.rectsize/2, window.rectsize/2);
  

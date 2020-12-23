@@ -12,7 +12,5 @@ Row init_row(int posX, int posY, int rectsize) {
   r.nb_shots = 0;
   r.nb_golds = 0;
   r.rectsize = rectsize;
-  r.posX = posX;
-  r.posY = posY;
   return r;
 }

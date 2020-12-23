@@ -17,13 +17,13 @@ void use_friend_ability(Friend *this, Row *row) {
   case DEFENSE:
     break;
   case ATTACK:
-    create_new_shot(row, this->posX/row->rectsize, this->attack);
+    create_new_shot(row, this->posX/row->rectsize, this->posY/row->rectsize, this->attack);
     this->delay_ability = this->DELAY_ABILITY;
     break;
   case MONEY:
     switch_friend_behavior(this);
     if (!this->is_passive) {
-      create_new_gold(row, this->posX/row->rectsize);
+      create_new_gold(row, this->posY/row->rectsize, this->posX/row->rectsize);
       this->delay_ability = 2000;
     }
     else {
