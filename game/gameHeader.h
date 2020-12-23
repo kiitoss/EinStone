@@ -153,6 +153,7 @@ typedef struct {
 } Row;
 
 typedef struct {
+  bool in_game;
   menu_choice gamemode;
   menu_choice difficulty;
   Window window;

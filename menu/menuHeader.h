@@ -5,14 +5,6 @@
 #define MAX_LABELS 10
 #define MAX_SECTIONS 10
 
-
-typedef struct {
-  int posX;
-  int posY;
-  int width;
-  int height;
-} Geometry;
-
 typedef struct {
   int width;
   int height;

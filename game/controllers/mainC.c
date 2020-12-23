@@ -1,17 +1,63 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
-void pause() {
+void pause(Window *window, Game_Manager *GM) {
+  MLV_Font *font = MLV_load_font("resources/font/Amatic-Bold.ttf", window->rectsize/2);
   Event_Manager em;
   em.event = MLV_NONE;
-  printf("PAUSE\n");
-  while (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE || em.btn_state != MLV_PRESSED) {
-    em = get_game_event();
+  
+  char *play = "Play";
+  char *save_quit = "Save and Quit";
+  char *quit = "Quit";
+  
+  int line_size = window->rectsize / 5;
+  int hover = 0;
+  int last_hover = 0;
+  int i;
+  
+  Geometry g[3];
+  
+  MLV_get_size_of_adapted_text_box_with_font(play, font, line_size, &g[0].width, &g[0].height);
+  MLV_get_size_of_adapted_text_box_with_font(save_quit, font, line_size, &g[1].width, &g[1].height);
+  MLV_get_size_of_adapted_text_box_with_font(quit, font, line_size, &g[2].width, &g[2].height);
+
+  for (i=0; i<3; i++) {
+    g[i].posX = (window->width - g[i].width) / 2;
+    g[i].posY = (i+1)*(window->height/3 - g[i].height);
   }
-  printf("not pause\n");
+
+  draw_pause(hover, line_size, font, g, play, save_quit, quit);
+  
+  while ((em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || hover == 0)) {
+    em = get_game_event();
+
+    if (em.event == MLV_MOUSE_MOTION) {
+      last_hover = hover;
+      hover = 0;
+      for (i=0; i<3; i++) {
+	if (em.mouseX >= g[i].posX && em.mouseX <= g[i].posX + g[i].width && em.mouseY >= g[i].posY && em.mouseY <= g[i].posY + g[i].height) {
+	  hover = i+1;
+	}
+      }
+      if (hover != last_hover) {
+	draw_pause(hover, line_size, font, g, play, save_quit, quit);
+      }
+    }
+  }
+
+  if (em.event == MLV_MOUSE_BUTTON) {
+    if (hover == 1) {
+      printf("continue\n");
+    }
+    else {
+      MLV_free_font(font);
+      GM->in_game = false;
+    }
+  }
 }
 
 void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
+  int pause_time;
   switch (touch) {
   case MLV_KEYBOARD_UP:
     GM->p2.chosen_row = (GM->p2.chosen_row - 1 + NB_ROWS) % NB_ROWS;
@@ -26,7 +72,11 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
     GM->p2.chosen_enemy = (GM->p2.chosen_enemy + 1) % NB_ENEMIES;
     break;
   case MLV_KEYBOARD_ESCAPE:
-    pause();
+    pause_time = MLV_get_time();
+    pause(&GM->window, GM);
+    GM->p1.last_free_gold += MLV_get_time() - pause_time;
+    GM->p2.last_free_gold += MLV_get_time() - pause_time;
+    GM->last_refresh += MLV_get_time() - pause_time;
     break;
   case MLV_KEYBOARD_KP_ENTER:
   case MLV_KEYBOARD_RETURN:
@@ -91,8 +141,10 @@ void update_game(Game_Manager *GM, Texture_Manager *TM) {
   else if (em.event == MLV_MOUSE_BUTTON) {
     mouse_action(GM, em.mouseX, em.mouseY);
   }
-  draw_game(GM, TM);
-  update_game(GM, TM);
+  if (GM->in_game) {
+    draw_game(GM, TM);
+    update_game(GM, TM);
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -111,12 +163,12 @@ int main(int argc, char *argv[]) {
   TM = init_TM(window);
   GM = init_GM(&window, &TM, gamemode);
 
-
+  /*
   MLV_enable_full_screen();
- 
+  */
   update_game(&GM, &TM);
-   
-  MLV_wait_seconds(2);
+  
   MLV_free_window();
+  
   exit(0);
 }

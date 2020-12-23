@@ -74,6 +74,7 @@ Texture_Manager init_TM(Window window);
 Window init_window(unsigned int win_width, unsigned int win_height, menu_choice gamemode);
 
 /* views/gameV.c */
+void draw_pause(int hover, int line_size, MLV_Font *font, Geometry g[3], char *play, char *save_quit, char *quit);
 void draw_game(Game_Manager *GM, Texture_Manager *TM);
 Event_Manager get_game_event();
 
