@@ -3,8 +3,14 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: mainC.o playerC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` mainC.o playerC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: enemyC.o friendC.o mainC.o playerC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` enemyC.o friendC.o mainC.o playerC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+
+enemyC.o: ./game/controllers/enemyC.c
+	$(CC) $(CFLAGS) ./game/controllers/enemyC.c -c -I ./
+
+friendC.o: ./game/controllers/friendC.c
+	$(CC) $(CFLAGS) ./game/controllers/friendC.c -c -I ./
 
 mainC.o: ./game/controllers/mainC.c
 	$(CC) $(CFLAGS) ./game/controllers/mainC.c -c -I ./

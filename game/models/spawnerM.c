@@ -65,22 +65,22 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     row_animation_ability = 19;
     first_frame_ability = 0;
     last_frame_ability = 13;
-    time_ability = 8;
+    time_ability = 2;
     break;
   case DEFENSE:
-    row_animation_ability = 0;
-    first_frame_ability = 8;
-    last_frame_ability = 10;
-    time_ability = 10;
+    row_animation_ability = 7;
+    first_frame_ability = 0;
+    last_frame_ability = 7;
+    time_ability = 2;
     break;
   default:
     row_animation_ability = 3;
     first_frame_ability = 0;
     last_frame_ability = 2;
-    time_ability = 20;
+    time_ability = 2;
     break;
   }
-  FS.animation_passive = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, 3, 1, 3, 15);
+  FS.animation_passive = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, 3, 1, 3, 5);
   
   FS.animation_ability = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, row_animation_ability, first_frame_ability, last_frame_ability, time_ability);
   return FS;
@@ -102,7 +102,8 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.price= 100;
     ES.delay_frame_attack = 0;
     ES.delay_attack = 60;
-    ES.range = window->rectsize*1;
+    ES.range = window->rectsize/4;
+    ES.padding = window->rectsize/2;
     ES.type_attack = CAC;
     break;
   case 1:
@@ -112,8 +113,9 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.price = 150;
     ES.delay_frame_attack = 0;
     ES.delay_attack = 60;
-    ES.range = window->rectsize*1;
+    ES.range = window->rectsize/100;
     ES.type_attack = DISTANCE;
+    ES.padding = window->rectsize/2;
     break;
   case 2:
     ES.life = 150;
@@ -122,8 +124,9 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.price = 200;
     ES.delay_frame_attack = 0;
     ES.delay_attack = 60;
-    ES.range = window->rectsize*1;
+    ES.range = window->rectsize/4;
     ES.type_attack = CAC;
+    ES.padding = window->rectsize/2;
     break;
   default:
     printf("-->MAX atteint ! \n");
@@ -136,23 +139,23 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     row_animation_attack = 13;
     first_frame_attack = 0;
     last_frame_attack = 6;
-    time_attack = 10;
+    time_attack = 2;
     break;
   case DISTANCE:
     row_animation_attack = 5;
     first_frame_attack = 0;
     last_frame_attack = 7;
-    time_attack = 10;
+    time_attack = 2;
     break;
   default:
     row_animation_attack = 13;
     first_frame_attack = 0;
     last_frame_attack = 6;
-    time_attack = 10;
+    time_attack = 2;
     break;
   }
   
   ES.animation_attack = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize,row_animation_attack, first_frame_attack, last_frame_attack, time_attack);    
-  ES.animation_walking = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize,9,0,9,10 );
+  ES.animation_walking = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize, 9, 0, 9, 2);
   return ES;
 }

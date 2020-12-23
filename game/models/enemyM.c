@@ -2,6 +2,20 @@
 #include "../makhead.h"
 
 /* GLOBAL */
+void move_enemy(Enemy *this) {
+  if (!this->is_walking) {
+    return;
+  }
+  this->posX -= this->speed;
+}
+
+/* GLOBAL */
+void set_enemy_animation(Enemy *this, MLV_Animation_player *animation) {
+  this->animation = animation;
+  MLV_play_animation_player(this->animation);
+}
+
+/* GLOBAL */
 Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   Enemy e;
 
@@ -15,11 +29,11 @@ Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   e.delay_frame_attack = spawner->delay_frame_attack;
   e.delay_attack = spawner->delay_attack;
   e.type_attack = spawner->type_attack;
-
+  e.padding = spawner->padding;
 
   e.animation_attack = MLV_create_animation_player(spawner->animation_attack);
   e.animation_walking = MLV_create_animation_player(spawner->animation_walking);
-  e.animation = e.animation_attack;
+  e.animation = e.animation_walking;
   MLV_play_animation_player(e.animation);
   return e;
 }

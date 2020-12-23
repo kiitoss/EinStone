@@ -30,7 +30,7 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
     break;
   case MLV_KEYBOARD_KP_ENTER:
   case MLV_KEYBOARD_RETURN:
-    buy_enemy(&GM->p2,
+    p2_buy_enemy(&GM->p2,
 	      &GM->rows[GM->p2.chosen_row],
 	      &GM->enemy_spawners[GM->p2.chosen_enemy],
 	      GM->window.field.width,
@@ -60,7 +60,7 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
       return;
     }
     
-    buy_friend(&GM->p1,
+    p1_buy_friend(&GM->p1,
 	       &GM->rows[gridY],
 	       &GM->friend_spawners[GM->p1.chosen_friend],
 	       gridX,
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
   GM = init_GM(&window, &TM, gamemode);
 
 
-  MLV_enable_full_screen();
+  /* MLV_enable_full_screen(); */
   
   update_game(&GM, &TM);
    

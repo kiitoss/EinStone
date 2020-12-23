@@ -2,6 +2,17 @@
 #include "../makhead.h"
 
 /* GLOBAL */
+bool is_friend(Friend *this) {
+  return this->id_friend != -1;
+}
+
+/* GLOBAL */
+void set_friend_animation(Friend *this, MLV_Animation_player *animation) {
+  this->animation = animation;
+  MLV_play_animation_player(this->animation);
+}
+
+/* GLOBAL */
 Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY) {
   Friend f;
   
@@ -17,8 +28,7 @@ Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY) {
 
   f.animation_passive = MLV_create_animation_player(spawner->animation_passive);
   f.animation_ability = MLV_create_animation_player(spawner->animation_ability);
-  f.animation = f.animation_passive;
-  MLV_play_animation_player(f.animation);
+  set_friend_animation(&f, f.animation_passive);
   f.is_passive = true;
   return f;
 }

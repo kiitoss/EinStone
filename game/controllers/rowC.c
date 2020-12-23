@@ -15,6 +15,7 @@ void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY) {
 						    posY);
 }
 
+
 /* GLOBAL */
 void update_rows(Game_Manager *GM, Texture_Manager *TM) {
   int i, j;
@@ -25,11 +26,11 @@ void update_rows(Game_Manager *GM, Texture_Manager *TM) {
       if (r->friends[j].id_friend == -1) {
 	continue;
       }
-      MLV_update_animation_player(r->friends[j].animation);
+      update_friend_animation(&r->friends[j], r);
     }
     for (j=0; j<r->nb_enemies; j++) {
-      MLV_update_animation_player(r->enemies[j].animation);
-      r->enemies[j].posX -= r->enemies[j].speed;
+      update_enemy_animation(&r->enemies[j], r);
+      move_enemy(&r->enemies[j]);
     }
   }
 }

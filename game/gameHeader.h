@@ -12,7 +12,7 @@
 #define MAX_GOLDS 100
 /* MAX_FRAMES est le maximum de frames par animation */
 #define MAX_FRAMES 15
-#define DELAY_REFRESH 20
+#define DELAY_REFRESH 50
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
@@ -100,6 +100,7 @@ typedef struct {
   int delay_frame_attack;
   int delay_attack;
   int range;
+  int padding;
 } Enemy_Spawner;
 
 typedef struct {
@@ -132,6 +133,7 @@ typedef struct {
   int posX;
   int posY;
   bool is_walking;
+  int padding;
 } Enemy;
 
 typedef struct {
