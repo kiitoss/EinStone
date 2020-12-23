@@ -32,6 +32,46 @@ void draw_friend_spawner(Game_Manager *GM, Texture_Manager *TM) {
 
   } 
 }
+void draw_friend_stats(Game_Manager *GM){
+  int textbox_width = 0;
+  int textbox_height=0;
+  MLV_get_size_of_adapted_text_box (GM->p1.money_str,5,&textbox_width,&textbox_height);
+
+  MLV_draw_adapted_text_box((GM->window.friend_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
+			    GM->window.friend_spawner.height - textbox_height,
+			    GM->p1.money_str,
+			    5,
+			    MLV_COLOR_BLACK,
+			    MLV_COLOR_BLACK,
+			    MLV_COLOR_BURLYWOOD1,
+			    MLV_TEXT_CENTER);
+  
+  MLV_get_size_of_adapted_text_box (GM->p1.life_str,5,&textbox_width,&textbox_height);
+
+   MLV_draw_adapted_text_box((GM->window.friend_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
+			    GM->window.rectsize/2,
+			    GM->p1.life_str,
+			    5,
+			    MLV_COLOR_BLACK,
+			    MLV_COLOR_BLACK,
+			    MLV_COLOR_BURLYWOOD1,
+			    MLV_TEXT_CENTER);
+  
+}
+void draw_enemy_stats(Game_Manager *GM){
+  int textbox_width = 0;
+  int textbox_height=0;
+  MLV_get_size_of_adapted_text_box (GM->p2.money_str,5,&textbox_width,&textbox_height);
+
+  MLV_draw_adapted_text_box(GM->window.enemy_spawner.posX + ((GM->window.rectsize) - textbox_width)/2,
+			    GM->window.enemy_spawner.posY + GM->window.enemy_spawner.height - textbox_height,
+			    GM->p2.money_str,
+			    5,
+			    MLV_COLOR_BLACK,
+			    MLV_COLOR_BLACK,
+			    MLV_COLOR_BURLYWOOD1,
+			    MLV_TEXT_CENTER);
+}
 
 void draw_enemy_spawner(Game_Manager *GM, Texture_Manager *TM) {
   int i;
@@ -75,8 +115,10 @@ void draw_field(Game_Manager *GM, Texture_Manager *TM) {
 void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   draw_home(GM, TM);
   draw_friend_spawner(GM,TM);
+  draw_friend_stats(GM);
   if (GM->gamemode == MULTI) {
     draw_enemy_spawner(GM, TM);
+    draw_enemy_stats(GM);
   }
   draw_field(GM, TM);
 }
