@@ -100,9 +100,7 @@ int main(int argc, char *argv[]) {
   Texture_Manager TM;
   Game_Manager GM;
   Window window;
-  menu_choice gamemode = SOLO;
-
-  /* srand(time(NULL)); */
+  menu_choice gamemode = MULTI;
   
   MLV_get_desktop_size(&win_width, &win_height);
 
@@ -114,7 +112,7 @@ int main(int argc, char *argv[]) {
   GM = init_GM(&window, &TM, gamemode);
 
 
-  /* MLV_enable_full_screen(); */
+  MLV_enable_full_screen();
   
   update_game(&GM, &TM);
    

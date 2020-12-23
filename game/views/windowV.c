@@ -13,6 +13,10 @@ void draw_friend_spawner(Game_Manager *GM, Texture_Manager *TM) {
   int textbox_height=0;
   MLV_draw_image(TM->friend_spawner_background,GM->window.friend_spawner.posX, GM->window.friend_spawner.posY);
   for (i=0;i<NB_FRIENDS;i++){
+    if (GM->p1.chosen_friend == i) {
+      MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (i+1), 0, GM->window.rectsize, GM->window.friend_spawner.height, MLV_COLOR_GREEN);
+    }
+    
     MLV_draw_image(TM->friend_spawners_imgs[i],GM->window.friend_spawner.posX + (i+1)*GM->window.rectsize,GM->window.friend_spawner.posY);
 
     MLV_get_size_of_adapted_text_box (
@@ -81,6 +85,9 @@ void draw_enemy_spawner(Game_Manager *GM, Texture_Manager *TM) {
   MLV_draw_image(TM->enemy_spawner_background,GM->window.enemy_spawner.posX, GM->window.enemy_spawner.posY);
 
   for (i=0;i<NB_ENEMIES;i++){
+    if (GM->p2.chosen_enemy == i) {
+      MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (i+1), GM->window.enemy_spawner.posY, GM->window.rectsize, GM->window.enemy_spawner.height, MLV_COLOR_GREEN);
+    }
     MLV_draw_image(TM->enemy_spawners_imgs[i],GM->window.enemy_spawner.posX + (i+1)*GM->window.rectsize,GM->window.enemy_spawner.posY);
 
     MLV_get_size_of_adapted_text_box (
@@ -111,14 +118,18 @@ void draw_field(Game_Manager *GM, Texture_Manager *TM) {
   }
 }
 
+
 /* GLOBAL */
 void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   draw_home(GM, TM);
-  draw_friend_spawner(GM,TM);
-  draw_friend_stats(GM);
   if (GM->gamemode == MULTI) {
     draw_enemy_spawner(GM, TM);
     draw_enemy_stats(GM);
   }
+  draw_friend_spawner(GM,TM);
+  draw_friend_stats(GM);
+
   draw_field(GM, TM);
+  
+  MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row, GM->window.rectsize, GM->window.rectsize, MLV_COLOR_GREEN);
 }
