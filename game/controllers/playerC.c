@@ -2,6 +2,12 @@
 #include "../makhead.h"
 
 /* GLOBAL */
+void create_p1_free_gold(Player_1 *p1, Row *row, int gridX) {
+  p1->last_free_gold = MLV_get_time();
+  create_new_gold(row, gridX);
+}
+
+/* GLOBAL */
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY) {
   this->money = spawner->price + 1000;
   if (this->money >= spawner->price) {

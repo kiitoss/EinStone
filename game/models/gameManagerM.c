@@ -19,7 +19,9 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode) 
   GM.p2 = init_p2();
   
   for (i=0; i<NB_ROWS; i++) {
-    GM.rows[i] = init_row(window->rectsize);
+    GM.rows[i] = init_row(window->field.posX,
+			  window->field.posY + i*window->rectsize,
+			  window->rectsize);
   }
   
   GM.last_refresh = MLV_get_time();

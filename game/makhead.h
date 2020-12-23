@@ -12,11 +12,12 @@ void update_enemy_animation(Enemy *this, Row *row);
 void update_friend_animation(Friend *this, Row *row);
 
 /* controllers/playerC.c */
+void create_p1_free_gold(Player_1 *p1, Row *row, int gridX);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
 
 /* controllers/popC.c */
-void create_new_gold(Game_Manager *GM, Texture_Manager *TM);
+void create_new_gold(Row *row, int gridX);
 void check_click_gold(Game_Manager *GM, int mouseX, int mouseY);
 
 /* controllers/rowC.c */
@@ -43,7 +44,7 @@ Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY);
 Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode);
 
 /* models/goldM.c */
-Gold get_new_gold(int gridX, int gridY, Window *window, MLV_Image *img);
+Gold get_new_gold(int centerX, int centerY, int rectsize);
 
 /* models/playerM.c */
 void set_player_money_str(int money, char money_str[10]);
@@ -52,7 +53,7 @@ Player_1 init_p1();
 Player_2 init_p2();
 
 /* models/rowM.c */
-Row init_row(int rectsize);
+Row init_row(int posX, int posY, int rectsize);
 
 /* models/spawnerM.c */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window);

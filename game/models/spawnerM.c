@@ -12,7 +12,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     FS.life = 50;
     FS.attack = 0;
     FS.price = 50;
-    FS.delay_ability = 1000;
+    FS.DELAY_ABILITY = 1000;
     FS.delay_frame_ability = 0;
     FS.range = 0;
     break;
@@ -22,7 +22,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     FS.life = 100;
     FS.attack = 35;
     FS.price = 100;
-    FS.delay_ability = 100;
+    FS.DELAY_ABILITY = 100;
     FS.delay_frame_ability = 0;
     FS.range = window->rectsize*NB_COLUMNS;
     break;
@@ -32,7 +32,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     FS.life = 200;
     FS.attack = 20;
     FS.price = 75;
-    FS.delay_ability = 70;
+    FS.DELAY_ABILITY = 70;
     FS.delay_frame_ability = 0;
     FS.range = window->rectsize*1;
     break;
@@ -42,7 +42,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
     FS.life = 150;
     FS.attack = 50;
     FS.price = 150;
-    FS.delay_ability = 100;
+    FS.DELAY_ABILITY = 100;
     FS.delay_frame_ability = 0;
     FS.range = window->rectsize*NB_COLUMNS;
     break;

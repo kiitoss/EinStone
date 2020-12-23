@@ -2,14 +2,12 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-void create_new_gold(Game_Manager *GM, Texture_Manager *TM) {
-  int random_row, random_column;
-  random_row = rand() % NB_ROWS;
-  random_column = rand() % NB_COLUMNS;
-  if (GM->rows[random_row].nb_golds >= MAX_GOLDS) {return;}
+void create_new_gold(Row *row, int gridX) {
+  if (row->nb_golds >= MAX_GOLDS) {return;}
 
-  GM->rows[random_row].golds[GM->rows[random_row].nb_golds++] = get_new_gold(random_column, random_row, &GM->window, TM->gold_img);
-  GM->p1.last_free_gold = MLV_get_time();
+  row->golds[row->nb_golds++] = get_new_gold((rand() % row->rectsize) + gridX * row->rectsize + row->posX,
+					     (rand() % row->rectsize) + row->posY,
+					     row->rectsize);
 }
 
 /* GLOBAL */

@@ -77,7 +77,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM) {
     em = get_game_event();
   }
   if (MLV_get_time() >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
-    create_new_gold(GM, TM);
+    create_p1_free_gold(&GM->p1, &GM->rows[rand() % NB_ROWS], rand() % NB_COLUMNS);
   }
   if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
     update_rows(GM, TM);

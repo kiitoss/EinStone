@@ -46,7 +46,6 @@ typedef struct {
   int time_left;
   int radius;
   int max_radius;
-  MLV_Image *original_img;
   int value;
 } Gold;
 
@@ -87,7 +86,7 @@ typedef struct {
   int attack;
   int price;
   char price_str[5];
-  int delay_ability;
+  int DELAY_ABILITY;
   int range;
 } Friend_Spawner;
 
@@ -116,6 +115,7 @@ typedef struct {
   int life;
   int attack;
   int delay_ability;
+  int DELAY_ABILITY;
   int range;
   int posX;
   int posY;
@@ -140,6 +140,8 @@ typedef struct {
 } Enemy;
 
 typedef struct {
+  int posX;
+  int posY;
   Friend friends[NB_COLUMNS];
   Enemy enemies[MAX_ENEMIES];
   int nb_enemies;

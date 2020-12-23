@@ -2,7 +2,7 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-Row init_row(int rectsize) {
+Row init_row(int posX, int posY, int rectsize) {
   Row r;
   int i;
   for (i=0; i<NB_COLUMNS; i++) {
@@ -12,5 +12,7 @@ Row init_row(int rectsize) {
   r.nb_shots = 0;
   r.nb_golds = 0;
   r.rectsize = rectsize;
+  r.posX = posX;
+  r.posY = posY;
   return r;
 }
