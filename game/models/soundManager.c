@@ -14,7 +14,7 @@ Sound_Manager init_game_SM() {
 
   SM.sound_works = true;
   
-  sound = MLV_load_sound("resources/sounds/fugue.ogg");
+  sound = MLV_load_sound("resources/sounds/gold.ogg");
 
   touche=MLV_KEYBOARD_NONE;
   while( touche != MLV_KEYBOARD_ESCAPE ){
