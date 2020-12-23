@@ -2,8 +2,10 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-void create_new_gold(Row *row, int gridX, int gridY) {
+void create_new_gold(Row *row, int gridX, int gridY, Sound_Manager *SM) {
   if (row->nb_golds >= MAX_GOLDS) {return;}
+
+  play_sound(SM, &SM->gold);
   
   row->golds[row->nb_golds++] = get_new_gold((rand() % row->rectsize) + gridX * row->rectsize,
 					     (rand() % row->rectsize) + gridY * row->rectsize,
@@ -33,9 +35,11 @@ void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
 }
 
 /* GLOBAL */
-void create_new_shot(Row *row, int gridX, int gridY, int attack) {
+void create_new_shot(Row *row, int gridX, int gridY, int attack, Sound_Manager *SM) {
   if (row->nb_shots >= MAX_SHOTS) {return;}
 
+  play_sound(SM, &SM->arrow);
+  
   row->shots[row->nb_shots++] = get_new_shot(row->rectsize + (gridX-0.5) * row->rectsize,
 					     row->rectsize/2 + gridY * row->rectsize,
 					     row->rectsize,

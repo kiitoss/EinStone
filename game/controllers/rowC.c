@@ -26,8 +26,9 @@ void remove_shot_from_row(Row *this, int index_shot) {
 }
 
 /* GLOBAL */
-void remove_enemy_from_row(Row *this, int index_enemy) {
+void remove_enemy_from_row(Row *this, int index_enemy, Sound_Manager *SM) {
   int i;
+  play_sound(SM, &SM->big_monster_roar);
   for (i=index_enemy; i<this->nb_enemies - 1; i++) {
     this->enemies[i] = this->enemies[i+1];
   }
@@ -59,7 +60,7 @@ void update_shot(Shot *this) {
   this->posX += this->speed;
 }
 
-void update_collision(Row *r) {
+void update_collision(Row *r, Sound_Manager *SM) {
   int i = 0;
   int j;
   Shot *s;
@@ -72,7 +73,7 @@ void update_collision(Row *r) {
 	e->life -= s->attack;
 	remove_shot_from_row(r, i);
 	if (e->life <= 0) {
-	  remove_enemy_from_row(r, j);
+	  remove_enemy_from_row(r, j, SM);
 	}
 	break;
       }
@@ -91,7 +92,7 @@ void remove_all_enemies_in_row(Row *r, Player_1 *p1) {
 }
 
 /* GLOBAL */
-void update_rows(Game_Manager *GM, Texture_Manager *TM) {
+void update_rows(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   int i, j;
   Row *r;
   for (i=0; i<NB_ROWS; i++) {
@@ -100,11 +101,11 @@ void update_rows(Game_Manager *GM, Texture_Manager *TM) {
       if (r->friends[j].id_friend == -1) {
 	continue;
       }
-      update_friend_animation(&r->friends[j], r);
+      update_friend_animation(&r->friends[j], r, SM);
     }
     j = 0;
     while (j<r->nb_enemies) {
-      update_enemy_animation(&r->enemies[j], r);
+      update_enemy_animation(&r->enemies[j], r, SM);
       move_enemy(&r->enemies[j]);
       if (r->enemies[j].posX <= -GM->window.rectsize) {
 	remove_all_enemies_in_row(r, &GM->p1);
@@ -120,7 +121,7 @@ void update_rows(Game_Manager *GM, Texture_Manager *TM) {
       }
       j++;
     }
-    update_collision(r);
+    update_collision(r, SM);
     j = 0;
     while (j<r->nb_golds) {
       update_gold(&r->golds[j]);

@@ -1,15 +1,16 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
-void attack_all_enemies_in_range(Friend *this, Row *row) {
+void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM) {
   int i = 0;
   Enemy *e;
+  play_sound(SM, &SM->spear);
   while (i<row->nb_enemies) {
     e = &row->enemies[i];
     if (e->posX + e->padding < this->posX + this->range + row->rectsize && e->posX + e->padding + row->rectsize > this->posX) {
       e->life -= this->attack;
       if (e->life <= 0) {
-	remove_enemy_from_row(row, i);
+	remove_enemy_from_row(row, i, SM);
 	i--;
       }
     }
@@ -28,20 +29,20 @@ void switch_friend_behavior(Friend *this) {
   this->is_passive = !this->is_passive;
 }
 
-void use_friend_ability(Friend *this, Row *row) {
+void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM) {
   switch (this->ability) {
   case DEFENSE:
-    attack_all_enemies_in_range(this, row);
+    attack_all_enemies_in_range(this, row, SM);
     this->delay_ability = this->DELAY_ABILITY;
     break;
   case ATTACK:
-    create_new_shot(row, this->posX/row->rectsize, this->posY/row->rectsize, this->attack);
+    create_new_shot(row, this->posX/row->rectsize, this->posY/row->rectsize, this->attack, SM);
     this->delay_ability = this->DELAY_ABILITY;
     break;
   case MONEY:
     switch_friend_behavior(this);
     if (!this->is_passive) {
-      create_new_gold(row, this->posX/row->rectsize, this->posY/row->rectsize);
+      create_new_gold(row, this->posX/row->rectsize, this->posY/row->rectsize, SM);
       this->delay_ability = 2000;
     }
     else {
@@ -54,7 +55,7 @@ void use_friend_ability(Friend *this, Row *row) {
 }
 
 /* GLOBAL */
-void update_friend_animation(Friend *this, Row *row) {
+void update_friend_animation(Friend *this, Row *row, Sound_Manager *SM) {
   int i;
   bool enemy_in_range = false;
   if (this->ability == DEFENSE || this->ability == ATTACK) {
@@ -75,7 +76,7 @@ void update_friend_animation(Friend *this, Row *row) {
   if (this->ability == MONEY || !this->is_passive) {
     this->delay_ability -= DELAY_REFRESH;
     if (this->delay_ability <= 0) {
-      use_friend_ability(this, row);
+      use_friend_ability(this, row, SM);
     }
   }
   MLV_update_animation_player(this->animation);

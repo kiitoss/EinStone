@@ -61,7 +61,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   case ATTACK:
     row_animation_ability = 19;
     first_frame_ability = 0;
-    last_frame_ability = 13;
+    last_frame_ability = 14;
     time_ability = 2;
     FS.DELAY_ABILITY = 1300;
     break;

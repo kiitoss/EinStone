@@ -34,10 +34,8 @@ typedef struct {
 typedef struct {
   bool sound_works;
   Sound arrow;
-  Sound big_monster_hurted;
   Sound big_monster_roar;
   Sound gold;
   Sound punch;
-  Sound skeletton_walk;
   Sound spear;
 } Sound_Manager;

@@ -1,11 +1,12 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
-void attack_friend_in_front(Enemy *this, Row *row, int gridY_close, int gridY_far) {
+void attack_friend_in_front(Enemy *this, Row *row, int gridY_close, int gridY_far, Sound_Manager *SM) {
   int i;
   Friend *f;
   for (i=gridY_close-1; i>= gridY_far; i--) {
     if (is_friend(&row->friends[i])) {
+      play_sound(SM, &SM->punch);
       f = &row->friends[i];
       f->life -= this->attack;
       if (f->life <= 0) {
@@ -27,7 +28,7 @@ void switch_enemy_behavior(Enemy *this) {
 }
 
 /* GLOBAL */
-void update_enemy_animation(Enemy *this, Row *row) {
+void update_enemy_animation(Enemy *this, Row *row, Sound_Manager *SM) {
   int gridY_far, gridY_close, i;
   bool friend_in_range = false;
   gridY_far = (this->posX + this->padding - this->range) / row->rectsize;
@@ -45,7 +46,7 @@ void update_enemy_animation(Enemy *this, Row *row) {
   if (!this->is_walking) {
     this->delay_attack -= DELAY_REFRESH;
     if (this->delay_attack <= 0) {
-      attack_friend_in_front(this, row, gridY_close, gridY_far);
+      attack_friend_in_front(this, row, gridY_close, gridY_far, SM);
       this->delay_attack = this->DELAY_ATTACK;
     }
   }
