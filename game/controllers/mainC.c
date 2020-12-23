@@ -155,7 +155,8 @@ int main(int argc, char *argv[]) {
   Window window;
   menu_choice gamemode = MULTI;
   Sound_Manager SM = init_game_SM();
-  printf("%d\n", SM.sound_works);
+
+  play_sound(&SM, &SM.gold);
   
   MLV_get_desktop_size(&win_width, &win_height);
 

@@ -63,6 +63,7 @@ Row init_row(int posX, int posY, int rectsize);
 Shot get_new_shot(int posX, int posY, int rectsize, int attack);
 
 /* models/soundManager.c */
+void play_sound(Sound_Manager *SM, Sound *this);
 Sound_Manager init_game_SM();
 
 /* models/spawnerM.c */

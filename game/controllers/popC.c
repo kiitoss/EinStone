@@ -4,7 +4,7 @@
 /* GLOBAL */
 void create_new_gold(Row *row, int gridX, int gridY) {
   if (row->nb_golds >= MAX_GOLDS) {return;}
-
+  
   row->golds[row->nb_golds++] = get_new_gold((rand() % row->rectsize) + gridX * row->rectsize,
 					     (rand() % row->rectsize) + gridY * row->rectsize,
 					     row->rectsize);
