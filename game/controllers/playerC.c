@@ -2,9 +2,9 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-void create_p1_free_gold(Player_1 *p1, Row *row, int gridX) {
+void create_p1_free_gold(Player_1 *p1, Row *row, int gridX, int gridY) {
   p1->last_free_gold = MLV_get_time();
-  create_new_gold(row, gridX);
+  create_new_gold(row, gridX, gridY);
 }
 
 /* GLOBAL */

@@ -1,19 +1,6 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
-void use_friend_ability(Friend *this, Row *row) {
-  switch (this->ability) {
-  case DEFENSE:
-    break;
-  case ATTACK:
-    break;
-  case MONEY:
-    break;
-  default:
-    break;
-  }
-}
-
 void switch_friend_behavior(Friend *this) {
   if (this->is_passive) {
     set_friend_animation(this, this->animation_ability);
@@ -23,6 +10,29 @@ void switch_friend_behavior(Friend *this) {
     set_friend_animation(this, this->animation_passive);
   }
   this->is_passive = !this->is_passive;
+}
+
+void use_friend_ability(Friend *this, Row *row) {
+  switch (this->ability) {
+  case DEFENSE:
+    break;
+  case ATTACK:
+    create_new_shot(row, this->posX/row->rectsize, this->posY/row->rectsize, this->attack);
+    this->delay_ability = this->DELAY_ABILITY;
+    break;
+  case MONEY:
+    switch_friend_behavior(this);
+    if (!this->is_passive) {
+      create_new_gold(row, this->posY/row->rectsize, this->posX/row->rectsize);
+      this->delay_ability = 2000;
+    }
+    else {
+      this->delay_ability = this->DELAY_ABILITY;
+    }
+    break;
+  default:
+    break;
+  }
 }
 
 /* GLOBAL */
@@ -45,8 +55,8 @@ void update_friend_animation(Friend *this, Row *row) {
   }
 
   if (this->ability == MONEY || !this->is_passive) {
-    this->DELAY_ABILITY--;
-    if (this->DELAY_ABILITY == 0) {
+    this->delay_ability -= DELAY_REFRESH;
+    if (this->delay_ability <= 0) {
       use_friend_ability(this, row);
     }
   }

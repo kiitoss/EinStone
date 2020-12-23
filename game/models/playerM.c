@@ -6,6 +6,11 @@ void set_player_money_str(int money, char money_str[10]) {
   sprintf(money_str, "%d", money);
 }
 
+/* GLOBAL */
+void set_player_life_str(int life, char life_str[10]) {
+  sprintf(life_str, "%d", life);
+}
+
 
 /* GLOBAL */
 void p1_add_gold(Player_1 *this, int gold) {
@@ -21,6 +26,8 @@ Player_1 init_p1() {
   p1.last_free_gold = MLV_get_time();
   p1.score = 0;
   set_player_money_str(p1.money, p1.money_str);
+  p1.life = 5;
+  set_player_life_str(p1.life, p1.life_str);
   return p1;
 }
 

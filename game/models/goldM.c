@@ -8,7 +8,7 @@ Gold get_new_gold(int centerX, int centerY, int rectsize) {
   g.centerY = centerY;
   g.time_left = 10000;
   g.radius = 1;
-  g.max_radius = rectsize/4;
+  g.max_radius = rectsize/2;
   g.value = 10;
   return g;
 }
