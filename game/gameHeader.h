@@ -52,7 +52,6 @@ typedef struct {
 typedef struct {
   int posX;
   int posY;
-  int width;
   int attack;
   int speed;
 } Shot;

@@ -19,7 +19,8 @@ Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY) {
   f.id_friend = spawner->id_friend;
   f.ability = spawner->ability;
   f.delay_frame_ability = spawner->delay_frame_ability;
-  f.delay_ability = spawner->delay_ability;
+  f.DELAY_ABILITY = spawner->DELAY_ABILITY;
+  f.delay_ability = spawner->DELAY_ABILITY;
   f.life = spawner->life;
   f.attack = spawner->attack;
   f.range = spawner->range;

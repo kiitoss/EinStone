@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 enemyC.o: ./game/controllers/enemyC.c
 	$(CC) $(CFLAGS) ./game/controllers/enemyC.c -c -I ./
@@ -44,6 +44,9 @@ playerM.o: ./game/models/playerM.c
 
 rowM.o: ./game/models/rowM.c
 	$(CC) $(CFLAGS) ./game/models/rowM.c -c -I ./
+
+shotM.o: ./game/models/shotM.c
+	$(CC) $(CFLAGS) ./game/models/shotM.c -c -I ./
 
 spawnerM.o: ./game/models/spawnerM.c
 	$(CC) $(CFLAGS) ./game/models/spawnerM.c -c -I ./

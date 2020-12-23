@@ -25,3 +25,13 @@ void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
     }
   }
 }
+
+/* GLOBAL */
+void create_new_shot(Row *row, int gridX, int attack) {
+  if (row->nb_shots >= MAX_SHOTS) {return;}
+
+  row->shots[row->nb_shots++] = get_new_shot(row->rectsize + (gridX-0.5) * row->rectsize + row->posX,
+					     row->posY + row->rectsize/2,
+					     row->rectsize,
+					     attack);
+}

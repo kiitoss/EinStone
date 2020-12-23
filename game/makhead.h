@@ -19,12 +19,12 @@ void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, in
 /* controllers/popC.c */
 void create_new_gold(Row *row, int gridX);
 void check_click_gold(Game_Manager *GM, int mouseX, int mouseY);
+void create_new_shot(Row *row, int gridX, int attack);
 
 /* controllers/rowC.c */
 void remove_gold_from_row(Row *this, int index_gold);
 void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY);
 void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
-void update_gold(Gold *this);
 void update_rows(Game_Manager *GM, Texture_Manager *TM);
 
 /* models/animationM.c */
@@ -54,6 +54,9 @@ Player_2 init_p2();
 
 /* models/rowM.c */
 Row init_row(int posX, int posY, int rectsize);
+
+/* models/shotM.c */
+Shot get_new_shot(int posX, int posY, int rectsize, int attack);
 
 /* models/spawnerM.c */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window);

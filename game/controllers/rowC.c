@@ -25,12 +25,15 @@ void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY) {
 						    posY);
 }
 
-/* GLOBAL */
 void update_gold(Gold *this) {
   if (this->radius < this->max_radius) {
     this->radius += 10;
   }
   this->time_left--;
+}
+
+void update_shot(Shot *this) {
+  this->posX += this->speed;
 }
 
 /* GLOBAL */
@@ -51,6 +54,9 @@ void update_rows(Game_Manager *GM, Texture_Manager *TM) {
     }
     for (j=0; j<r->nb_golds; j++) {
       update_gold(&r->golds[j]);
+    }
+    for (j=0; j<r->nb_shots; j++) {
+      update_shot(&r->shots[j]);
     }
   }
 }

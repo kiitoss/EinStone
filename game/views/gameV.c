@@ -1,6 +1,10 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
+void draw_shot(Shot *this, MLV_Image *shot_img) {
+  MLV_draw_image(shot_img, this->posX, this->posY);
+}
+
 void draw_gold(Gold *this, MLV_Image *gold_img) {
   MLV_Image *img = MLV_copy_image(gold_img);
   set_img_size(img, this->radius, this->radius);
@@ -28,6 +32,9 @@ void draw_row(Row *r, Window *window, Texture_Manager *TM) {
   }
   for (i=0; i<r->nb_golds; i++) {
     draw_gold(&r->golds[i], TM->gold_img);
+  }
+  for (i=0; i<r->nb_shots; i++) {
+    draw_shot(&r->shots[i], TM->shot_img);
   }
 }
 
