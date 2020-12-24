@@ -44,9 +44,10 @@ void draw_resume_page(resumePage *rp) {
   MLV_clear_window(MLV_COLOR_BLACK);
 
   draw_label(&rp->title_lbl);
+  draw_button(&rp->back_btn);
   draw_button(&rp->launch_btn);
 
-  for (i=0; i<10; i++) {
+  for (i=0; i<SAVED_GAMES; i++) {
     draw_resume_section(&rp->sections[i]);
   }
   

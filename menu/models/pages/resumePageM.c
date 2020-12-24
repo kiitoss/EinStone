@@ -10,17 +10,17 @@ resumePage init_resume_page(int width, int height) {
   int margin_title = height/3 * 0.2;
   int title_height = height/3 * 0.8;
   
-  int margin_row = 2*height/3 * 0.3/6;
-  int row_height = 2*height/3 * 0.7/6;
+  int margin_row = 2*height/3 * 0.3/(SAVED_GAMES+1);
+  int row_height = 2*height/3 * 0.7/(SAVED_GAMES+1);
   char *font_path = "./resources/font/Amatic-Bold.ttf";
 
   rp.hover_btn = NULL;
   rp.hover_section = NULL;
   rp.select_section = NULL;
   
-  g.width = width;
+  g.width = width/2;
   g.height = title_height;
-  g.posX = 0;
+  g.posX = width/4;
   g.posY = 0;
 
   rp.width = width;
@@ -31,8 +31,8 @@ resumePage init_resume_page(int width, int height) {
   g.height = row_height;
   g.posY += title_height + margin_title;
 
-  for (i=0;i<5;i++) {
-    rp.sections[i].section_lbl = get_new_label(g, "Section", MLV_COLOR_RED, font_path);
+  for (i=0; i<SAVED_GAMES; i++) {
+    rp.sections[i] = get_new_resumeSection(g, "Game1", font_path);
     g.posY += row_height + margin_row;
   }
 
@@ -43,4 +43,29 @@ resumePage init_resume_page(int width, int height) {
   rp.launch_btn = get_new_button(g, "Launch", MLV_COLOR_RED, font_path, LAUNCH);
 
   return rp;
+}
+
+
+/* GLOBAL */
+Button *get_resume_page_hover_btn(resumePage *this, int posX, int posY) {
+  Button *hover_btn = NULL;
+  if (is_btn_hover(&this->back_btn, posX, posY)) {
+    hover_btn = &this->back_btn;
+  }
+  else if (is_btn_hover(&this->launch_btn, posX, posY)) {
+    hover_btn = &this->launch_btn;
+  }
+  return hover_btn;
+}
+
+/* GLOBAL */
+resumeSection *get_resume_page_hover_section(resumePage *this, int posX, int posY) {
+  resumeSection *hover_section = NULL;
+  int i;
+  for (i=0; i<SAVED_GAMES; i++) {
+    if (is_resumeSection_hover(&this->sections[i], posX, posY)) {
+      hover_section = &this->sections[i];
+    }
+  }
+  return hover_section;
 }

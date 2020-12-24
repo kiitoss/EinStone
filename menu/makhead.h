@@ -29,8 +29,6 @@ void set_hidden_btn(Button *this);
 void unset_hidden_btn(Button *this);
 
 /* models/objects/generalM.c */
-void set_object_dimension(char *text, char *font_path, int font_size, int *object_width, int *object_height);
-int get_object_font_size(char *text, char *font_path, int max_width, int max_height);
 char *get_input_or_label_value(Input *input, Label *label);
 
 /* models/objects/inputM.c */
@@ -47,6 +45,14 @@ void set_hidden_lbl(Label *this);
 void unset_hidden_lbl(Label *this);
 void set_label_geometry(Label *this, int posX);
 
+/* models/objects/resumeSectionM.c */
+bool is_resumeSection_hover(resumeSection *this, int posX, int posY);
+resumeSection get_new_resumeSection(Geometry container, char *text, char *font_path);
+void set_hover_resume_section(resumeSection *this);
+void unset_hover_resume_section(resumeSection *this);
+void set_select_resume_section(resumeSection *this);
+void unset_select_resume_section(resumeSection *this);
+
 /* models/pages/mainPageM.c */
 mainPage init_main_page(int width, int height);
 Button *get_main_page_hover_btn(mainPage *this, int posX, int posY);
@@ -60,6 +66,8 @@ Button *get_newgame_page_hover_btn(newgamePage *this, int posX, int posY);
 
 /* models/pages/resumePageM.c */
 resumePage init_resume_page(int width, int height);
+Button *get_resume_page_hover_btn(resumePage *this, int posX, int posY);
+resumeSection *get_resume_page_hover_section(resumePage *this, int posX, int posY);
 
 /* views/objectV.c */
 void draw_button(Button *this);

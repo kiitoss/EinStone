@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <MLV/MLV_all.h>
 
+void set_object_dimension(char *text, char *font_path, int font_size, int *object_width, int *object_height);
+
+int get_object_font_size(char *text, char *font_path, int max_width, int max_height);
+
 /* Reproduction de la variable booléen */
 enum bool {false, true};
 typedef enum bool bool;

@@ -5,6 +5,8 @@
 #define MAX_LABELS 10
 #define MAX_SECTIONS 10
 
+#define SAVED_GAMES 3
+
 typedef struct {
   int width;
   int height;
@@ -80,6 +82,7 @@ typedef struct {
 
 
 typedef struct {
+  bool exist;
   int width;
   int height;
   int posX;
@@ -93,7 +96,7 @@ typedef struct {
   int width;
   int height;
   Label title_lbl;
-  resumeSection sections[5];
+  resumeSection sections[SAVED_GAMES];
   Button launch_btn;
   Button back_btn;
   Button *hover_btn;

@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o resumeSectionM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o graphM.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o resumeSectionM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o graphM.o `pkg-config --libs-only-l MLV` -o output
 
 enemyC.o: ./game/controllers/enemyC.c
 	$(CC) $(CFLAGS) ./game/controllers/enemyC.c -c -I ./
@@ -93,6 +93,9 @@ inputM.o: ./menu/models/objects/inputM.c
 labelM.o: ./menu/models/objects/labelM.c
 	$(CC) $(CFLAGS) ./menu/models/objects/labelM.c -c -I ./
 
+resumeSectionM.o: ./menu/models/objects/resumeSectionM.c
+	$(CC) $(CFLAGS) ./menu/models/objects/resumeSectionM.c -c -I ./
+
 mainPageM.o: ./menu/models/pages/mainPageM.c
 	$(CC) $(CFLAGS) ./menu/models/pages/mainPageM.c -c -I ./
 
@@ -107,6 +110,9 @@ objectV.o: ./menu/views/objectV.c
 
 pageV.o: ./menu/views/pageV.c
 	$(CC) $(CFLAGS) ./menu/views/pageV.c -c -I ./
+
+graphM.o: ./graphM.c
+	$(CC) $(CFLAGS) ./graphM.c -c -I ./
 
 clean:
 	rm -rf *.o

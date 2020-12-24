@@ -8,7 +8,9 @@ int main(int argc, char *argv[]) {
   width = win_width / 2;
   height = win_height / 2;
   MLV_create_window("EinStone", "EinStone", width, height);
+  /*
   MLV_enable_full_screen();
+  */
   launch_main_page(width, height);
   MLV_free_window();
   exit(0);
