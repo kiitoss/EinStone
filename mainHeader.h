@@ -18,7 +18,7 @@
 /* MAX_FRAMES est le maximum de frames par animation */
 #define MAX_FRAMES 15
 #define DELAY_REFRESH 50
-#define DELAY_FREE_GOLD_P1 10000
+#define DELAY_FREE_GOLD_P1 1000
 #define DELAY_FREE_GOLD_P2 1000
 #define QTY_FREE_GOLD_P2 10
 

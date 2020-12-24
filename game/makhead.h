@@ -5,6 +5,9 @@ MAKMAK from path: ./
 
 ------------------------------------------------------------
 */
+/* controllers/IAC.c */
+void update_IA(Game_Manager *GM);
+
 /* controllers/enemyC.c */
 void update_enemy_animation(Enemy *this, Row *row, Sound_Manager *SM);
 

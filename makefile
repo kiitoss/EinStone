@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: button.o general.o input.o label.o resumeSection.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 button.o: ./GUI/button.c
 	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
@@ -20,6 +20,9 @@ label.o: ./GUI/label.c
 
 resumeSection.o: ./GUI/resumeSection.c
 	$(CC) $(CFLAGS) ./GUI/resumeSection.c -c -I ./
+
+IAC.o: ./game/controllers/IAC.c
+	$(CC) $(CFLAGS) ./game/controllers/IAC.c -c -I ./
 
 enemyC.o: ./game/controllers/enemyC.c
 	$(CC) $(CFLAGS) ./game/controllers/enemyC.c -c -I ./

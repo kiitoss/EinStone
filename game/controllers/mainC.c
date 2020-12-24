@@ -191,9 +191,14 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   int random_row;
   em.event = MLV_NONE;
   em.btn_state = MLV_RELEASED;
+  em.touch = MLV_NONE;
+  
   while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED)) {
     em = get_game_event();
   }
+
+  update_IA(GM);
+  
   if (MLV_get_time() >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
     p1_create_free_gold(&GM->p1, &GM->rows[random_row], rand() % NB_COLUMNS, random_row, SM);
@@ -206,6 +211,9 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     GM->last_refresh = MLV_get_time();
   }
   else if (em.event == MLV_KEY) {
+    if (em.touch != MLV_KEYBOARD_ESCAPE && GM->gamemode == SOLO) {
+      return;
+    }
     keyboard_action(GM, em.touch);
   }
   else if (em.event == MLV_MOUSE_BUTTON) {
