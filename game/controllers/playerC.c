@@ -2,9 +2,16 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-void p1_create_free_gold(Player_1 *p1, Row *row, int gridX, int gridY, Sound_Manager *SM) {
-  p1->last_free_gold = MLV_get_time();
+void p1_create_free_gold(Player_1 *this, Row *row, int gridX, int gridY, Sound_Manager *SM) {
+  this->last_free_gold = MLV_get_time();
   create_new_gold(row, gridX, gridY, SM);
+}
+
+/* GLOBAL */
+void p2_create_free_gold(Player_2 *this) {
+  this->money += QTY_FREE_GOLD_P2;
+  set_player_money_str(this->money, this->money_str);
+  this->last_free_gold = MLV_get_time();
 }
 
 /* GLOBAL */

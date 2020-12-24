@@ -198,6 +198,9 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     random_row = rand() % NB_ROWS;
     p1_create_free_gold(&GM->p1, &GM->rows[random_row], rand() % NB_COLUMNS, random_row, SM);
   }
+  if (MLV_get_time() >+ GM->p2.last_free_gold + DELAY_FREE_GOLD_P2) {
+    p2_create_free_gold(&GM->p2);
+  }
   if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
     update_rows(GM, SM);
     GM->last_refresh = MLV_get_time();

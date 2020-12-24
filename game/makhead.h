@@ -15,7 +15,8 @@ void update_friend_animation(Friend *this, Row *row, Sound_Manager *SM);
 void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM);
 
 /* controllers/playerC.c */
-void p1_create_free_gold(Player_1 *p1, Row *row, int gridX, int gridY, Sound_Manager *SM);
+void p1_create_free_gold(Player_1 *this, Row *row, int gridX, int gridY, Sound_Manager *SM);
+void p2_create_free_gold(Player_2 *this);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
 
