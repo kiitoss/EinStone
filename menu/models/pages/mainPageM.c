@@ -10,7 +10,7 @@ mainPage init_main_page(int width, int height) {
   
   int margin_row = (2*height/3 * 0.2)/4;
   int row_height = (2*height/3 * 0.8)/4;
-  char *font_path = "res/font/Amatic-Bold.ttf";
+  char *font_path = "resources/font/Amatic-Bold.ttf";
 
   mp.hover_btn = NULL;
   

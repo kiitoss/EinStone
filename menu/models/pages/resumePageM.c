@@ -12,7 +12,7 @@ resumePage init_resume_page(int width, int height) {
   
   int margin_row = 2*height/3 * 0.3/6;
   int row_height = 2*height/3 * 0.7/6;
-  char *font_path = "./res/font/Amatic-Bold.ttf";
+  char *font_path = "./resources/font/Amatic-Bold.ttf";
 
   rp.hover_btn = NULL;
   rp.hover_section = NULL;

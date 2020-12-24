@@ -148,32 +148,33 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   }
 }
 
-int main(int argc, char *argv[]) {
-  unsigned int win_width, win_height;
+/* GLOBAL */
+void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
+  MLV_stop_all_sounds();
+  MLV_free_audio();
+  MLV_free_window();
+}
+
+
+void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name, char *p2_name) {
   Texture_Manager TM;
   Game_Manager GM;
   Window window;
-  menu_choice gamemode = MULTI;
   Sound_Manager SM = init_game_SM();
+  unsigned int win_width, win_height;
+  
+  printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
   
   MLV_get_desktop_size(&win_width, &win_height);
-
+  
   window = init_window(win_width, win_height, gamemode);
   
-  MLV_create_window("EinStone", "EinStone", window.width, window.height);
+  MLV_change_window_size(window.width, window.height);
 
   TM = init_TM(window);
   GM = init_GM(&window, &TM, gamemode);
-
-  /*
-  MLV_enable_full_screen();
-  */
+  
   update_game(&GM, &TM, &SM);
 
-  MLV_stop_all_sounds();
-  MLV_free_audio();
-  
-  MLV_free_window();
-  
-  exit(0);
+  quit_game(&GM, &TM, &SM);
 }

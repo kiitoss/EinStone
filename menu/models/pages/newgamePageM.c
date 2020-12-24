@@ -3,7 +3,7 @@
 
 /* GLOBAL */
 void set_player_name(newgamePage *this, MLV_Input_box *input_box, char *text_input) {
-  char *font_path = "./res/font/Amatic-Bold.ttf";
+  char *font_path = "./resources/font/Amatic-Bold.ttf";
   Geometry g;
   g.width = this->width/3;
   if (input_box == this->p1_input.object) {
@@ -128,7 +128,7 @@ newgamePage init_newgame_page(int width, int height) {
   
   int margin_row = 2*height/3 * 0.3/4;
   int row_height = 2*height/3 * 0.7/4;
-  char *font_path = "./res/font/Amatic-Bold.ttf";
+  char *font_path = "./resources/font/Amatic-Bold.ttf";
 
   ngp.hover_btn = NULL;
   ngp.select_gamemode = NULL;

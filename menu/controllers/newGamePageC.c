@@ -2,6 +2,8 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
+void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name, char *p2_name);
+
 void update_newgame_page(newgamePage *ngp);
 
 void prepare_launching(newgamePage *ngp) {
@@ -18,7 +20,7 @@ void prepare_launching(newgamePage *ngp) {
   if (strlen(p2_name) == 0) {
     p2_name = "Joueur 2";
   }
-  printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
+  launch_newgame(gamemode, difficulty, p1_name, p2_name);
 }
 
 static void select_hover_btn(newgamePage *ngp) {
