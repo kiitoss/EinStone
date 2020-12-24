@@ -5,6 +5,7 @@
 Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode) {
   Game_Manager GM;
   int i;
+  GM.id = 0;
   GM.in_game = true;
   GM.gamemode = gamemode;
   

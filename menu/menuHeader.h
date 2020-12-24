@@ -5,8 +5,6 @@
 #define MAX_LABELS 10
 #define MAX_SECTIONS 10
 
-#define SAVED_GAMES 3
-
 typedef struct {
   int width;
   int height;

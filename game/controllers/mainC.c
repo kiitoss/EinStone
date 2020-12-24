@@ -1,6 +1,56 @@
 #include "../gameHeader.h"
 #include "../makhead.h"
 
+void save_game(Game_Manager *GM) {
+  GM_List GM_list;
+  int i;
+  bool is_free_id;
+  FILE *f = fopen("resources/data.bin", "rb");
+ 
+  if (f == NULL) {
+    printf("--> fichier de sauvegarde introuvable.\n");
+    return;
+  }
+
+ 
+  for (i=0; i<SAVED_GAMES; i++) {
+    fread(&GM_list[i], sizeof(Game_Manager), 1, f);
+  }
+
+
+  
+  for (i=SAVED_GAMES-1; i>0; i--) {
+    GM_list[i] = GM_list[i-1];
+  }
+
+  if (GM->id == 0) {
+    GM->id = 1;
+    is_free_id = false;
+    while (!is_free_id) {
+      is_free_id = true;
+      for (i=1; i<SAVED_GAMES; i++) {
+	if (GM_list[i].id == GM->id) {
+	  GM->id++;
+	  is_free_id = false;
+	  break;
+	}
+      }
+    }
+  }
+
+  GM_list[0] = *GM;
+  fclose(f);
+
+  
+  f = fopen("resources/data.bin", "wb");
+  for (i=0; i<SAVED_GAMES; i++) {
+    fwrite(&GM_list[i], sizeof(Game_Manager), 1 ,f);
+  }
+
+  fclose(f);
+  printf("saved\n");
+}
+
 void pause(Window *window, Game_Manager *GM) {
   MLV_Font *font = MLV_load_font("resources/font/Amatic-Bold.ttf", window->rectsize/2);
   Event_Manager em;
@@ -47,10 +97,10 @@ void pause(Window *window, Game_Manager *GM) {
   }
 
   if (em.event == MLV_MOUSE_BUTTON) {
-    if (hover == 1) {
-      printf("continue\n");
-    }
-    else {
+    if (hover != 1) {
+      if (hover == 2) {
+	save_game(GM);
+      }
       MLV_free_font(font);
       GM->in_game = false;
     }
@@ -161,11 +211,19 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   }
 }
 
+
+void launch_main_page(int width, int height);
+
 /* GLOBAL */
 void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
+  /*
   MLV_stop_all_sounds();
   MLV_free_audio();
+  */
+  MLV_change_window_size(GM->window.width/2, GM->window.height/2);
+  launch_main_page(GM->window.width/2, GM->window.height/2);
   MLV_free_window();
+  exit(0);
 }
 
 

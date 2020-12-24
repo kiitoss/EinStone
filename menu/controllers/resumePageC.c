@@ -51,7 +51,28 @@ void update_resume_page(resumePage *rp) {
 
 /* GLOBAL */
 void launch_resume_page(int width, int height) {
-  resumePage rp = init_resume_page(width, height);
+  Game_Manager GM;
+  GM_List GM_list;
+  resumePage rp;
+  int i;
+
+  FILE *data = fopen("resources/data.bin", "rb");
+  if (data == NULL) {
+    printf("--> Fichier de données introuvable.\n");
+  }
+  else {
+    for (i=0; i<SAVED_GAMES; i++) {
+      fread(&GM_list[i], sizeof(Game_Manager), 1, data);
+    }
+  }
+  fclose(data);
+
+  /*
+  for (i=0; i<SAVED_GAMES; i++) {
+    printf("id: %d\n", GM_list[i].id);
+  }
+  */
+  rp = init_resume_page(width, height);
   draw_resume_page(&rp);
   MLV_flush_event_queue();
   update_resume_page(&rp);
