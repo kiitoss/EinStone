@@ -78,22 +78,35 @@ Texture_Manager init_TM(Window window) {
   set_img_size(TM.field_dark_grass_img, window.rectsize, window.rectsize);
 
   TM.enemy_spawner_background = get_image_with_path("resources/backgrounds/wood.png");
-  set_img_size(TM.enemy_spawner_background,window.enemy_spawner.width, window.rectsize);
+  set_img_size(TM.enemy_spawner_background,window.field.width, window.rectsize);
 
   TM.friend_spawner_background = get_image_with_path("resources/backgrounds/wood.png");
-  set_img_size(TM.friend_spawner_background, window.friend_spawner.width, window.rectsize);
+  set_img_size(TM.friend_spawner_background, window.field.width, window.rectsize);
 
   TM.friend_home_background = get_image_with_path("resources/backgrounds/castle.jpg");
-  set_img_proportional_size(TM.friend_home_background, window.friend_home.height, window.friend_home.height);
+  set_img_size(TM.friend_home_background, window.friend_home.width, window.friend_home.height);
   
-  TM.enemy_home_background = get_image_with_path("resources/backgrounds/castle.jpg");
+  TM.enemy_home_background = get_image_with_path("resources/backgrounds/enemies.png");
   set_img_size(TM.enemy_home_background, window.enemy_home.width, window.enemy_home.height);
+
+  TM.life_friend_img = get_image_with_path("resources/backgrounds/life.png");
+  set_img_size(TM.life_friend_img, window.rectsize/6, window.rectsize/6);
+
+  TM.delete_friend_img = get_image_with_path("resources/backgrounds/delete.png");
+  set_img_size(TM.delete_friend_img, window.rectsize/2, window.rectsize/2);
   
   TM.gold_img = get_image_with_path("resources/pops/gold.png");
   set_img_size(TM.gold_img, window.rectsize/2, window.rectsize/2);
+
   TM.shot_img = get_image_with_path("resources/pops/arrow.png");
   set_img_proportional_size(TM.shot_img, window.rectsize/2, window.rectsize/2);
- 
+  
+  TM.score_img = get_image_with_path("resources/pops/gold.png");
+  set_img_size(TM.score_img, window.rectsize/4, window.rectsize/4);
+
+  TM.font_size= 20;
+  TM.font = MLV_load_font ("resources/font/AdobeDevanagari-Bold.otf", TM.font_size);
+  
   for (i=0; i<NB_FRIENDS; i++) {
     TM.friend_spawners_sprites[i] = get_friend_spawner_sprite(i);
     TM.friend_spawners_imgs[i] = get_spawner_img_from_sprite(TM.friend_spawners_sprites[i], window.rectsize, window.friend_spawner.height);

@@ -65,6 +65,7 @@ typedef struct {
   int score;
   int life;
   char life_str[2];
+  bool is_deleting;
 } Player_1;
 
 typedef struct {
@@ -178,4 +179,9 @@ typedef struct {
   MLV_Image *enemy_spawners_imgs[NB_ENEMIES];
   MLV_Image *gold_img;
   MLV_Image *shot_img;
+  MLV_Image *life_friend_img;
+  MLV_Image *delete_friend_img;
+  MLV_Image *score_img;
+  MLV_Font *font;
+  int font_size;
 } Texture_Manager;

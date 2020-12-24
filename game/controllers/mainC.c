@@ -94,30 +94,43 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
 
 void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
   int gridX, gridY;
-  if (mouseX < GM->window.field.posX || mouseX > GM->window.field.posX + GM->window.field.width) {
-    return;
-  }
-  gridX = (mouseX - GM->window.field.posX) / GM->window.rectsize;
-
-  if (mouseY < GM->window.field.posY) {
-    if (gridX > NB_FRIENDS || gridX == 0) {
-      return;
+  if (mouseX >= GM->window.field.posX && mouseX <= GM->window.field.posX + GM->window.field.width) {
+    gridX = (mouseX - GM->window.field.posX) / GM->window.rectsize;
+    
+    if (mouseY < GM->window.field.posY) {
+      if (gridX == NB_COLUMNS-1) {
+	GM->p1.chosen_friend = -1;
+	GM->p1.is_deleting = true;
+      }
+      else if (gridX <= NB_FRIENDS && gridX != 0) {
+	GM->p1.chosen_friend = gridX - 1;
+      }
+      else {
+	GM->p1.chosen_friend = -1;
+	GM->p1.is_deleting = false;}
     }
-    GM->p1.chosen_friend = gridX - 1;
-  }
-  else if (mouseY < GM->window.field.posX + GM->window.field.height) {
-    gridY = (mouseY - GM->window.field.posY) / GM->window.rectsize;
-    if (GM->p1.chosen_friend != -1 && GM->rows[gridY].friends[gridX].id_friend == -1) {
-      p1_buy_friend(&GM->p1,
-		    &GM->rows[gridY],
-		    &GM->friend_spawners[GM->p1.chosen_friend],
-		    gridX,
-		    gridY);
+    
+    else if (mouseY < GM->window.field.posX + GM->window.field.height) {
+      gridY = (mouseY - GM->window.field.posY) / GM->window.rectsize;
+      if (GM->p1.chosen_friend != -1 && GM->rows[gridY].friends[gridX].id_friend == -1) {
+	p1_buy_friend(&GM->p1,
+		      &GM->rows[gridY],
+		      &GM->friend_spawners[GM->p1.chosen_friend],
+		      gridX,
+		      gridY);
+	GM->p1.is_deleting = false;
+      }
+      else if(GM->p1.is_deleting == true && is_friend(&GM->rows[gridY].friends[gridX])){
+	remove_friend_from_row(&GM->rows[gridY].friends[gridX]);
+	GM->p1.is_deleting = false;
     }
-    else {
-      check_click_gold(GM, mouseX, mouseY);
+      else {
+	check_click_gold(GM, mouseX, mouseY);
+	GM->p1.is_deleting = false;
+      }
     }
   }
+  else {GM->p1.chosen_friend = -1; GM->p1.is_deleting = false;}
 }
 
 void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
