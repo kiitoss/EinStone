@@ -3,8 +3,23 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o resumeSectionM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o graphM.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o buttonM.o generalM.o inputM.o labelM.o resumeSectionM.o mainPageM.o newgamePageM.o resumePageM.o objectV.o pageV.o graphM.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o resumeSection.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+
+button.o: ./GUI/button.c
+	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
+
+general.o: ./GUI/general.c
+	$(CC) $(CFLAGS) ./GUI/general.c -c -I ./
+
+input.o: ./GUI/input.c
+	$(CC) $(CFLAGS) ./GUI/input.c -c -I ./
+
+label.o: ./GUI/label.c
+	$(CC) $(CFLAGS) ./GUI/label.c -c -I ./
+
+resumeSection.o: ./GUI/resumeSection.c
+	$(CC) $(CFLAGS) ./GUI/resumeSection.c -c -I ./
 
 enemyC.o: ./game/controllers/enemyC.c
 	$(CC) $(CFLAGS) ./game/controllers/enemyC.c -c -I ./
@@ -81,38 +96,17 @@ resumePageC.o: ./menu/controllers/resumePageC.c
 scorePageC.o: ./menu/controllers/scorePageC.c
 	$(CC) $(CFLAGS) ./menu/controllers/scorePageC.c -c -I ./
 
-buttonM.o: ./menu/models/objects/buttonM.c
-	$(CC) $(CFLAGS) ./menu/models/objects/buttonM.c -c -I ./
+mainPageM.o: ./menu/models/mainPageM.c
+	$(CC) $(CFLAGS) ./menu/models/mainPageM.c -c -I ./
 
-generalM.o: ./menu/models/objects/generalM.c
-	$(CC) $(CFLAGS) ./menu/models/objects/generalM.c -c -I ./
+newgamePageM.o: ./menu/models/newgamePageM.c
+	$(CC) $(CFLAGS) ./menu/models/newgamePageM.c -c -I ./
 
-inputM.o: ./menu/models/objects/inputM.c
-	$(CC) $(CFLAGS) ./menu/models/objects/inputM.c -c -I ./
-
-labelM.o: ./menu/models/objects/labelM.c
-	$(CC) $(CFLAGS) ./menu/models/objects/labelM.c -c -I ./
-
-resumeSectionM.o: ./menu/models/objects/resumeSectionM.c
-	$(CC) $(CFLAGS) ./menu/models/objects/resumeSectionM.c -c -I ./
-
-mainPageM.o: ./menu/models/pages/mainPageM.c
-	$(CC) $(CFLAGS) ./menu/models/pages/mainPageM.c -c -I ./
-
-newgamePageM.o: ./menu/models/pages/newgamePageM.c
-	$(CC) $(CFLAGS) ./menu/models/pages/newgamePageM.c -c -I ./
-
-resumePageM.o: ./menu/models/pages/resumePageM.c
-	$(CC) $(CFLAGS) ./menu/models/pages/resumePageM.c -c -I ./
-
-objectV.o: ./menu/views/objectV.c
-	$(CC) $(CFLAGS) ./menu/views/objectV.c -c -I ./
+resumePageM.o: ./menu/models/resumePageM.c
+	$(CC) $(CFLAGS) ./menu/models/resumePageM.c -c -I ./
 
 pageV.o: ./menu/views/pageV.c
 	$(CC) $(CFLAGS) ./menu/views/pageV.c -c -I ./
-
-graphM.o: ./graphM.c
-	$(CC) $(CFLAGS) ./graphM.c -c -I ./
 
 clean:
 	rm -rf *.o

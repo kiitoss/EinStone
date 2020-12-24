@@ -8,48 +8,6 @@
 typedef struct {
   int width;
   int height;
-  int posX;
-  int posY;
-  char *text;
-  char *font_path;
-  int font_size;
-  MLV_Color color;
-  bool is_hidden;
-} Label;
-
-typedef struct {
-  Geometry container;
-  int width;
-  int height;
-  int posX;
-  int posY;
-  char *text;
-  char *font_path;
-  int font_size;
-  MLV_Color color;
-  bool is_hover;
-  bool is_select;
-  menu_choice value;
-  bool is_hidden;
-} Button;
-
-typedef struct {
-  int width;
-  int height;
-  int posX;
-  int posY;
-  char *placeholder;
-  char *font_path;
-  int font_size;
-  MLV_Color color;
-  MLV_Input_box *object;
-  MLV_Font *font;
-  bool is_hidden;
-} Input;
-
-typedef struct {
-  int width;
-  int height;
   Label title_lbl;
   Button newgame_btn;
   Button resume_btn;
@@ -77,18 +35,6 @@ typedef struct {
   Button *select_gamemode;
   Button *select_difficulty;
 } newgamePage;
-
-
-typedef struct {
-  bool exist;
-  int width;
-  int height;
-  int posX;
-  int posY;
-  Label section_lbl;
-  bool is_hover;
-  bool is_select;
-} resumeSection;
 
 typedef struct {
   int width;

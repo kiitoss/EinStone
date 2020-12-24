@@ -1,5 +1,11 @@
-#include "../../menuHeader.h"
-#include "../../makhead.h"
+#include "GUI_header.h"
+#include "makhead.h"
+
+/* GLOBAL */
+void draw_input(Input *this) {
+  if (this->is_hidden) {return;}
+  MLV_draw_input_box(this->object);
+}
 
 void set_input_object(Input *this) {
   MLV_Font *font = MLV_load_font(this->font_path, this->font_size);

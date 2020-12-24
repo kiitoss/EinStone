@@ -14,7 +14,9 @@ void save_game(Game_Manager *GM) {
 
  
   for (i=0; i<SAVED_GAMES; i++) {
-    fread(&GM_list[i], sizeof(Game_Manager), 1, f);
+    if (!fread(&GM_list[i], sizeof(Game_Manager), 1, f)) {
+      printf("Erreur lors de l'écriture des scores.\n");
+    }
   }
 
 
@@ -54,8 +56,7 @@ void save_game(Game_Manager *GM) {
 void pause(Window *window, Game_Manager *GM) {
   MLV_Font *font = MLV_load_font("resources/font/Amatic-Bold.ttf", window->rectsize/2);
   Event_Manager em;
-  em.event = MLV_NONE;
-  
+
   char *play = "Play";
   char *save_quit = "Save and Quit";
   char *quit = "Quit";
@@ -66,6 +67,8 @@ void pause(Window *window, Game_Manager *GM) {
   int i;
   
   Geometry g[3];
+  
+  em.event = MLV_NONE;
   
   MLV_get_size_of_adapted_text_box_with_font(play, font, line_size, &g[0].width, &g[0].height);
   MLV_get_size_of_adapted_text_box_with_font(save_quit, font, line_size, &g[1].width, &g[1].height);
@@ -196,7 +199,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     p1_create_free_gold(&GM->p1, &GM->rows[random_row], rand() % NB_COLUMNS, random_row, SM);
   }
   if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
-    update_rows(GM, TM, SM);
+    update_rows(GM, SM);
     GM->last_refresh = MLV_get_time();
   }
   else if (em.event == MLV_KEY) {
@@ -216,10 +219,16 @@ void launch_main_page(int width, int height);
 
 /* GLOBAL */
 void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
-  /*
-  MLV_stop_all_sounds();
-  MLV_free_audio();
-  */
+  /* Libération des sons */
+  if (SM->sound_works) {
+    MLV_stop_all_sounds();
+    MLV_free_audio();
+  }
+
+  /* Libération des images. */
+  MLV_free_image(TM->gold_img);
+
+  
   MLV_change_window_size(GM->window.width/2, GM->window.height/2);
   launch_main_page(GM->window.width/2, GM->window.height/2);
   MLV_free_window();

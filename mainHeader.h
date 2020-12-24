@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <MLV/MLV_all.h>
+#include "GUI/GUI_header.h"
+#include "GUI/makhead.h"
+#include "global_header.h"
 #include <time.h>
 
 #define NB_FRIENDS 4
@@ -21,20 +23,11 @@
 
 #define SAVED_GAMES 3
 
-void set_object_dimension(char *text, char *font_path, int font_size, int *object_width, int *object_height);
-
-int get_object_font_size(char *text, char *font_path, int max_width, int max_height);
-
 /* Reproduction de la variable booléen */
-enum bool {false, true};
-typedef enum bool bool;
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
 typedef enum enemy_type_attacks enemy_type_attacks;
 typedef enum friend_abilities friend_abilities;
-
-enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH};
-typedef enum menu_choices menu_choice;
 
 typedef struct {
   MLV_Event event;
@@ -45,13 +38,6 @@ typedef struct {
   char *text_input;
   MLV_Input_box *input_box;
 } Event_Manager;
-
-typedef struct {
-  int posX;
-  int posY;
-  int width;
-  int height;
-} Geometry;
 
 typedef struct {
   MLV_Sound *sound;
@@ -66,13 +52,6 @@ typedef struct {
   Sound punch;
   Sound spear;
 } Sound_Manager;
-
-typedef struct {
-  int posX;
-  int posY;
-  int width;
-  int height;
-} Container;
 
 typedef struct {
   int width;

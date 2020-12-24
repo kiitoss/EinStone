@@ -1,5 +1,21 @@
-#include "../../menuHeader.h"
-#include "../../makhead.h"
+#include "GUI_header.h"
+#include "makhead.h"
+
+/* GLOBAL */
+void draw_resume_section(resumeSection *this) {
+  MLV_Color border_color = MLV_rgba(0,0,0,0);
+  if (!this->exist) {return;}
+  if (this->is_select || this->is_hover) {
+    if (this->is_select) {
+      border_color = MLV_COLOR_GREEN;
+    }
+    else {
+      border_color = MLV_COLOR_ORANGE;
+    }
+  }
+  MLV_draw_rectangle(this->posX, this->posY, this->width, this->height, border_color);
+  draw_label(&this->section_lbl);
+}
 
 /* GLOBAL */
 bool is_resumeSection_hover(resumeSection *this, int posX, int posY) {

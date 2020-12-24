@@ -51,7 +51,6 @@ void update_resume_page(resumePage *rp) {
 
 /* GLOBAL */
 void launch_resume_page(int width, int height) {
-  Game_Manager GM;
   GM_List GM_list;
   resumePage rp;
   int i;
@@ -62,7 +61,9 @@ void launch_resume_page(int width, int height) {
   }
   else {
     for (i=0; i<SAVED_GAMES; i++) {
-      fread(&GM_list[i], sizeof(Game_Manager), 1, data);
+      if (!fread(&GM_list[i], sizeof(Game_Manager), 1, data)) {
+	printf("Erreur lors de la lecture des scores.\n");
+      }
     }
   }
   fclose(data);

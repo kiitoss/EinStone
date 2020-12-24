@@ -92,7 +92,7 @@ void remove_all_enemies_in_row(Row *r, Player_1 *p1) {
 }
 
 /* GLOBAL */
-void update_rows(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
+void update_rows(Game_Manager *GM, Sound_Manager *SM) {
   int i, j;
   Row *r;
   for (i=0; i<NB_ROWS; i++) {

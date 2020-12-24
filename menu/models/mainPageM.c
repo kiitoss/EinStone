@@ -1,5 +1,5 @@
-#include "../../menuHeader.h"
-#include "../../makhead.h"
+#include "../menuHeader.h"
+#include "../makhead.h"
 
 /* GLOBAL */
 mainPage init_main_page(int width, int height) {

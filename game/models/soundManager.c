@@ -12,7 +12,6 @@ void play_sound(Sound_Manager *SM, Sound *this) {
 /* GLOBAL */
 Sound_Manager init_game_SM() {
   Sound_Manager SM;
-  MLV_Sound *sound;
   
   if( MLV_init_audio() ){
     SM.sound_works = false;

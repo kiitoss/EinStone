@@ -2,7 +2,7 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-Row init_row(int posX, int posY, int rectsize) {
+Row init_row(int rectsize) {
   Row r;
   int i;
   for (i=0; i<NB_COLUMNS; i++) {

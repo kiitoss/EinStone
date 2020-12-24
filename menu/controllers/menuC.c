@@ -4,6 +4,7 @@
 int main(int argc, char *argv[]) {
   unsigned int win_width, win_height;
   int width, height;
+  printf("%d, %s\n", argc, *argv);
   MLV_get_desktop_size(&win_width, &win_height);
   width = win_width / 2;
   height = win_height / 2;

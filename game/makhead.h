@@ -31,7 +31,7 @@ void remove_shot_from_row(Row *this, int index_shot);
 void remove_enemy_from_row(Row *this, int index_enemy, Sound_Manager *SM);
 void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY);
 void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
-void update_rows(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM);
+void update_rows(Game_Manager *GM, Sound_Manager *SM);
 
 /* models/animationM.c */
 MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation, int first_frame, int last_frame, int time);
@@ -60,7 +60,7 @@ Player_1 init_p1();
 Player_2 init_p2();
 
 /* models/rowM.c */
-Row init_row(int posX, int posY, int rectsize);
+Row init_row(int rectsize);
 
 /* models/shotM.c */
 Shot get_new_shot(int posX, int posY, int rectsize, int attack);
