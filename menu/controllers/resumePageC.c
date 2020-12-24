@@ -10,6 +10,7 @@ void select_hover_btn_or_section(resumePage *rp) {
 void update_hover_btn_and_section(resumePage *rp, int posX, int posY) {
   Button *hover_btn = get_resume_page_hover_btn(rp, posX, posY);
   resumeSection *hover_section = get_resume_page_hover_section(rp, posX, posY);
+
   if (rp->hover_btn != hover_btn) {
     unset_hover_btn(rp->hover_btn);
     set_hover_btn(hover_btn);
@@ -27,11 +28,10 @@ void update_resume_page(resumePage *rp) {
   Event_Manager em;
   draw_resume_page(rp);
   em = get_event();
-  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED || (rp->hover_btn == NULL && rp->hover_section == NULL)) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
+  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || (rp->hover_btn == NULL && rp->hover_section == NULL)) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
-  MLV_flush_event_queue();
-  if (em.event == MLV_MOUSE_BUTTON && em.btn_state == MLV_PRESSED && (rp->hover_btn != NULL || rp->hover_section != NULL)) {
+  if (em.event == MLV_MOUSE_BUTTON && (rp->hover_btn != NULL || rp->hover_section != NULL)) {
     select_hover_btn_or_section(rp);
     if (rp->hover_btn != NULL && rp->hover_btn->value == BACK) {
       launch_main_page(rp->width, rp->height);
