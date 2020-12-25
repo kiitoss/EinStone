@@ -2,19 +2,10 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-void draw_pause(int hover, int line_size, MLV_Font *font, Geometry g[3], char *play, char *save_quit, char *quit) {
-  MLV_Color color;
-  char *text;
-  int i;
-  for (i=0; i<3; i++) {
-    color = (hover == i+1) ? MLV_COLOR_YELLOW : MLV_COLOR_BROWN;
-    switch (i) {
-    case 0: text = play; break;
-    case 1: text = save_quit; break;
-    case 2: text = quit; break;
-    }
-    MLV_draw_adapted_text_box_with_font(g[i].posX, g[i].posY, text, font, line_size, MLV_COLOR_BLACK, MLV_COLOR_BLACK, color, MLV_TEXT_CENTER);
-  }
+void draw_pause_screen(pauseScreen *this) {
+  draw_button(&this->play_btn);
+  draw_button(&this->save_quit_btn);
+  draw_button(&this->quit_btn);
   MLV_update_window();
 }
 

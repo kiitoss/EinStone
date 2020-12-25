@@ -23,7 +23,7 @@ void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
   for (i=0; i<NB_ROWS; i++) {
     for (j=0; j<GM->rows[i].nb_golds; j++) {
       g = &GM->rows[i].golds[j];
-      if (mouseX >= g->centerX - g->radius/2 && mouseX <= g->centerX + g->radius/2 && mouseY >= g->centerY - g->radius/2 && mouseY <=g->centerY + g->radius/2) {
+      if (mouseX >= g->centerX - g->radius/2 && mouseX <= g->centerX + g->radius/2 && mouseY >= g->centerY - g->radius/2 && mouseY <= g->centerY + g->radius/2) {
 	p1_add_gold(&GM->p1, g->value);
 	remove_gold_from_row(&GM->rows[i], j);
 	get = true;

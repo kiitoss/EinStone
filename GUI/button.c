@@ -18,10 +18,13 @@ void draw_button(Button *this) {
     else {
       background_color = MLV_COLOR_ORANGE;
     }
-
-    MLV_draw_rectangle(this->container.posX, this->container.posY - border_size, this->container.width, this->container.height + 2*border_size, background_color);
-    MLV_draw_filled_rectangle(this->container.posX, this->container.posY, this->container.width, this->container.height, background_color);
   }
+  else {
+    background_color = this->background_color;
+  }
+
+  MLV_draw_rectangle(this->container.posX, this->container.posY - border_size, this->container.width, this->container.height + 2*border_size, background_color);
+  MLV_draw_filled_rectangle(this->container.posX, this->container.posY, this->container.width, this->container.height, background_color);
 
   MLV_draw_adapted_text_box_with_font(this->posX, this->posY, this->text, font, 0, MLV_rgba(0,0,0,0), this->color, MLV_rgba(0,0,0,0), MLV_TEXT_CENTER);
   MLV_free_font(font);
@@ -41,11 +44,12 @@ bool is_btn_select(Button *this) {
 }
 
 /* GLOBAL */
-Button get_new_button(Geometry g, char *text, MLV_Color color, char *font_path, menu_choice value) {
+Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, menu_choice value) {
   Button btn;
   btn.container = g;
   btn.text = text;
   btn.color = color;
+  btn.background_color = background_color;
   btn.font_path = font_path;
   btn.is_hover = false;
   btn.is_select = false;
@@ -64,36 +68,36 @@ Button get_new_button(Geometry g, char *text, MLV_Color color, char *font_path, 
 
 /* GLOBAL */
 void set_hover_btn(Button *this) {
-  if (this == NULL) {return;}
+  if (this == NULL || this->is_hover) {return;}
   this->is_hover = true;
 }
 
 /* GLOBAL */
 void unset_hover_btn(Button *this) {
-  if (this == NULL) {return;}
+  if (this == NULL || !this->is_hover) {return;}
   this->is_hover = false;
 }
 
 /* GLOBAL */
 void set_select_btn(Button *this) {
-  if (this == NULL) {return;}
+  if (this == NULL || this->is_select) {return;}
   this->is_select = true;
 }
 
 /* GLOBAL */
 void unset_select_btn(Button *this) {
-  if (this == NULL) {return;}
+  if (this == NULL || !this->is_select) {return;}
   this->is_select = false;
 }
 
 /* GLOBAL */
 void set_hidden_btn(Button *this) {
-  if (this == NULL) {return;}
+  if (this == NULL || this->is_hidden) {return;}
   this->is_hidden = true;
 }
 
 /* GLOBAL */
 void unset_hidden_btn(Button *this) {
-  if (this == NULL) {return;}
+  if (this == NULL || !this->is_hidden) {return;}
   this->is_hidden = false;
 }

@@ -26,7 +26,6 @@ Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   e.posX = posX;
   e.posY = posY;
   e.is_walking = true;
-  e.delay_frame_attack = spawner->delay_frame_attack;
   e.DELAY_ATTACK = spawner->DELAY_ATTACK;
   e.delay_attack = spawner->DELAY_ATTACK;
   e.type_attack = spawner->type_attack;

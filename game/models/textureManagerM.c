@@ -53,6 +53,8 @@ MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
   return get_image_with_path(path);
 }
 
+
+
 MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spawner_height) {
   MLV_Image *spawner_img;
   spawner_img = MLV_copy_partial_image(sprite, 64, 3*64, 64, 64); 
@@ -67,6 +69,23 @@ void set_img_size(MLV_Image *img, int width, int height) {
 void set_img_proportional_size(MLV_Image *img, int width, int height){
   MLV_resize_image_with_proportions(img, width, height);
 }
+
+pauseScreen get_pause_screen(Window window) {
+  Geometry g;
+  pauseScreen pause_screen;
+  g.posX = 3*window.width/8;
+  g.posY = 4*window.height/12;
+  g.width = window.width/4;
+  g.height = window.height/12;
+  pause_screen.play_btn = get_new_button(g, "Play", MLV_COLOR_YELLOW, MLV_COLOR_BROWN, "resources/font/Amatic-Bold.ttf", PAUSE_PLAY);
+  g.posY += 2*window.height/12;
+  pause_screen.save_quit_btn = get_new_button(g, "Save and Quit", MLV_COLOR_YELLOW, MLV_COLOR_BROWN, "resources/font/Amatic-Bold.ttf", PAUSE_SAVE_QUIT);
+  g.posY += 2*window.height/12;
+  pause_screen.quit_btn = get_new_button(g, "Quit", MLV_COLOR_YELLOW, MLV_COLOR_BROWN, "resources/font/Amatic-Bold.ttf", PAUSE_QUIT);
+  pause_screen.hover_btn = NULL;
+  return pause_screen;
+}
+
 /* GLOBAL */
 Texture_Manager init_TM(Window window) {
   int i;
@@ -115,5 +134,33 @@ Texture_Manager init_TM(Window window) {
     TM.enemy_spawners_sprites[i] = get_enemy_spawner_sprite(i);
     TM.enemy_spawners_imgs[i] = get_spawner_img_from_sprite(TM.enemy_spawners_sprites[i], window.rectsize, window.enemy_spawner.height);
   }
+
+  TM.pause_screen = get_pause_screen(window);
   return TM;
+}
+
+/* GLOBAL */
+void free_TM(Texture_Manager *this) {
+  int i;
+  MLV_free_image(this->field_light_grass_img);
+  MLV_free_image(this->field_dark_grass_img);
+  MLV_free_image(this->enemy_spawner_background);
+  MLV_free_image(this->friend_spawner_background);
+  MLV_free_image(this->enemy_home_background);
+  MLV_free_image(this->friend_home_background);
+
+  for (i=0; i<NB_FRIENDS; i++) {
+    MLV_free_image(this->friend_spawners_sprites[i]);
+    MLV_free_image(this->friend_spawners_imgs[i]);
+  }
+
+  for (i=0; i<NB_ENEMIES; i++) {
+    MLV_free_image(this->enemy_spawners_sprites[i]);
+    MLV_free_image(this->enemy_spawners_imgs[i]);
+  }
+  MLV_free_image(this->gold_img);
+  MLV_free_image(this->shot_img);
+  MLV_free_image(this->life_friend_img);
+  MLV_free_image(this->delete_friend_img);
+  MLV_free_image(this->score_img);
 }

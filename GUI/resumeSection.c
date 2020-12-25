@@ -54,24 +54,24 @@ resumeSection get_new_resumeSection(Geometry container, char *text, char *font_p
 
 /* GLOBAL */
 void set_hover_resume_section(resumeSection *this) {
-  if (this == NULL || !this->exist) {return;}
+  if (this == NULL || !this->exist || this->is_hover) {return;}
   this->is_hover = true;
 }
 
 /* GLOBAL */
 void unset_hover_resume_section(resumeSection *this) {
-  if (this == NULL || !this->exist) {return;}
+  if (this == NULL || !this->exist || !this->is_hover) {return;}
   this->is_hover = false;
 }
 
 /* GLOBAL */
 void set_select_resume_section(resumeSection *this) {
-  if (this == NULL || !this->exist) {return;}
+  if (this == NULL || !this->exist || this->is_select) {return;}
   this->is_select = true;
 }
 
 /* GLOBAL */
 void unset_select_resume_section(resumeSection *this) {
-  if (this == NULL || !this->exist) {return;}
+  if (this == NULL || !this->exist || !this->is_select) {return;}
   this->is_select = false;
 }

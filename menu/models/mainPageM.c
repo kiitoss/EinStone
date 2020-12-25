@@ -27,16 +27,16 @@ mainPage init_main_page(int width, int height) {
   g.height = row_height;
   g.posY += title_height + margin_title;
   
-  mp.newgame_btn = get_new_button(g, "New Game", MLV_COLOR_RED, font_path, NEWGAME);
+  mp.newgame_btn = get_new_button(g, "New Game", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, NEWGAME);
   g.posY += row_height + margin_row;
   
-  mp.resume_btn = get_new_button(g, "Resume", MLV_COLOR_RED, font_path, RESUME);
+  mp.resume_btn = get_new_button(g, "Resume", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, RESUME);
   g.posY += row_height + margin_row;
   
-  mp.score_btn = get_new_button(g, "Score", MLV_COLOR_RED, font_path, SCORE);
+  mp.score_btn = get_new_button(g, "Score", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, SCORE);
   g.posY += row_height + margin_row;
   
-  mp.quit_btn = get_new_button(g, "Quit", MLV_COLOR_RED, font_path, BACK);
+  mp.quit_btn = get_new_button(g, "Quit", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, BACK);
 
   return mp;
 }

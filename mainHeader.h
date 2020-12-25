@@ -108,7 +108,6 @@ typedef struct {
   MLV_Animation *animation_passive;
   MLV_Animation *animation_ability;
   friend_abilities ability;
-  int delay_frame_ability;
   int life;
   int attack;
   int price;
@@ -126,7 +125,6 @@ typedef struct {
   int speed;
   int price;
   char price_str[5];
-  int delay_frame_attack;
   int DELAY_ATTACK;
   int range;
   int padding;
@@ -138,7 +136,6 @@ typedef struct {
   MLV_Animation_player *animation_ability;
   MLV_Animation_player *animation;
   friend_abilities ability;
-  int delay_frame_ability;
   int life;
   int attack;
   int delay_ability;
@@ -157,7 +154,6 @@ typedef struct {
   int life;
   int attack;
   int speed;
-  int delay_frame_attack;
   int DELAY_ATTACK;
   int delay_attack;
   int range;
@@ -195,6 +191,13 @@ typedef struct {
 typedef Game_Manager GM_List[SAVED_GAMES];
 
 typedef struct {
+  Button play_btn;
+  Button save_quit_btn;
+  Button quit_btn;
+  Button *hover_btn;
+} pauseScreen;
+
+typedef struct {
   MLV_Image *field_light_grass_img;
   MLV_Image *field_dark_grass_img;
   MLV_Image *enemy_spawner_background;
@@ -212,4 +215,5 @@ typedef struct {
   MLV_Image *score_img;
   MLV_Font *font;
   int font_size;
+  pauseScreen pause_screen;
 } Texture_Manager;

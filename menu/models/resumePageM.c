@@ -38,9 +38,9 @@ resumePage init_resume_page(int width, int height) {
 
   g.width = width/4;
   g.posX = 0;
-  rp.back_btn = get_new_button(g, "Back", MLV_COLOR_RED, font_path, BACK);
+  rp.back_btn = get_new_button(g, "Back", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, BACK);
   g.posX = 3*width/4;
-  rp.launch_btn = get_new_button(g, "Launch", MLV_COLOR_RED, font_path, LAUNCH);
+  rp.launch_btn = get_new_button(g, "Launch", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, LAUNCH);
 
   return rp;
 }

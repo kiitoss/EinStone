@@ -18,7 +18,6 @@ void update_friend_animation(Friend *this, Row *row, Sound_Manager *SM);
 void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM);
 
 /* controllers/playerC.c */
-void p1_create_free_gold(Player_1 *this, Row *row, int gridX, int gridY, Sound_Manager *SM);
 void p2_create_free_gold(Player_2 *this);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
@@ -72,6 +71,7 @@ Shot get_new_shot(int posX, int posY, int rectsize, int attack);
 /* models/soundManager.c */
 void play_sound(Sound_Manager *SM, Sound *this);
 Sound_Manager init_game_SM();
+void free_SM(Sound_Manager *SM);
 
 /* models/spawnerM.c */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window);
@@ -80,12 +80,13 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window);
 /* models/textureManagerM.c */
 void set_img_size(MLV_Image *img, int width, int height);
 Texture_Manager init_TM(Window window);
+void free_TM(Texture_Manager *this);
 
 /* models/windowM.c */
 Window init_window(unsigned int win_width, unsigned int win_height, menu_choice gamemode);
 
 /* views/gameV.c */
-void draw_pause(int hover, int line_size, MLV_Font *font, Geometry g[3], char *play, char *save_quit, char *quit);
+void draw_pause_screen(pauseScreen *this);
 void draw_game(Game_Manager *GM, Texture_Manager *TM);
 Event_Manager get_game_event();
 

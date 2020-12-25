@@ -37,3 +37,17 @@ Sound_Manager init_game_SM() {
   
   return SM;
 }
+
+
+/* GLOBAL */
+void free_SM(Sound_Manager *SM) {
+  if (!SM->sound_works) {return;}
+  
+  MLV_stop_all_sounds();
+  
+  MLV_free_sound(SM->arrow.sound);
+  MLV_free_sound(SM->big_monster_roar.sound);
+  MLV_free_sound(SM->gold.sound);
+  MLV_free_sound(SM->punch.sound);
+  MLV_free_sound(SM->spear.sound);
+}

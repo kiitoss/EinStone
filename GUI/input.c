@@ -48,14 +48,14 @@ void free_input(Input *this) {
 
 /* GLOBAL */
 void set_hidden_input(Input *this) {
-  if (this->object == NULL) {return;}
+  if (this->object == NULL || this->is_hidden) {return;}
   this->is_hidden = true;
   MLV_change_input_box_geometry(this->object, 0, 0, 0, 0);
 }
 
 /* GLOBAL */
 void unset_hidden_input(Input *this) {
-  if (this->object == NULL) {return;}
+  if (this->object == NULL || !this->is_hidden) {return;}
   this->is_hidden = false;
   MLV_change_input_box_geometry(this->object, this->posX, this->posY, this->width, this->height);
 }

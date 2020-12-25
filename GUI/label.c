@@ -32,11 +32,13 @@ Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path) {
 
 /* GLOBAL */
 void set_hidden_lbl(Label *this) {
+  if (this->is_hidden) {return;}
   this->is_hidden = true;
 }
 
 /* GLOBAL */
 void unset_hidden_lbl(Label *this) {
+  if (!this->is_hidden) {return;}
   this->is_hidden = false;
 }
 

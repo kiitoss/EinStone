@@ -1,6 +1,13 @@
 #include "../../mainHeader.h"
 #include "../makhead.h"
 
+
+
+void launch_main_page(int width, int height);
+
+
+
+/* Sauvegarde la partie en cours */
 void save_game(Game_Manager *GM) {
   GM_List GM_list;
   int i;
@@ -12,19 +19,19 @@ void save_game(Game_Manager *GM) {
     return;
   }
 
- 
+  /* Lecture des anciennes sauvegardes dans la liste des parties */
   for (i=0; i<SAVED_GAMES; i++) {
     if (!fread(&GM_list[i], sizeof(Game_Manager), 1, f)) {
       printf("Erreur lors de l'écriture des scores.\n");
     }
   }
 
-
-  
+  /* Incrémentation des sauvegardes */
   for (i=SAVED_GAMES-1; i>0; i--) {
     GM_list[i] = GM_list[i-1];
   }
 
+  /* Attribution d'un id à la partie en cours */
   if (GM->id == 0) {
     GM->id = 1;
     is_free_id = false;
@@ -40,79 +47,89 @@ void save_game(Game_Manager *GM) {
     }
   }
 
+  /* Insertion de la partie en cours dans la liste des parties */
   GM_list[0] = *GM;
   fclose(f);
 
-  
+  /* Ecriture de la liste des parties sauvegardées */
   f = fopen("resources/data.bin", "wb");
   for (i=0; i<SAVED_GAMES; i++) {
     fwrite(&GM_list[i], sizeof(Game_Manager), 1 ,f);
   }
 
   fclose(f);
-  printf("saved\n");
 }
 
-void pause(Window *window, Game_Manager *GM) {
-  MLV_Font *font = MLV_load_font("resources/font/Amatic-Bold.ttf", window->rectsize/2);
+
+
+
+
+/* Mise en pause du jeu */
+void pause(Window *window, Game_Manager *GM, pauseScreen *ps) {
   Event_Manager em;
-
-  char *play = "Play";
-  char *save_quit = "Save and Quit";
-  char *quit = "Quit";
-  
-  int line_size = window->rectsize / 5;
-  int hover = 0;
-  int last_hover = 0;
-  int i;
-  
-  Geometry g[3];
-  
+  Button *hover_btn;
   em.event = MLV_NONE;
-  
-  MLV_get_size_of_adapted_text_box_with_font(play, font, line_size, &g[0].width, &g[0].height);
-  MLV_get_size_of_adapted_text_box_with_font(save_quit, font, line_size, &g[1].width, &g[1].height);
-  MLV_get_size_of_adapted_text_box_with_font(quit, font, line_size, &g[2].width, &g[2].height);
 
-  for (i=0; i<3; i++) {
-    g[i].posX = (window->width - g[i].width) / 2;
-    g[i].posY = (i+1)*(window->height/3 - g[i].height);
-  }
+  ps->hover_btn = NULL;
 
+  /* Mise en palce d'un filtre sur le jeu et dessin des boutons de l'écran de pause. */
   MLV_draw_filled_rectangle(0, 0, window->width, window->height, MLV_rgba(255, 255, 200, 200));
-  draw_pause(hover, line_size, font, g, play, save_quit, quit);
-  
-  while ((em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || hover == 0)) {
+  draw_pause_screen(ps);
+
+  /* Attente du choix du joueur et mise en évidence du bouton survolé. */
+  while ((em.event != MLV_KEY || (em.touch != MLV_KEYBOARD_ESCAPE && em.touch != MLV_KEYBOARD_p) || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || ps->hover_btn == NULL)) {
     em = get_game_event();
 
     if (em.event == MLV_MOUSE_MOTION) {
-      last_hover = hover;
-      hover = 0;
-      for (i=0; i<3; i++) {
-	if (em.mouseX >= g[i].posX && em.mouseX <= g[i].posX + g[i].width && em.mouseY >= g[i].posY && em.mouseY <= g[i].posY + g[i].height) {
-	  hover = i+1;
-	}
+      hover_btn = NULL;
+      if (is_btn_hover(&ps->play_btn, em.mouseX, em.mouseY)) {
+	hover_btn = &ps->play_btn;
       }
-      if (hover != last_hover) {
-	draw_pause(hover, line_size, font, g, play, save_quit, quit);
+      else if (is_btn_hover(&ps->save_quit_btn, em.mouseX, em.mouseY)) {
+	hover_btn = &ps->save_quit_btn;
+      }
+      else if (is_btn_hover(&ps->quit_btn, em.mouseX, em.mouseY)) {
+	hover_btn = &ps->quit_btn;
+      }
+
+      if (ps->hover_btn != hover_btn) {
+	unset_hover_btn(ps->hover_btn);
+	set_hover_btn(hover_btn);
+	ps->hover_btn = hover_btn;
+	draw_pause_screen(ps);
       }
     }
   }
 
+  /* Action suivant le choix du joueur */
   if (em.event == MLV_MOUSE_BUTTON) {
-    if (hover != 1) {
-      if (hover == 2) {
-	save_game(GM);
-      }
-      MLV_free_font(font);
+    switch (ps->hover_btn->value) {
+    case PAUSE_PLAY:
+      break;
+    case PAUSE_SAVE_QUIT:
+      save_game(GM);
       GM->in_game = false;
+      break;
+    case PAUSE_QUIT:
+      GM->in_game = false;
+      break;
+    default:
+      break;
     }
   }
 }
 
-void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
+
+
+
+
+/* Action faisant suite à une action du clavier */
+void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manager *TM) {
   int pause_time;
+  if (GM->gamemode != MULTI && touch != MLV_KEYBOARD_ESCAPE && touch != MLV_KEYBOARD_p) {return;}
+  
   switch (touch) {
+    /* Changement des choix du joueur 2 */
   case MLV_KEYBOARD_UP:
     GM->p2.chosen_row = (GM->p2.chosen_row - 1 + NB_ROWS) % NB_ROWS;
     break;
@@ -125,13 +142,8 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
   case MLV_KEYBOARD_RIGHT:
     GM->p2.chosen_enemy = (GM->p2.chosen_enemy + 1) % NB_ENEMIES;
     break;
-  case MLV_KEYBOARD_ESCAPE:
-    pause_time = MLV_get_time();
-    pause(&GM->window, GM);
-    GM->p1.last_free_gold += MLV_get_time() - pause_time;
-    GM->p2.last_free_gold += MLV_get_time() - pause_time;
-    GM->last_refresh += MLV_get_time() - pause_time;
-    break;
+
+    /* Achat de l'ennemie par le joueur 2*/
   case MLV_KEYBOARD_KP_ENTER:
   case MLV_KEYBOARD_RETURN:
     p2_buy_enemy(&GM->p2,
@@ -140,55 +152,105 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch) {
 	      GM->window.field.width,
 	      GM->p2.chosen_row * GM->window.rectsize);
     break;
+
+    /* Pause dans le jeu */
+  case MLV_KEYBOARD_ESCAPE:
+  case MLV_KEYBOARD_p:
+    pause_time = MLV_get_time();
+    pause(&GM->window, GM, &TM->pause_screen);
+    GM->p1.last_free_gold += MLV_get_time() - pause_time;
+    GM->p2.last_free_gold += MLV_get_time() - pause_time;
+    GM->last_refresh += MLV_get_time() - pause_time;
+    break;
+ 
   default:
     break;
   }
 }
 
+
+
+
+
+/* Action faisant suite à une action de la souris. */
 void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
   int gridX, gridY;
-  if (mouseX >= GM->window.field.posX && mouseX <= GM->window.field.posX + GM->window.field.width) {
-    gridX = (mouseX - GM->window.field.posX) / GM->window.rectsize;
-    
-    if (mouseY < GM->window.field.posY) {
-      if (gridX == NB_COLUMNS-1) {
-	GM->p1.chosen_friend = -1;
-	GM->p1.is_deleting = true;
-      }
-      else if (gridX <= NB_FRIENDS && gridX != 0) {
-	GM->p1.chosen_friend = gridX - 1;
-      }
-      else {
-	GM->p1.chosen_friend = -1;
-	GM->p1.is_deleting = false;}
-    }
-    
-    else if (mouseY < GM->window.field.posX + GM->window.field.height) {
-      gridY = (mouseY - GM->window.field.posY) / GM->window.rectsize;
-      if (GM->p1.chosen_friend != -1 && GM->rows[gridY].friends[gridX].id_friend == -1) {
-	p1_buy_friend(&GM->p1,
-		      &GM->rows[gridY],
-		      &GM->friend_spawners[GM->p1.chosen_friend],
-		      gridX,
-		      gridY);
-	GM->p1.is_deleting = false;
-      }
-      else if(GM->p1.is_deleting == true && is_friend(&GM->rows[gridY].friends[gridX])){
-	remove_friend_from_row(&GM->rows[gridY].friends[gridX]);
-	GM->p1.is_deleting = false;
-    }
-      else {
-	check_click_gold(GM, mouseX, mouseY);
-	GM->p1.is_deleting = false;
-      }
-    }
+
+  if (GM->p1.chosen_friend == -1 && GM->p1.is_deleting == false) {
+    check_click_gold(GM, mouseX, mouseY);
   }
-  else {GM->p1.chosen_friend = -1; GM->p1.is_deleting = false;}
+
+  /* Clique à gauche, à droite, ou en dessous du terrain. */
+  if (mouseX < GM->window.field.posX || mouseX > GM->window.field.posX + GM->window.field.width || mouseY > GM->window.field.posY + GM->window.field.height) {
+    GM->p1.chosen_friend = -1;
+    GM->p1.is_deleting = false;
+    return;
+  }
+
+  
+  gridX = (mouseX - GM->window.field.posX) / GM->window.rectsize;
+
+  /* Clique dans le spawner allié. */
+  if (mouseY < GM->window.friend_spawner.posY + GM->window.friend_spawner.height) {
+
+    /* Colonne stats du joueur 1. */
+    if (gridX == 0) {
+      GM->p1.chosen_friend = -1;
+      GM->p1.is_deleting = false;
+    }
+    
+    /* Colonne suppression. */
+    else if (gridX == NB_COLUMNS-1) {
+      GM->p1.chosen_friend = -1;
+      GM->p1.is_deleting = true;
+    }
+
+    /* La colonnes d'un des spawners alliés. */
+    else if (gridX <= NB_FRIENDS) {
+      GM->p1.chosen_friend = gridX - 1;
+    }
+    
+    else {
+      GM->p1.chosen_friend = -1;
+      GM->p1.is_deleting = false;
+    }
+
+    return;
+  }
+
+  
+  /* Clique sur le terrain. */
+  gridY = (mouseY - GM->window.field.posY) / GM->window.rectsize;
+
+  /* Si le joueur 1 est en cours de suppression. */
+  if (GM->p1.is_deleting) {
+    if (is_friend(&GM->rows[gridY].friends[gridX])) {
+      remove_friend_from_row(&GM->rows[gridY].friends[gridX]);
+    }
+    GM->p1.is_deleting = false;
+    return;
+  }
+
+  /* Si le joueur 1 achète un joueur. */
+  if (GM->p1.chosen_friend != -1) {
+    if (is_friend(&GM->rows[gridY].friends[gridX])) {return;}
+    p1_buy_friend(&GM->p1,
+		  &GM->rows[gridY],
+		  &GM->friend_spawners[GM->p1.chosen_friend],
+		  gridX,
+		  gridY);
+    
+  }
 }
 
+
+
+
+
+/* Met à jour le jeu. */
 void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   Event_Manager em;
-  int random_row;
+  int random_row, random_column;
   int time;
   em.event = MLV_NONE;
   em.btn_state = MLV_RELEASED;
@@ -199,26 +261,39 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   }
 
   time = MLV_get_time();
-  
+
+  /* Mise à jour de l'IA. */
   update_IA(GM);
-  
+
+  /* Création d'or pour le joueur 1. */
   if (time >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
-    p1_create_free_gold(&GM->p1, &GM->rows[random_row], rand() % NB_COLUMNS, random_row, SM);
+    random_column = rand() % NB_COLUMNS;
+    create_new_gold(&GM->rows[random_row], random_column, random_row, SM);
+    GM->p1.last_free_gold = time;
   }
+
+  /* Création d'or pour le joueur 2 / IA. */
   if (time >+ GM->p2.last_free_gold + DELAY_FREE_GOLD_P2) {
     p2_create_free_gold(&GM->p2);
+    GM->p2.last_free_gold = time;
   }
+
+  /* Mise à jour du terrain de jeu. */
   if (time >= GM->last_refresh + DELAY_REFRESH) {
     update_rows(GM, SM);
     GM->last_refresh = time;
   }
-  else if ((em.event == MLV_KEY && GM->gamemode == SOLO) || em.touch == MLV_KEYBOARD_ESCAPE) {
-    keyboard_action(GM, em.touch);
+
+  /* Gère l'action du clavier et de la souris. */
+  if ((em.event == MLV_KEY && GM->gamemode == MULTI) || em.touch == MLV_KEYBOARD_ESCAPE || em.touch == MLV_KEYBOARD_p) {
+    keyboard_action(GM, em.touch, TM);
   }
   else if (em.event == MLV_MOUSE_BUTTON) {
     mouse_action(GM, em.mouseX, em.mouseY);
   }
+
+  /* S'auto-appel tant que le jeu continue. */
   if (GM->in_game) {
     draw_game(GM, TM);
     update_game(GM, TM, SM);
@@ -226,27 +301,35 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 }
 
 
-void launch_main_page(int width, int height);
 
+
+
+/* Libère des images et des sons du jeu avant de retourner au menu */
 /* GLOBAL */
 void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   /* Libération des sons */
-  if (SM->sound_works) {
-    MLV_stop_all_sounds();
-    MLV_free_audio();
-  }
+  free_SM(SM);
 
   /* Libération des images. */
-  MLV_free_image(TM->gold_img);
+  free_TM(TM);
+
+  MLV_free_font(TM->font);
 
   
   MLV_change_window_size(GM->window.width/2, GM->window.height/2);
+  
   launch_main_page(GM->window.width/2, GM->window.height/2);
+  
   MLV_free_window();
+  
   exit(0);
 }
 
 
+
+
+
+/* Lancement d'une nouvelle partie */
 void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name, char *p2_name) {
   Texture_Manager TM;
   Game_Manager GM;

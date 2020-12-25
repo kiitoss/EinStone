@@ -1,10 +1,17 @@
 #include "../../mainHeader.h"
 #include "../makhead.h"
 
+
+
+
+
+/* Attaque tous les ennemies dans la range de l'allié. */
 void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM) {
   int i = 0;
   Enemy *e;
+  
   play_sound(SM, &SM->spear);
+  
   while (i<row->nb_enemies) {
     e = &row->enemies[i];
     if (e->posX + e->padding < this->posX + this->range + row->rectsize && e->posX + e->padding + row->rectsize > this->posX) {
@@ -18,6 +25,11 @@ void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM) {
   }
 }
 
+
+
+
+
+/* Change le comportement de l'allié. */
 void switch_friend_behavior(Friend *this) {
   if (this->is_passive) {
     set_friend_animation(this, this->animation_ability);
@@ -29,6 +41,11 @@ void switch_friend_behavior(Friend *this) {
   this->is_passive = !this->is_passive;
 }
 
+
+
+
+
+/* Utilise le pouvoir de l'allié */
 void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM) {
   switch (this->ability) {
   case DEFENSE:
@@ -54,10 +71,16 @@ void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM) {
   }
 }
 
+
+
+
+
+/* Met à jour l'allié. */
 /* GLOBAL */
 void update_friend_animation(Friend *this, Row *row, Sound_Manager *SM) {
   int i;
   bool enemy_in_range = false;
+  
   if (this->ability == DEFENSE || this->ability == ATTACK) {
     for (i=0; i<row->nb_enemies; i++) {
       if (row->enemies[i].posX < this->posX) {
@@ -68,7 +91,8 @@ void update_friend_animation(Friend *this, Row *row, Sound_Manager *SM) {
 	break;
       }
     }
-    if (enemy_in_range == this->is_passive) {
+
+    if (enemy_in_range ^ !this->is_passive) {
       switch_friend_behavior(this);
     }
   }
@@ -79,5 +103,6 @@ void update_friend_animation(Friend *this, Row *row, Sound_Manager *SM) {
       use_friend_ability(this, row, SM);
     }
   }
+  
   MLV_update_animation_player(this->animation);
 }

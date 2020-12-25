@@ -9,7 +9,7 @@ MAKMAK from path: ./
 void draw_button(Button *this);
 bool is_btn_hover(Button *this, int posX, int posY);
 bool is_btn_select(Button *this);
-Button get_new_button(Geometry g, char *text, MLV_Color color, char *font_path, menu_choice value);
+Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, menu_choice value);
 void set_hover_btn(Button *this);
 void unset_hover_btn(Button *this);
 void set_select_btn(Button *this);

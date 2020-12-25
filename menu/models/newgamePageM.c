@@ -148,9 +148,9 @@ newgamePage init_newgame_page(int width, int height) {
   g.posY += title_height + margin_title;
   g.width = width/4;
   g.posX = width/4;
-  ngp.solo_btn = get_new_button(g, "SOLO", MLV_COLOR_RED, font_path, SOLO);
+  ngp.solo_btn = get_new_button(g, "SOLO", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, SOLO);
   g.posX += width/4;
-  ngp.multi_btn = get_new_button(g, "MULTI", MLV_COLOR_RED, font_path, MULTI);
+  ngp.multi_btn = get_new_button(g, "MULTI", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, MULTI);
 
   g.posY += row_height + margin_row;
   g.width = width/4;
@@ -162,19 +162,19 @@ newgamePage init_newgame_page(int width, int height) {
   g.posY += row_height + margin_row;
   g.width = width/3;
   g.posX = 0;
-  ngp.easy_btn = get_new_button(g, "EASY", MLV_COLOR_RED, font_path, EASY);
+  ngp.easy_btn = get_new_button(g, "EASY", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, EASY);
   g.posX += width/3;
-  ngp.medium_btn = get_new_button(g, "MEDIUM", MLV_COLOR_RED, font_path, MEDIUM);
+  ngp.medium_btn = get_new_button(g, "MEDIUM", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, MEDIUM);
   g.posX += width/3;
-  ngp.hard_btn = get_new_button(g, "HARD", MLV_COLOR_RED, font_path, HARD);
+  ngp.hard_btn = get_new_button(g, "HARD", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, HARD);
   
 
   g.posY += row_height + margin_row;
   g.width = width/4;
   g.posX = 0;
-  ngp.back_btn = get_new_button(g, "Back", MLV_COLOR_RED, font_path, BACK);
+  ngp.back_btn = get_new_button(g, "Back", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, BACK);
   g.posX = 3*width/4;
-  ngp.launch_btn = get_new_button(g, "Launch", MLV_COLOR_RED, font_path, LAUNCH);
+  ngp.launch_btn = get_new_button(g, "Launch", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, LAUNCH);
 
   return ngp;
 }

@@ -1,6 +1,6 @@
 #include "../global_header.h"
 
-enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH};
+enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH, PAUSE_PLAY, PAUSE_QUIT, PAUSE_SAVE_QUIT};
 typedef enum menu_choices menu_choice;
 
 typedef struct {
@@ -39,6 +39,7 @@ typedef struct {
   char *font_path;
   int font_size;
   MLV_Color color;
+  MLV_Color background_color;
   bool is_hover;
   bool is_select;
   menu_choice value;
