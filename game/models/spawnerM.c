@@ -121,7 +121,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.life = 150;
     ES.attack = 75;
     ES.speed = 1;
-    ES.price = 200;
+    ES.price = 175;
     ES.delay_frame_attack = 0;
     ES.DELAY_ATTACK = 600;
     ES.range = window->rectsize/4;

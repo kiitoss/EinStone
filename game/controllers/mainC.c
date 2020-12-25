@@ -197,7 +197,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     em = get_game_event();
   }
 
-  update_IA(GM);
+  if (GM->gamemode == MULTI){update_IA(GM);}
   
   if (MLV_get_time() >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
@@ -210,10 +210,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     update_rows(GM, SM);
     GM->last_refresh = MLV_get_time();
   }
-  else if (em.event == MLV_KEY) {
-    if (em.touch != MLV_KEYBOARD_ESCAPE && GM->gamemode == SOLO) {
-      return;
-    }
+  else if ((em.event == MLV_KEY && GM->gamemode == SOLO) || em.touch == MLV_KEYBOARD_ESCAPE) {
     keyboard_action(GM, em.touch);
   }
   else if (em.event == MLV_MOUSE_BUTTON) {

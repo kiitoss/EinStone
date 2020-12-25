@@ -13,7 +13,11 @@ void draw_friend_spawner(Game_Manager *GM, Texture_Manager *TM) {
   int textbox_height=0;
   MLV_Color Color;
   MLV_draw_image(TM->friend_spawner_background,GM->window.friend_spawner.posX, GM->window.friend_spawner.posY);
+  
+  if (GM->p1.is_deleting){MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), 0, GM->window.rectsize, GM->window.friend_spawner.height, MLV_COLOR_BLUE);}
+
   MLV_draw_image(TM->delete_friend_img, GM->window.friend_spawner.posX + (NB_COLUMNS-1)*GM->window.rectsize+GM->window.rectsize/4 , GM->window.friend_spawner.posY+GM->window.rectsize/4);
+  
   for (i=0;i<NB_FRIENDS;i++){
     Color = (GM->p1.money >= GM->friend_spawners[i].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
     if (GM->p1.chosen_friend == i) {
@@ -158,6 +162,8 @@ void draw_field(Game_Manager *GM, Texture_Manager *TM) {
 
 /* GLOBAL */
 void draw_window(Game_Manager *GM, Texture_Manager *TM) {
+  MLV_Color Color;
+  int i;
   draw_home(GM, TM);
   if (GM->gamemode == MULTI) {
     draw_enemy_spawner(GM, TM);
@@ -167,6 +173,9 @@ void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   draw_friend_stats(GM,TM);
 
   draw_field(GM, TM);
-  
-  MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row, GM->window.rectsize, GM->window.rectsize, MLV_COLOR_GREEN);
+  /*if(GM->gamemode == SOLO){return;}*/
+  for (i=0;i<NB_ENEMIES;i++){
+    Color = (GM->p2.money >= GM->enemy_spawners[i].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
+    MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row, GM->window.rectsize, GM->window.rectsize, Color);
+  }
 }
