@@ -198,13 +198,9 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     em = get_game_event();
   }
 
-<<<<<<< HEAD
-  if (GM->gamemode == MULTI){update_IA(GM);}
-=======
   time = MLV_get_time();
   
   update_IA(GM);
->>>>>>> 20587a26140147883f2c69b0d2fb8bfc5d025fe4
   
   if (time >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
