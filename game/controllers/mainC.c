@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 void save_game(Game_Manager *GM) {
@@ -189,6 +189,7 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
 void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   Event_Manager em;
   int random_row;
+  int time;
   em.event = MLV_NONE;
   em.btn_state = MLV_RELEASED;
   em.touch = MLV_NONE;
@@ -197,18 +198,24 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     em = get_game_event();
   }
 
+<<<<<<< HEAD
   if (GM->gamemode == MULTI){update_IA(GM);}
+=======
+  time = MLV_get_time();
   
-  if (MLV_get_time() >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
+  update_IA(GM);
+>>>>>>> 20587a26140147883f2c69b0d2fb8bfc5d025fe4
+  
+  if (time >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
     p1_create_free_gold(&GM->p1, &GM->rows[random_row], rand() % NB_COLUMNS, random_row, SM);
   }
-  if (MLV_get_time() >+ GM->p2.last_free_gold + DELAY_FREE_GOLD_P2) {
+  if (time >+ GM->p2.last_free_gold + DELAY_FREE_GOLD_P2) {
     p2_create_free_gold(&GM->p2);
   }
-  if (MLV_get_time() >= GM->last_refresh + DELAY_REFRESH) {
+  if (time >= GM->last_refresh + DELAY_REFRESH) {
     update_rows(GM, SM);
-    GM->last_refresh = MLV_get_time();
+    GM->last_refresh = time;
   }
   else if ((em.event == MLV_KEY && GM->gamemode == SOLO) || em.touch == MLV_KEYBOARD_ESCAPE) {
     keyboard_action(GM, em.touch);

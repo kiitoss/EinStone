@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 void draw_home(Game_Manager *GM, Texture_Manager *TM) {

@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 /* GLOBAL */
@@ -20,7 +20,11 @@ void p1_add_gold(Player_1 *this, int gold) {
 Player_1 init_p1() {
   Player_1 p1;
   p1.chosen_friend = -1;
+<<<<<<< HEAD
   p1.money = 10000;
+=======
+  p1.money = 2000;
+>>>>>>> 20587a26140147883f2c69b0d2fb8bfc5d025fe4
   p1.last_free_gold = MLV_get_time();
   p1.score = 0;
   set_player_money_str(p1.money, p1.money_str);
@@ -35,7 +39,11 @@ Player_2 init_p2() {
   Player_2 p2;
   p2.chosen_row = 0;
   p2.chosen_enemy = 0;
+<<<<<<< HEAD
   p2.money = 50;
+=======
+  p2.money = 2000;
+>>>>>>> 20587a26140147883f2c69b0d2fb8bfc5d025fe4
   p2.last_free_gold = MLV_get_time();
   p2.score = 0;
   set_player_money_str(p2.money, p2.money_str);

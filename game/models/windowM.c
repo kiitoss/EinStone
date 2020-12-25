@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 int get_rectsize(unsigned int win_width, unsigned int win_height, menu_choice gamemode) {
