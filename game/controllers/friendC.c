@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM) {

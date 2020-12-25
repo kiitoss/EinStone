@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 void attack_friend_in_front(Enemy *this, Row *row, int gridY_close, int gridY_far, Sound_Manager *SM) {

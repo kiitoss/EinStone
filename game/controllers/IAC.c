@@ -1,4 +1,4 @@
-#include "../gameHeader.h"
+#include "../../mainHeader.h"
 #include "../makhead.h"
 
 void get_weak_row(Game_Manager *GM){
@@ -27,6 +27,7 @@ void get_enemy(Game_Manager *GM){
 }
 /* GLOBAL */
 void update_IA(Game_Manager *GM){
+  if (GM->gamemode == MULTI) {return;}
   get_weak_row(GM);
   get_enemy(GM);
   p2_buy_enemy(&GM->p2, &GM->rows[GM->p2.chosen_row] ,&GM->enemy_spawners[GM->p2.chosen_enemy], GM->window.field.width, GM->p2.chosen_row * GM->window.rectsize);
