@@ -388,6 +388,8 @@ void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name,
   TM = init_TM(window);
   GM = init_GM(&window, &TM, gamemode, difficulty, p1_name, p2_name);
   
+  init_IA(&GM);  
+
   update_game(&GM, &TM, &SM);
 
   quit_game(&GM, &TM, &SM);
