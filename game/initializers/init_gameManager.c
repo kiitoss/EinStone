@@ -24,5 +24,6 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode) 
   }
   
   GM.last_refresh = MLV_get_time();
+  GM.duration = -MLV_get_time();
   return GM;
 }

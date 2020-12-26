@@ -45,6 +45,8 @@ void save_game(Game_Manager *GM) {
     }
   }
 
+  GM->duration += MLV_get_time();
+
   /* Insertion de la partie en cours dans la liste des parties */
   GM_list[0] = *GM;
   fclose(f);
@@ -123,7 +125,7 @@ void pause(Window *window, Game_Manager *GM, pauseScreen *ps) {
 
 /* Action faisant suite à une action du clavier */
 void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manager *TM) {
-  int pause_time;
+  int pause_time, time;
   if (GM->gamemode != MULTI && touch != MLV_KEYBOARD_ESCAPE && touch != MLV_KEYBOARD_p) {return;}
   
   switch (touch) {
@@ -156,9 +158,11 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manage
   case MLV_KEYBOARD_p:
     pause_time = MLV_get_time();
     pause(&GM->window, GM, &TM->pause_screen);
-    GM->p1.last_free_gold += MLV_get_time() - pause_time;
-    GM->p2.last_free_gold += MLV_get_time() - pause_time;
-    GM->last_refresh += MLV_get_time() - pause_time;
+    time = MLV_get_time();
+    GM->p1.last_free_gold += time - pause_time;
+    GM->p2.last_free_gold += time - pause_time;
+    GM->last_refresh += time - pause_time;
+    GM->duration -= time - pause_time;
     break;
  
   default:
@@ -298,7 +302,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Mise à jour de l'IA. */
   update_IA(GM);
-
+  
   /* Création d'or pour le joueur 1. */
   if (time >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
@@ -331,7 +335,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* S'auto-appel tant que le jeu continue. */
   if (GM->in_game) {
-    draw_game(GM, TM);
+    draw_game(GM, TM, time);
     update_game(GM, TM, SM);
   }
 }

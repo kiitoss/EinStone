@@ -11,6 +11,8 @@ int get_rectsize(unsigned int win_width, unsigned int win_height, menu_choice ga
 /* GLOBAL */
 Window init_window(unsigned int win_width, unsigned int win_height, menu_choice gamemode) {
   Window window;
+  Geometry g;
+  char *font_path = "resources/font/Amatic-Bold.ttf";
 
   window.rectsize = get_rectsize(win_width, win_height, gamemode);
   window.width = win_width;
@@ -43,5 +45,11 @@ Window init_window(unsigned int win_width, unsigned int win_height, menu_choice 
     window.enemy_spawner.width = NB_COLUMNS * window.rectsize;
     window.enemy_spawner.height = window.rectsize;
   }
+
+  g.width = window.rectsize;
+  g.height = window.rectsize/4;
+  g.posX = window.field.posX + window.field.width - g.width;
+  g.posY = window.field.posY - g.height;
+  window.time_lbl = get_new_label(g, "0m : 0s", MLV_COLOR_WHITE, font_path);
   return window;
 }

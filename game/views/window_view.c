@@ -2,6 +2,16 @@
 #include "../makhead.h"
 
 /* GLOBAL */
+void draw_time(int time, Window *window) {
+  int min = (time / 1000) / 60;
+  int sec = (time / 1000) - min*60;
+  char msg[20];
+  sprintf(msg, "%dm : %ds", min, sec);
+  window->time_lbl.text = msg;
+  draw_label(&window->time_lbl);
+}
+
+/* GLOBAL */
 void draw_pause_screen(pauseScreen *this) {
   draw_button(&this->play_btn);
   draw_button(&this->save_quit_btn);

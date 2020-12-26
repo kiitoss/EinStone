@@ -71,10 +71,11 @@ void free_TM(Texture_Manager *this);
 Window init_window(unsigned int win_width, unsigned int win_height, menu_choice gamemode);
 
 /* views/game_view.c */
-void draw_game(Game_Manager *GM, Texture_Manager *TM);
+void draw_game(Game_Manager *GM, Texture_Manager *TM, int time);
 Event_Manager get_game_event();
 
 /* views/window_view.c */
+void draw_time(int time, Window *window);
 void draw_pause_screen(pauseScreen *this);
 void draw_window(Game_Manager *GM, Texture_Manager *TM);
 

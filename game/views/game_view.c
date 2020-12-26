@@ -39,12 +39,13 @@ void draw_row(Row *r, Window *window, Texture_Manager *TM) {
 }
 
 /* GLOBAL */
-void draw_game(Game_Manager *GM, Texture_Manager *TM) {
+void draw_game(Game_Manager *GM, Texture_Manager *TM, int time) {
   int i;
   draw_window(GM, TM);
   for (i=0; i<NB_ROWS; i++) {
     draw_row(&GM->rows[i], &GM->window, TM);
   }
+  draw_time(GM->duration + time, &GM->window);
   MLV_update_window();
 }
 

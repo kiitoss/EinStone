@@ -21,7 +21,6 @@
 
 #define SAVED_GAMES 3
 
-/* Reproduction de la variable booléen */
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
 typedef enum enemy_type_attacks enemy_type_attacks;
@@ -60,6 +59,7 @@ typedef struct {
   Container enemy_spawner;
   Container friend_home;
   Container enemy_home;
+  Label time_lbl;
 } Window;
 
 typedef struct {
@@ -183,6 +183,7 @@ typedef struct {
   Player_1 p1;
   Player_2 p2;
   int last_refresh;
+  int duration;
 } Game_Manager;
 
 typedef Game_Manager GM_List[SAVED_GAMES];
