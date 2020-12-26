@@ -23,6 +23,8 @@ void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX,
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
 
 /* controllers/popC.c */
+void update_gold(Gold *this);
+void update_shot(Shot *this);
 void create_new_gold(Row *row, int gridX, int gridY, Sound_Manager *SM);
 void check_click_gold(Game_Manager *GM, int mouseX, int mouseY);
 void create_new_shot(Row *row, int gridX, int gridY, int attack, Sound_Manager *SM);

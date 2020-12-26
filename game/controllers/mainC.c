@@ -147,10 +147,10 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manage
   case MLV_KEYBOARD_KP_ENTER:
   case MLV_KEYBOARD_RETURN:
     p2_buy_enemy(&GM->p2,
-	      &GM->rows[GM->p2.chosen_row],
-	      &GM->enemy_spawners[GM->p2.chosen_enemy],
-	      GM->window.field.width,
-	      GM->p2.chosen_row * GM->window.rectsize);
+		 &GM->rows[GM->p2.chosen_row],
+		 &GM->enemy_spawners[GM->p2.chosen_enemy],
+		 GM->window.field.width,
+		 GM->p2.chosen_row * GM->window.rectsize);
     break;
 
     /* Pause dans le jeu */
@@ -202,12 +202,17 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
     /* Colonne suppression. */
     else if (gridX == NB_COLUMNS-1) {
       GM->p1.chosen_friend = -1;
-      GM->p1.is_deleting = true;
+      GM->p1.is_deleting = !GM->p1.is_deleting;
     }
 
     /* La colonnes d'un des spawners alliés. */
     else if (gridX <= NB_FRIENDS) {
-      GM->p1.chosen_friend = gridX - 1;
+      if (GM->p1.chosen_friend == gridX - 1) {
+	GM->p1.chosen_friend = -1;
+      }
+      else {	
+	GM->p1.chosen_friend = gridX - 1;
+      }
     }
     
     else {
@@ -233,7 +238,11 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
 
   /* Si le joueur 1 achète un joueur. */
   if (GM->p1.chosen_friend != -1) {
-    if (is_friend(&GM->rows[gridY].friends[gridX])) {return;}
+    if (is_friend(&GM->rows[gridY].friends[gridX])) {
+      GM->p1.chosen_friend = -1;
+      return;
+    }
+    
     p1_buy_friend(&GM->p1,
 		  &GM->rows[gridY],
 		  &GM->friend_spawners[GM->p1.chosen_friend],
