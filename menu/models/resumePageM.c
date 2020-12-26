@@ -30,10 +30,9 @@ resumePage init_resume_page(int width, int height, GM_List GM_list) {
 
   g.height = row_height;
   g.posY += title_height + margin_title;
-
   for (i=0; i<SAVED_GAMES; i++) {
     if (GM_list[i].id == 0) {
-      rp.sections[i] = get_new_resumeSection(g, "", "", 0, 0, 0, font_path);
+      rp.sections[i] = get_new_resumeSection(g, "NULL", "NULL", 0, 0, 0, font_path);
       rp.sections[i].exist = false;
     }
     else {

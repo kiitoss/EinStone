@@ -8,49 +8,56 @@
 /* Sauvegarde la partie en cours */
 void save_game(Game_Manager *GM) {
   GM_List GM_list;
+  Game_Manager empty_GM;
   int i;
   bool is_free_id;
-  FILE *f = fopen("resources/data.bin", "rb");
+  FILE *f = fopen("./resources/data.bin", "rb");
  
   if (f == NULL) {
     printf("--> fichier de sauvegarde introuvable.\n");
-    return;
-  }
-
-  /* Lecture des anciennes sauvegardes dans la liste des parties */
-  for (i=0; i<SAVED_GAMES; i++) {
-    if (!fread(&GM_list[i], sizeof(Game_Manager), 1, f)) {
-      printf("Erreur lors de l'écriture des scores.\n");
-    }
-  }
-
-  /* Incrémentation des sauvegardes */
-  for (i=SAVED_GAMES-1; i>0; i--) {
-    GM_list[i] = GM_list[i-1];
-  }
-
-  /* Attribution d'un id à la partie en cours */
-  if (GM->id == 0) {
+    empty_GM.id = 0;
     GM->id = 1;
-    is_free_id = false;
-    while (!is_free_id) {
-      is_free_id = true;
-      for (i=1; i<SAVED_GAMES; i++) {
-	if (GM_list[i].id == GM->id) {
-	  GM->id++;
-	  is_free_id = false;
-	  break;
+    for (i=1; i<SAVED_GAMES; i++) {
+      GM_list[i] = empty_GM;
+    }
+    GM->id = 1;
+  }
+  else {
+    /* Lecture des anciennes sauvegardes dans la liste des parties */
+    for (i=0; i<SAVED_GAMES; i++) {
+      if (!fread(&GM_list[i], sizeof(Game_Manager), 1, f)) {
+	printf("Erreur lors de l'écriture des scores.\n");
+      }
+    }
+
+    /* Incrémentation des sauvegardes */
+    for (i=SAVED_GAMES-1; i>0; i--) {
+      GM_list[i] = GM_list[i-1];
+    }
+
+    /* Attribution d'un id à la partie en cours */
+    if (GM->id == 0) {
+      GM->id = 1;
+      is_free_id = false;
+      while (!is_free_id) {
+	is_free_id = true;
+	for (i=1; i<SAVED_GAMES; i++) {
+	  if (GM_list[i].id == GM->id) {
+	    GM->id++;
+	    is_free_id = false;
+	    break;
+	  }
 	}
       }
     }
+    
+    fclose(f);
   }
 
-  GM->duration += MLV_get_time();
-
   /* Insertion de la partie en cours dans la liste des parties */
+  GM->duration += MLV_get_time();
   GM_list[0] = *GM;
-  fclose(f);
-
+  
   /* Ecriture de la liste des parties sauvegardées */
   f = fopen("resources/data.bin", "wb");
   for (i=0; i<SAVED_GAMES; i++) {

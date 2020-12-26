@@ -58,6 +58,9 @@ void launch_resume_page(int width, int height) {
   FILE *data = fopen("resources/data.bin", "rb");
   if (data == NULL) {
     printf("--> Fichier de données introuvable.\n");
+    for (i=0; i<SAVED_GAMES; i++) {
+      GM_list[i].id = 0;
+    }
   }
   else {
     for (i=0; i<SAVED_GAMES; i++) {
@@ -65,9 +68,9 @@ void launch_resume_page(int width, int height) {
 	printf("Erreur lors de la lecture des scores.\n");
       }
     }
+    fclose(data);
   }
-  fclose(data);
-
+  
   rp = init_resume_page(width, height, GM_list);
   draw_resume_page(&rp);
   MLV_flush_event_queue();
