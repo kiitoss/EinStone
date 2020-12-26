@@ -241,6 +241,7 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
       }
       else {	
 	GM->p1.chosen_friend = gridX - 1;
+	GM->p1.is_deleting = false;
       }
     }
     
