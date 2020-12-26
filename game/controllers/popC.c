@@ -5,6 +5,51 @@
 
 
 
+/* Retourne un nouveau tir. */
+/* GLOBAL */
+Shot get_new_shot(int posX, int posY, int rectsize, int attack) {
+  Shot s;
+  s.posX = posX;
+  s.posY = posY;
+  s.attack = attack;
+  s.speed = (rectsize/20 == 0) ? 1 : rectsize/30;
+  return s;
+}
+
+
+
+
+
+/* Retourne vrai si le joueur a cliqué sur la pièce d'or. */
+/* GLOBAL */
+bool is_clicked_gold(Gold *this, int mouseX, int mouseY) {
+  bool is_clicked = false;
+  if (mouseX >= this->centerX - this->radius/2 && mouseX <= this->centerX + this->radius/2 && mouseY >= this->centerY - this->radius/2 && mouseY <= this->centerY + this->radius/2) {
+    is_clicked = true;
+  }
+  return is_clicked;
+}
+
+
+
+
+
+/* Retourne une nouvelle pièce d'or. */
+/* GLOBAL */
+Gold get_new_gold(int centerX, int centerY, int rectsize) {
+  Gold g;
+  g.centerX = centerX;
+  g.centerY = centerY;
+  g.time_left = 10000;
+  g.radius = 1;
+  g.max_radius = rectsize/2;
+  g.value = 10;
+  return g;
+}
+
+
+
+
 /* Met à jour une pièce d'or du terrain. */
 /* GLOBAL */
 void update_gold(Gold *this) {
@@ -20,7 +65,7 @@ void update_gold(Gold *this) {
 
 /* Met à jour un tir allié. */
 /* GLOBAL */
-void update_shot(Shot *this) {
+void move_shot(Shot *this) {
   this->posX += this->speed;
 }
 
@@ -38,34 +83,6 @@ void create_new_gold(Row *row, int gridX, int gridY, Sound_Manager *SM) {
   row->golds[row->nb_golds++] = get_new_gold((rand() % row->rectsize) + gridX * row->rectsize,
 					     (rand() % row->rectsize) + gridY * row->rectsize,
 					     row->rectsize);
-}
-
-
-
-
-
-/* Compare la position de la souris et celles des pièces d'or sur le terrain. */
-/* GLOBAL */
-void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
-  int i, j;
-  Gold *g;
-  bool get = false;
-
-  mouseX -= GM->window.field.posX;
-  mouseY -= GM->window.field.posY;
-  
-  for (i=0; i<NB_ROWS; i++) {
-    for (j=0; j<GM->rows[i].nb_golds; j++) {
-      g = &GM->rows[i].golds[j];
-      if (mouseX >= g->centerX - g->radius/2 && mouseX <= g->centerX + g->radius/2 && mouseY >= g->centerY - g->radius/2 && mouseY <= g->centerY + g->radius/2) {
-	p1_add_gold(&GM->p1, g->value);
-	remove_gold_from_row(&GM->rows[i], j);
-	get = true;
-	break;
-      }
-    }
-    if (get) {break;}
-  }
 }
 
 

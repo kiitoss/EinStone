@@ -5,6 +5,57 @@
 
 
 
+/* Retourne un nouvel ennemie. */
+/* GLOBAL */
+Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
+  Enemy e;
+
+  e.life = spawner->life;
+  e.attack = spawner->attack;
+  e.speed = spawner->speed;
+  e.range = spawner->range;
+  e.posX = posX;
+  e.posY = posY;
+  e.is_walking = true;
+  e.DELAY_ATTACK = spawner->DELAY_ATTACK;
+  e.delay_attack = spawner->DELAY_ATTACK;
+  e.type_attack = spawner->type_attack;
+  e.padding = spawner->padding;
+
+  e.animation_attack = MLV_create_animation_player(spawner->animation_attack);
+  e.animation_walking = MLV_create_animation_player(spawner->animation_walking);
+  e.animation = e.animation_walking;
+  MLV_play_animation_player(e.animation);
+  return e;
+}
+
+
+
+
+
+/* Affecte une animation à un ennemie. */
+/* GLOBAL */
+void set_enemy_animation(Enemy *this, MLV_Animation_player *animation) {
+  this->animation = animation;
+  MLV_play_animation_player(this->animation);
+}
+
+
+
+
+
+/* Déplace un ennemie. */
+void move_enemy(Enemy *this) {
+  if (!this->is_walking) {
+    return;
+  }
+  this->posX -= this->speed;
+}
+
+
+
+
+
 /* Attaque l'allié le plus proche de l'ennemie. */
 void attack_friend_in_front(Enemy *this, Row *row, int gridY_friend, Sound_Manager *SM) {
   Friend *f = &row->friends[gridY_friend];
@@ -38,7 +89,7 @@ void switch_enemy_behavior(Enemy *this) {
 
 /* Met à jour l'ennemie. */
 /* GLOBAL */
-void update_enemy_animation(Enemy *this, Row *row, Sound_Manager *SM) {
+void update_enemy(Enemy *this, Row *row, Sound_Manager *SM) {
   int gridY_far, gridY_close, i, gridY_friend = 0;
   bool friend_in_range = false;
   
@@ -67,6 +118,9 @@ void update_enemy_animation(Enemy *this, Row *row, Sound_Manager *SM) {
       attack_friend_in_front(this, row, gridY_friend, SM);
       this->delay_attack = this->DELAY_ATTACK;
     }
+  }
+  else {
+    move_enemy(this);
   }
 
   

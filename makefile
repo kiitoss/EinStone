@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o mainC.o playerC.o popC.o rowC.o animationM.o enemyM.o friendM.o gameManagerM.o goldM.o playerM.o rowM.o shotM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o gameC.o playerC.o popC.o rowC.o animationM.o gameManagerM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o gameC.o playerC.o popC.o rowC.o animationM.o gameManagerM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 button.o: ./GUI/button.c
 	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
@@ -30,8 +30,8 @@ enemyC.o: ./game/controllers/enemyC.c
 friendC.o: ./game/controllers/friendC.c
 	$(CC) $(CFLAGS) ./game/controllers/friendC.c -c -I ./
 
-mainC.o: ./game/controllers/mainC.c
-	$(CC) $(CFLAGS) ./game/controllers/mainC.c -c -I ./
+gameC.o: ./game/controllers/gameC.c
+	$(CC) $(CFLAGS) ./game/controllers/gameC.c -c -I ./
 
 playerC.o: ./game/controllers/playerC.c
 	$(CC) $(CFLAGS) ./game/controllers/playerC.c -c -I ./
@@ -45,26 +45,8 @@ rowC.o: ./game/controllers/rowC.c
 animationM.o: ./game/models/animationM.c
 	$(CC) $(CFLAGS) ./game/models/animationM.c -c -I ./
 
-enemyM.o: ./game/models/enemyM.c
-	$(CC) $(CFLAGS) ./game/models/enemyM.c -c -I ./
-
-friendM.o: ./game/models/friendM.c
-	$(CC) $(CFLAGS) ./game/models/friendM.c -c -I ./
-
 gameManagerM.o: ./game/models/gameManagerM.c
 	$(CC) $(CFLAGS) ./game/models/gameManagerM.c -c -I ./
-
-goldM.o: ./game/models/goldM.c
-	$(CC) $(CFLAGS) ./game/models/goldM.c -c -I ./
-
-playerM.o: ./game/models/playerM.c
-	$(CC) $(CFLAGS) ./game/models/playerM.c -c -I ./
-
-rowM.o: ./game/models/rowM.c
-	$(CC) $(CFLAGS) ./game/models/rowM.c -c -I ./
-
-shotM.o: ./game/models/shotM.c
-	$(CC) $(CFLAGS) ./game/models/shotM.c -c -I ./
 
 soundManager.o: ./game/models/soundManager.c
 	$(CC) $(CFLAGS) ./game/models/soundManager.c -c -I ./

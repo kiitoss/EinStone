@@ -172,6 +172,33 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manage
 
 
 
+/* Compare la position de la souris et celles des pièces d'or sur le terrain. */
+void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
+  int i, j;
+  Gold *g;
+  bool get = false;
+
+  mouseX -= GM->window.field.posX;
+  mouseY -= GM->window.field.posY;
+  
+  for (i=0; i<NB_ROWS; i++) {
+    for (j=0; j<GM->rows[i].nb_golds; j++) {
+      g = &GM->rows[i].golds[j];
+      if (is_clicked_gold(g, mouseX, mouseY)) {
+	p1_add_gold(&GM->p1, g->value);
+	remove_gold_from_row(&GM->rows[i], j);
+	get = true;
+	break;
+      }
+    }
+    if (get) {break;}
+  }
+}
+
+
+
+
+
 /* Action faisant suite à une action de la souris. */
 void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
   int gridX, gridY;
@@ -260,7 +287,7 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
 void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   Event_Manager em;
   int random_row, random_column;
-  int time;
+  int time, i;
   em.event = MLV_NONE;
   em.btn_state = MLV_RELEASED;
   em.touch = MLV_NONE;
@@ -288,9 +315,11 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     GM->p2.last_free_gold = time;
   }
 
-  /* Mise à jour du terrain de jeu. */
+  /* Mise à jour des lignes du terrain de jeu. */
   if (time >= GM->last_refresh + DELAY_REFRESH) {
-    update_rows(GM, SM);
+    for (i=0; i<NB_ROWS; i++) {
+      update_row(&GM->rows[i], GM, SM);
+    }
     GM->last_refresh = time;
   }
 

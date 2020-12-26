@@ -5,6 +5,25 @@
 
 
 
+/* Retourne une ligne initialisée. */
+/* GLOBAL */
+Row init_row(int rectsize) {
+  Row r;
+  int i;
+  for (i=0; i<NB_COLUMNS; i++) {
+    r.friends[i].id_friend = -1;
+  }
+  r.nb_enemies = 0;
+  r.nb_shots = 0;
+  r.nb_golds = 0;
+  r.rectsize = rectsize;
+  return r;
+}
+
+
+
+
+
 /* Supprime un allié d'une ligne. */
 /* GLOBAL */
 void remove_friend_from_row(Friend *f) {
@@ -83,21 +102,21 @@ void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY) {
 
 
 /* Vérifie les collisions entre tirs alliés et ennemies. */
-void update_collision(Row *r, Sound_Manager *SM) {
+void update_all_collisions_in_row(Row *this, Sound_Manager *SM) {
   int i = 0;
   int j;
   Shot *s;
   Enemy *e;
   
-  while (i<r->nb_shots) {
-    s = &r->shots[i];
-    for (j=0; j<r->nb_enemies; j++) {
-      e = &r->enemies[j];
-      if (s->posX + r->rectsize/2 >= e->posX + e->padding && s->posX <= e->posX + e->padding + r->rectsize) {
+  while (i<this->nb_shots) {
+    s = &this->shots[i];
+    for (j=0; j<this->nb_enemies; j++) {
+      e = &this->enemies[j];
+      if (s->posX + this->rectsize/2 >= e->posX + e->padding && s->posX <= e->posX + e->padding + this->rectsize) {
 	e->life -= s->attack;
-	remove_shot_from_row(r, i);
+	remove_shot_from_row(this, i);
 	if (e->life <= 0) {
-	  remove_enemy_from_row(r, j, SM);
+	  remove_enemy_from_row(this, j, SM);
 	}
 	break;
       }
@@ -111,8 +130,8 @@ void update_collision(Row *r, Sound_Manager *SM) {
 
 
 /* Supprime tous les ennemies d'une ligne. */
-void remove_all_enemies_in_row(Row *r, Player_1 *p1) {
-  r->nb_enemies = 0;
+void remove_all_enemies_in_row(Row *this, Player_1 *p1) {
+  this->nb_enemies = 0;
   p1->life--;
   set_player_life_str(p1->life, p1->life_str);
   if (p1->life == 0) {
@@ -125,13 +144,13 @@ void remove_all_enemies_in_row(Row *r, Player_1 *p1) {
 
 
 /* Met à jour tous les alliés d'une ligne. */
-void update_friends(Row *r, Sound_Manager *SM) {
+void update_all_friends_in_row(Row *this, Sound_Manager *SM) {
   int i;
   for (i=0; i<NB_COLUMNS;i++) {
-    if (!is_friend(&r->friends[i])) {
+    if (!is_friend(&this->friends[i])) {
       continue;
     }
-    update_friend_animation(&r->friends[i], r, SM);
+    update_friend(&this->friends[i], this, SM);
   }
 }
 
@@ -140,13 +159,12 @@ void update_friends(Row *r, Sound_Manager *SM) {
 
 
 /* Met à jour tous les ennemies d'une ligne. */
-void update_enemies(Row *r, Player_1 *p1, Sound_Manager *SM) {
+void update_all_enemies_in_row(Row *this, Player_1 *p1, Sound_Manager *SM) {
   int i=0;
-  while (i<r->nb_enemies) {
-    update_enemy_animation(&r->enemies[i], r, SM);
-    move_enemy(&r->enemies[i]);
-    if (r->enemies[i].posX <= -r->rectsize) {
-      remove_all_enemies_in_row(r, p1);
+  while (i<this->nb_enemies) {
+    update_enemy(&this->enemies[i], this, SM);
+    if (this->enemies[i].posX <= -this->rectsize) {
+      remove_all_enemies_in_row(this, p1);
     }
     i++;
   }
@@ -157,12 +175,12 @@ void update_enemies(Row *r, Player_1 *p1, Sound_Manager *SM) {
 
 
 /* Met à jour tous les tirs d'une ligne. */
-void update_shots(Row *r, Game_Manager *GM) {
+void update_all_shots_in_row(Row *this, Game_Manager *GM) {
   int i=0;
-  while (i<r->nb_shots) {
-    update_shot(&r->shots[i]);
-    if (r->shots[i].posX >= GM->window.field.width) {
-      remove_shot_from_row(r, i);
+  while (i<this->nb_shots) {
+    move_shot(&this->shots[i]);
+    if (this->shots[i].posX >= GM->window.field.width) {
+      remove_shot_from_row(this, i);
       i--;
     }
     i++;
@@ -174,12 +192,12 @@ void update_shots(Row *r, Game_Manager *GM) {
 
 
 /* Met à jour toutes les pièces d'or d'une ligne. */
-void update_golds(Row *r) {
+void update_all_golds_in_row(Row *this) {
   int i=0;
-  while (i<r->nb_golds) {
-    update_gold(&r->golds[i]);
-    if (r->golds[i].time_left <= 0) {
-      remove_gold_from_row(r, i);
+  while (i<this->nb_golds) {
+    update_gold(&this->golds[i]);
+    if (this->golds[i].time_left <= 0) {
+      remove_gold_from_row(this, i);
       i--;
     }
     i++;
@@ -190,18 +208,13 @@ void update_golds(Row *r) {
 
 
 
-/* Met à jour les lignes du terrain. */
+/* Met à jour une ligne du terrain. */
 /* GLOBAL */
-void update_rows(Game_Manager *GM, Sound_Manager *SM) {
-  int i;
-  Row *r;
-  for (i=0; i<NB_ROWS; i++) {
-    r = &GM->rows[i];
-    update_friends(r, SM);
-    update_enemies(r, &GM->p1, SM);
-    update_shots(r, GM);
-    
-    update_collision(r, SM);
-    update_golds(r);
-  }
+void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM) {
+  update_all_friends_in_row(this, SM);
+  update_all_enemies_in_row(this, &GM->p1, SM);
+  update_all_shots_in_row(this, GM);
+  
+  update_all_collisions_in_row(this, SM);
+  update_all_golds_in_row(this);
 }
