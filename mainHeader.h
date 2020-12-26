@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "GUI/GUI_header.h"
-#include "GUI/makhead.h"
 #include "global_header.h"
+#include "GUI/GUI_header.h"
 #include <time.h>
 
 #define NB_FRIENDS 4
@@ -217,3 +214,9 @@ typedef struct {
   int font_size;
   pauseScreen pause_screen;
 } Texture_Manager;
+
+
+
+
+void launch_main_page(int width, int height);
+void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name, char *p2_name);

@@ -1,5 +1,4 @@
 #include "GUI_header.h"
-#include "makhead.h"
 
 /* GLOBAL */
 void draw_resume_section(resumeSection *this) {

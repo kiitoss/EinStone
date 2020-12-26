@@ -1,6 +1,14 @@
 #include "../../mainHeader.h"
 #include "../makhead.h"
 
+/* GLOBAL */
+void draw_pause_screen(pauseScreen *this) {
+  draw_button(&this->play_btn);
+  draw_button(&this->save_quit_btn);
+  draw_button(&this->quit_btn);
+  MLV_update_window();
+}
+
 void draw_home(Game_Manager *GM, Texture_Manager *TM) {
    MLV_draw_image(TM->friend_home_background,GM->window.friend_home.posX, GM->window.friend_home.posY);
   

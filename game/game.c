@@ -1,9 +1,7 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../mainHeader.h"
+#include "makhead.h"
 
 
-
-void launch_main_page(int width, int height);
 
 
 

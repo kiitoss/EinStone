@@ -1,14 +1,6 @@
 #include "../../mainHeader.h"
 #include "../makhead.h"
 
-/* GLOBAL */
-void draw_pause_screen(pauseScreen *this) {
-  draw_button(&this->play_btn);
-  draw_button(&this->save_quit_btn);
-  draw_button(&this->quit_btn);
-  MLV_update_window();
-}
-
 void draw_shot(Shot *this, MLV_Image *shot_img, Window *window) {
   MLV_draw_image(shot_img, this->posX + window->field.posX, this->posY + window->field.posY);
 }

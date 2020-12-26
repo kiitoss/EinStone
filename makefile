@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o gameC.o playerC.o popC.o rowC.o animationM.o gameManagerM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IAC.o enemyC.o friendC.o gameC.o playerC.o popC.o rowC.o animationM.o gameManagerM.o soundManager.o spawnerM.o textureManagerM.o windowM.o gameV.o windowV.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 button.o: ./GUI/button.c
 	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
@@ -21,50 +21,50 @@ label.o: ./GUI/label.c
 resumeSection.o: ./GUI/resumeSection.c
 	$(CC) $(CFLAGS) ./GUI/resumeSection.c -c -I ./
 
-IAC.o: ./game/controllers/IAC.c
-	$(CC) $(CFLAGS) ./game/controllers/IAC.c -c -I ./
+IA.o: ./game/controllers/IA.c
+	$(CC) $(CFLAGS) ./game/controllers/IA.c -c -I ./
 
-enemyC.o: ./game/controllers/enemyC.c
-	$(CC) $(CFLAGS) ./game/controllers/enemyC.c -c -I ./
+enemy.o: ./game/controllers/enemy.c
+	$(CC) $(CFLAGS) ./game/controllers/enemy.c -c -I ./
 
-friendC.o: ./game/controllers/friendC.c
-	$(CC) $(CFLAGS) ./game/controllers/friendC.c -c -I ./
+friend.o: ./game/controllers/friend.c
+	$(CC) $(CFLAGS) ./game/controllers/friend.c -c -I ./
 
-gameC.o: ./game/controllers/gameC.c
-	$(CC) $(CFLAGS) ./game/controllers/gameC.c -c -I ./
+player.o: ./game/controllers/player.c
+	$(CC) $(CFLAGS) ./game/controllers/player.c -c -I ./
 
-playerC.o: ./game/controllers/playerC.c
-	$(CC) $(CFLAGS) ./game/controllers/playerC.c -c -I ./
+pop.o: ./game/controllers/pop.c
+	$(CC) $(CFLAGS) ./game/controllers/pop.c -c -I ./
 
-popC.o: ./game/controllers/popC.c
-	$(CC) $(CFLAGS) ./game/controllers/popC.c -c -I ./
+row.o: ./game/controllers/row.c
+	$(CC) $(CFLAGS) ./game/controllers/row.c -c -I ./
 
-rowC.o: ./game/controllers/rowC.c
-	$(CC) $(CFLAGS) ./game/controllers/rowC.c -c -I ./
+init_gameManager.o: ./game/initializers/init_gameManager.c
+	$(CC) $(CFLAGS) ./game/initializers/init_gameManager.c -c -I ./
 
-animationM.o: ./game/models/animationM.c
-	$(CC) $(CFLAGS) ./game/models/animationM.c -c -I ./
+init_row.o: ./game/initializers/init_row.c
+	$(CC) $(CFLAGS) ./game/initializers/init_row.c -c -I ./
 
-gameManagerM.o: ./game/models/gameManagerM.c
-	$(CC) $(CFLAGS) ./game/models/gameManagerM.c -c -I ./
+init_soundManager.o: ./game/initializers/init_soundManager.c
+	$(CC) $(CFLAGS) ./game/initializers/init_soundManager.c -c -I ./
 
-soundManager.o: ./game/models/soundManager.c
-	$(CC) $(CFLAGS) ./game/models/soundManager.c -c -I ./
+init_spawner.o: ./game/initializers/init_spawner.c
+	$(CC) $(CFLAGS) ./game/initializers/init_spawner.c -c -I ./
 
-spawnerM.o: ./game/models/spawnerM.c
-	$(CC) $(CFLAGS) ./game/models/spawnerM.c -c -I ./
+init_textureManager.o: ./game/initializers/init_textureManager.c
+	$(CC) $(CFLAGS) ./game/initializers/init_textureManager.c -c -I ./
 
-textureManagerM.o: ./game/models/textureManagerM.c
-	$(CC) $(CFLAGS) ./game/models/textureManagerM.c -c -I ./
+init_window.o: ./game/initializers/init_window.c
+	$(CC) $(CFLAGS) ./game/initializers/init_window.c -c -I ./
 
-windowM.o: ./game/models/windowM.c
-	$(CC) $(CFLAGS) ./game/models/windowM.c -c -I ./
+game_view.o: ./game/views/game_view.c
+	$(CC) $(CFLAGS) ./game/views/game_view.c -c -I ./
 
-gameV.o: ./game/views/gameV.c
-	$(CC) $(CFLAGS) ./game/views/gameV.c -c -I ./
+window_view.o: ./game/views/window_view.c
+	$(CC) $(CFLAGS) ./game/views/window_view.c -c -I ./
 
-windowV.o: ./game/views/windowV.c
-	$(CC) $(CFLAGS) ./game/views/windowV.c -c -I ./
+game.o: ./game/game.c
+	$(CC) $(CFLAGS) ./game/game.c -c -I ./
 
 mainPageC.o: ./menu/controllers/mainPageC.c
 	$(CC) $(CFLAGS) ./menu/controllers/mainPageC.c -c -I ./
