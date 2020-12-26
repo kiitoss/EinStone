@@ -386,7 +386,7 @@ void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name,
   MLV_change_window_size(window.width, window.height);
 
   TM = init_TM(window);
-  GM = init_GM(&window, &TM, gamemode);
+  GM = init_GM(&window, &TM, gamemode, difficulty, p1_name, p2_name);
   
   update_game(&GM, &TM, &SM);
 

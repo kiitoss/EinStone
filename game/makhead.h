@@ -23,8 +23,8 @@ void update_friend(Friend *this, Row *row, Sound_Manager *SM);
 void set_player_money_str(int money, char money_str[10]);
 void set_player_life_str(int life, char life_str[10]);
 void p1_add_gold(Player_1 *this, int gold);
-Player_1 init_p1();
-Player_2 init_p2();
+Player_1 init_p1(char *p1_name);
+Player_2 init_p2(char *p2_name);
 void p2_create_free_gold(Player_2 *this);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
@@ -47,8 +47,11 @@ void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY)
 void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
 void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM);
 
+/* initializers/IAM.c */
+void init_IA(Game_Manager *GM);
+
 /* initializers/init_gameManager.c */
-Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode);
+Game_Manager init_GM(Window *window, Texture_Manager *TM, menu_choice gamemode,menu_choice difficulty,char *p1_name,char *p2_name);
 
 /* initializers/init_row.c */
 Row init_row(int rectsize);
