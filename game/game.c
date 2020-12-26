@@ -69,7 +69,54 @@ void save_game(Game_Manager *GM) {
 
 
 
+void game_over(Window *window, Game_Manager *GM, gameOver *go) {
+  Event_Manager em;
+  Button *hover_btn;
+  em.event = MLV_NONE;
 
+  go->hover_btn = NULL;
+
+  /* Mise en palce d'un filtre sur le jeu et dessin des boutons de l'écran de pause. */
+  MLV_draw_filled_rectangle(0, 0, window->width, window->height, MLV_rgba(255, 255, 200, 200));
+  draw_game_over_screen(go,GM);
+
+  /* Attente du choix du joueur et mise en évidence du bouton survolé. */
+  while (em.event != MLV_MOUSE_BUTTON || go->hover_btn == NULL) {
+    em = get_game_event();
+
+    if (em.event == MLV_MOUSE_MOTION) {
+      hover_btn = NULL;
+      
+      if (is_btn_hover(&go->quit_btn, em.mouseX, em.mouseY)) {
+	hover_btn = &go->quit_btn;
+      }
+      else if (is_btn_hover(&go->restart_btn, em.mouseX, em.mouseY)) {
+	hover_btn = &go->restart_btn;
+      }
+      if (go->hover_btn != hover_btn) {
+	unset_hover_btn(go->hover_btn);
+	set_hover_btn(hover_btn);
+	go->hover_btn = hover_btn;
+	draw_game_over_screen(go,GM);
+      }
+    }
+  }
+  
+  /* Action suivant le choix du joueur */
+  if (em.event == MLV_MOUSE_BUTTON) {
+    switch (go->hover_btn->value) {
+    case PAUSE_QUIT:
+      GM->in_game = false;
+      break;
+    case RESTART:
+      launch_newgame(GM->gamemode,GM->difficulty,GM->p1.name,GM->p2.name);
+      GM->in_game = true;
+    default:break;
+    }
+  }
+}
+
+  
 
 /* Mise en pause du jeu */
 void pause(Window *window, Game_Manager *GM, pauseScreen *ps) {
@@ -310,7 +357,11 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Mise à jour de l'IA. */
   update_IA(GM);
-  
+
+  /* Affichage du Game Over */
+  if(GM->p1.life == 0){
+    game_over(&GM->window,GM,&TM->game_over_screen);
+  }
   /* Création d'or pour le joueur 1. */
   if (time >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;

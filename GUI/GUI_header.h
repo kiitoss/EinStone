@@ -1,6 +1,6 @@
 #include "../global_header.h"
 
-enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH, PAUSE_PLAY, PAUSE_QUIT, PAUSE_SAVE_QUIT};
+enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH, PAUSE_PLAY, PAUSE_QUIT, PAUSE_SAVE_QUIT,RESTART};
 typedef enum menu_choices menu_choice;
 
 typedef struct {

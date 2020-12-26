@@ -16,9 +16,34 @@ void draw_pause_screen(pauseScreen *this) {
   draw_button(&this->play_btn);
   draw_button(&this->save_quit_btn);
   draw_button(&this->quit_btn);
+
   MLV_update_window();
 }
 
+/* GLOBAL */
+void draw_game_over_screen(gameOver *this,Game_Manager *GM) {
+  MLV_Font *font;
+  int textbox_width = 0;
+  int textbox_height=0;
+  
+  draw_button(&this->quit_btn);
+  draw_button(&this->restart_btn);
+  font = MLV_load_font ("resources/font/AdobeDevanagari-Bold.otf", 100);
+
+  MLV_get_size_of_adapted_text_box_with_font("Game Over",font,5,&textbox_width,&textbox_height);
+
+  MLV_draw_adapted_text_box_with_font ((GM->window.width - textbox_width)/2,
+				       GM->window.field.posY,
+				       "Game Over",
+				       font,
+				       5,
+				       MLV_rgba(0,0,0,0),
+				       MLV_COLOR_BROWN,
+				       MLV_rgba(0,0,0,0),
+				       MLV_TEXT_CENTER); 
+
+  MLV_update_window();
+}
 void draw_home(Game_Manager *GM, Texture_Manager *TM) {
    MLV_draw_image(TM->friend_home_background,GM->window.friend_home.posX, GM->window.friend_home.posY);
   
@@ -56,19 +81,6 @@ void draw_friend_spawner(Game_Manager *GM, Texture_Manager *TM) {
 			      MLV_TEXT_CENTER);
 
   }
-  
-  /*MLV_get_size_of_adapted_text_box("DELETE",5,&textbox_width,&textbox_height);
-
-  MLV_draw_adapted_text_box_with_font(GM->window.friend_spawner.posX + ((NB_COLUMNS-1) * GM->window.rectsize) + GM->window.rectsize/4,
-				      GM->window.friend_spawner.height - textbox_height,
-				      "DELETE",
-				      TM->font,
-				      5,
-				      MLV_COLOR_BLACK,
-				      MLV_COLOR_BLACK,
-				      MLV_COLOR_FIREBRICK2,
-				      MLV_TEXT_CENTER);
-*/
 }
 
 void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
@@ -92,7 +104,7 @@ void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
 		    MLV_HORIZONTAL_CENTER,
 		    MLV_VERTICAL_CENTER);
   
-  MLV_get_size_of_adapted_text_box(GM->p1.name,5,&textbox_width,&textbox_height);
+  MLV_get_size_of_adapted_text_box_with_font(GM->p1.name,TM->font,5,&textbox_width,&textbox_height);
   
   if (textbox_width > GM->window.rectsize){
 
@@ -134,7 +146,7 @@ void draw_enemy_stats(Game_Manager *GM,Texture_Manager *TM){
 			    MLV_COLOR_YELLOW,
 			    MLV_TEXT_CENTER);
   
-MLV_get_size_of_adapted_text_box(GM->p2.name,5,&textbox_width,&textbox_height);
+  MLV_get_size_of_adapted_text_box_with_font(GM->p2.name,TM->font,5,&textbox_width,&textbox_height);
 
   if (textbox_width > GM->window.rectsize){
 
@@ -197,7 +209,7 @@ void draw_field(Game_Manager *GM, Texture_Manager *TM) {
 /* GLOBAL */
 void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   MLV_Color Color;
-  int i;
+
   draw_home(GM, TM);
   if (GM->gamemode == MULTI) {
     draw_enemy_spawner(GM, TM);

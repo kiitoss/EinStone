@@ -5,6 +5,9 @@ MAKMAK from path: ./
 
 ------------------------------------------------------------
 */
+
+
+void draw_game_over_screen(gameOver *this,Game_Manager *GM);
 /* controllers/IA.c */
 void update_IA(Game_Manager *GM);
 

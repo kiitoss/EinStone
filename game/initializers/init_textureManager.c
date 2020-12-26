@@ -86,6 +86,21 @@ pauseScreen get_pause_screen(Window window) {
   return pause_screen;
 }
 
+gameOver get_game_over_screen(Window window) {
+  Geometry g;
+  gameOver GO_screen;
+  g.posX = 3*window.width/8;
+  g.posY = 4*window.height/12;
+  g.width = window.width/4;
+  g.height = window.height/12;
+  GO_screen.restart_btn = get_new_button(g, "Restart", MLV_COLOR_YELLOW, MLV_COLOR_BROWN, "resources/font/Amatic-Bold.ttf", RESTART);
+  g.posY += 2*window.height/12;
+  GO_screen.quit_btn = get_new_button(g, "Quit", MLV_COLOR_YELLOW, MLV_COLOR_BROWN, "resources/font/Amatic-Bold.ttf", PAUSE_QUIT);
+  GO_screen.hover_btn = NULL;
+  return GO_screen;
+}
+
+
 /* GLOBAL */
 Texture_Manager init_TM(Window window) {
   int i;
@@ -136,6 +151,7 @@ Texture_Manager init_TM(Window window) {
   }
 
   TM.pause_screen = get_pause_screen(window);
+  TM.game_over_screen = get_game_over_screen(window);
   return TM;
 }
 

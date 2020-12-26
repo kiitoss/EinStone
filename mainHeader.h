@@ -197,6 +197,12 @@ typedef struct {
 } pauseScreen;
 
 typedef struct {
+  Button quit_btn;
+  Button restart_btn;
+  Button *hover_btn;
+}gameOver;
+
+typedef struct {
   MLV_Image *field_light_grass_img;
   MLV_Image *field_dark_grass_img;
   MLV_Image *enemy_spawner_background;
@@ -215,6 +221,7 @@ typedef struct {
   MLV_Font *font;
   int font_size;
   pauseScreen pause_screen;
+  gameOver game_over_screen;
 } Texture_Manager;
 
 
