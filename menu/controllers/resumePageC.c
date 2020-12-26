@@ -68,12 +68,7 @@ void launch_resume_page(int width, int height) {
   }
   fclose(data);
 
-  /*
-  for (i=0; i<SAVED_GAMES; i++) {
-    printf("id: %d\n", GM_list[i].id);
-  }
-  */
-  rp = init_resume_page(width, height);
+  rp = init_resume_page(width, height, GM_list);
   draw_resume_page(&rp);
   MLV_flush_event_queue();
   update_resume_page(&rp);

@@ -47,7 +47,7 @@ void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY)
 void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
 void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM);
 
-/* initializers/IAM.c */
+/* initializers/init_IA.c */
 void init_IA(Game_Manager *GM);
 
 /* initializers/init_gameManager.c */

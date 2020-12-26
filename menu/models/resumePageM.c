@@ -3,7 +3,7 @@
 
 
 /* GLOBAL */
-resumePage init_resume_page(int width, int height) {
+resumePage init_resume_page(int width, int height, GM_List GM_list) {
   resumePage rp;
   Geometry g;
   int i;
@@ -32,7 +32,13 @@ resumePage init_resume_page(int width, int height) {
   g.posY += title_height + margin_title;
 
   for (i=0; i<SAVED_GAMES; i++) {
-    rp.sections[i] = get_new_resumeSection(g, "Game1", font_path);
+    if (GM_list[i].id == 0) {
+      rp.sections[i] = get_new_resumeSection(g, "", "", 0, 0, 0, font_path);
+      rp.sections[i].exist = false;
+    }
+    else {
+      rp.sections[i] = get_new_resumeSection(g, GM_list[i].p1.name, GM_list[i].p2.name, GM_list[i].p1.score, GM_list[i].p2.score, GM_list[i].duration, font_path);
+    }
     g.posY += row_height + margin_row;
   }
 

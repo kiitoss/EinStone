@@ -79,7 +79,7 @@ typedef struct {
 } Shot;
 
 typedef struct {
-  char *name;
+  char name[21];
   int chosen_friend;
   int money;
   char money_str[10];
@@ -91,7 +91,8 @@ typedef struct {
 } Player_1;
 
 typedef struct {
-  char *name;
+  char name[21];
+  char saved_name[10];
   int chosen_enemy;
   int chosen_row;
   int money;

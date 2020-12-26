@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o IAM.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o IAM.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 button.o: ./GUI/button.c
 	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
@@ -39,8 +39,8 @@ pop.o: ./game/controllers/pop.c
 row.o: ./game/controllers/row.c
 	$(CC) $(CFLAGS) ./game/controllers/row.c -c -I ./
 
-IAM.o: ./game/initializers/IAM.c
-	$(CC) $(CFLAGS) ./game/initializers/IAM.c -c -I ./
+init_IA.o: ./game/initializers/init_IA.c
+	$(CC) $(CFLAGS) ./game/initializers/init_IA.c -c -I ./
 
 init_gameManager.o: ./game/initializers/init_gameManager.c
 	$(CC) $(CFLAGS) ./game/initializers/init_gameManager.c -c -I ./

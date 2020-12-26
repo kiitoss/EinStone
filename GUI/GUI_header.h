@@ -66,7 +66,11 @@ typedef struct {
   int height;
   int posX;
   int posY;
-  Label section_lbl;
+  Label p1_name_lbl;
+  Label p2_name_lbl;
+  Label p1_score_lbl;
+  Label p2_score_lbl;
+  Label time_lbl;
   bool is_hover;
   bool is_select;
 } resumeSection;
@@ -112,7 +116,7 @@ void set_label_geometry(Label *this, int posX);
 /* resumeSection.c */
 void draw_resume_section(resumeSection *this);
 bool is_resumeSection_hover(resumeSection *this, int posX, int posY);
-resumeSection get_new_resumeSection(Geometry container, char *text, char *font_path);
+resumeSection get_new_resumeSection(Geometry container, char p1_name[21], char p2_name[21], int p1_score, int p2_score, int time, char *font_path);
 void set_hover_resume_section(resumeSection *this);
 void unset_hover_resume_section(resumeSection *this);
 void set_select_resume_section(resumeSection *this);
