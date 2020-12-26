@@ -92,20 +92,26 @@ void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
 		    MLV_HORIZONTAL_CENTER,
 		    MLV_VERTICAL_CENTER);
   
-  GM->p1.name = "FRIENDSjuyfjyfjjhhhhhhhhhh";
   MLV_get_size_of_adapted_text_box(GM->p1.name,5,&textbox_width,&textbox_height);
   
+  if (textbox_width > GM->window.rectsize){
+
+    TM->font_size = get_object_font_size(GM->p1.name,"resources/font/AdobeDevanagari-Bold.otf",GM->window.rectsize - GM->window.rectsize/4,GM->window.rectsize);
+
+    TM->font = MLV_load_font ("resources/font/AdobeDevanagari-Bold.otf", TM->font_size);
+
+    set_object_dimension(GM->p1.name,"resources/font/AdobeDevanagari-Bold.otf",TM->font_size,&textbox_width,&textbox_height);
+  }
   MLV_draw_adapted_text_box_with_font(
 				      (GM->window.friend_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
 				      GM->window.friend_spawner.posY + textbox_height,
 				      GM->p1.name,
 				      TM->font,
 				      5,
+				      MLV_rgba(0,0,0,0),
 				      MLV_COLOR_BLACK,
-				      MLV_COLOR_BLACK,
-				      MLV_COLOR_WHITE,
+				      MLV_rgba(0,0,0,0),
 				      MLV_TEXT_CENTER);
-  
   
    for(i=0;i<GM->p1.life;i++){
      MLV_draw_image(TM->life_friend_img, (GM->window.friend_spawner.posX + ((GM->window.rectsize - (GM->p1.life * GM->window.rectsize)/6)/2) + (i*GM->window.rectsize)/6), GM->window.friend_spawner.height - (GM->window.rectsize/2));
@@ -127,8 +133,18 @@ void draw_enemy_stats(Game_Manager *GM,Texture_Manager *TM){
 			    MLV_COLOR_BLACK,
 			    MLV_COLOR_YELLOW,
 			    MLV_TEXT_CENTER);
-  GM->p2.name = "ENEMIES";
-  MLV_get_size_of_adapted_text_box(GM->p2.name,5,&textbox_width,&textbox_height);
+  
+MLV_get_size_of_adapted_text_box(GM->p2.name,5,&textbox_width,&textbox_height);
+
+  if (textbox_width > GM->window.rectsize){
+
+    TM->font_size = get_object_font_size(GM->p2.name,"resources/font/AdobeDevanagari-Bold.otf",GM->window.rectsize - GM->window.rectsize/4,GM->window.rectsize);
+
+    TM->font = MLV_load_font ("resources/font/AdobeDevanagari-Bold.otf", TM->font_size);
+
+    set_object_dimension(GM->p2.name,"resources/font/AdobeDevanagari-Bold.otf",TM->font_size,&textbox_width,&textbox_height);
+  }
+  
   MLV_draw_adapted_text_box_with_font(
 				      (GM->window.enemy_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
 				      GM->window.enemy_spawner.posY + textbox_height,
@@ -136,7 +152,7 @@ void draw_enemy_stats(Game_Manager *GM,Texture_Manager *TM){
 				      TM->font,
 				      5,
 				      MLV_rgba(0,0,0,0),
-				      MLV_rgba(0,0,0,0),
+				      MLV_COLOR_BLACK,
 				      MLV_rgba(0,0,0,0),
 				      MLV_TEXT_CENTER);
 }
@@ -191,9 +207,10 @@ void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   draw_friend_stats(GM,TM);
 
   draw_field(GM, TM);
-  /*if(GM->gamemode == SOLO){return;}*/
-  for (i=0;i<NB_ENEMIES;i++){
-    Color = (GM->p2.money >= GM->enemy_spawners[i].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
-    MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row, GM->window.rectsize, GM->window.rectsize, Color);
-  }
+  if(GM->gamemode == SOLO){return;}
+
+  Color = (GM->p2.money >= GM->enemy_spawners[GM->p2.chosen_enemy].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
+  MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row, GM->window.rectsize, GM->window.rectsize, Color);
+
+ 
 }
