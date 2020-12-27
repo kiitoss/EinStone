@@ -14,7 +14,7 @@ Button *get_score_page_hover_btn(scorePage *this, int posX, int posY) {
 scoreSection get_new_scoreSection(Game_Manager *GM, Geometry container, char *font_path) {
   scoreSection ss;
   Geometry g;
-  char *p1_score_str, *time_str, *p2_score_str;
+  char *p1_score_str, *time_str;
   int min, sec;
   
   if (GM == NULL) {
@@ -26,7 +26,6 @@ scoreSection get_new_scoreSection(Game_Manager *GM, Geometry container, char *fo
 
   p1_score_str = malloc(21*sizeof(char));
   time_str = malloc(21*sizeof(char));
-  p2_score_str = malloc(21*sizeof(char));
 
 
   min = (GM->duration / 1000) / 60;
@@ -34,10 +33,9 @@ scoreSection get_new_scoreSection(Game_Manager *GM, Geometry container, char *fo
 
   sprintf(time_str, "%dm : %ds", min, sec);
   sprintf(p1_score_str, "%d", GM->p1.score);
-  sprintf(p2_score_str, "%d", GM->p2.score);
   
   
-  g.width = container.width/5;
+  g.width = container.width/3;
   g.height = container.height;
   g.posX = container.posX;
   g.posY = container.posY;
@@ -53,10 +51,6 @@ scoreSection get_new_scoreSection(Game_Manager *GM, Geometry container, char *fo
   ss.p1_score_lbl = get_new_label(g, p1_score_str, MLV_COLOR_RED, font_path);
   g.posX += g.width;
   ss.time_lbl = get_new_label(g, time_str, MLV_COLOR_RED, font_path);
-  g.posX += g.width;
-  ss.p2_score_lbl = get_new_label(g, p2_score_str, MLV_COLOR_RED, font_path);
-  g.posX += g.width;
-  ss.p2_name_lbl = get_new_label(g, GM->p2.name, MLV_COLOR_RED, font_path);
   
   return ss;
 }

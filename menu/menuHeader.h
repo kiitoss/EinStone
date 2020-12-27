@@ -72,9 +72,7 @@ typedef struct {
   int posX;
   int posY;
   Label p1_name_lbl;
-  Label p2_name_lbl;
   Label p1_score_lbl;
-  Label p2_score_lbl;
   Label time_lbl;
 } scoreSection;
 

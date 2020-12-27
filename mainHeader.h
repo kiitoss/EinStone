@@ -20,7 +20,7 @@
 #define QTY_FREE_GOLD_P2 10
 #define LIFE_P1 1
 
-#define SAVED_GAMES 3
+#define SAVED_GAMES 5
 #define SAVED_SCORES 5
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
