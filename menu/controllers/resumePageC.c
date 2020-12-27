@@ -31,6 +31,7 @@ void update_resume_page(resumePage *rp) {
   while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || (rp->hover_btn == NULL && rp->hover_section == NULL)) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
+  MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_BUTTON && (rp->hover_btn != NULL || rp->hover_section != NULL)) {
     select_hover_btn_or_section(rp);
     if (rp->hover_btn != NULL && rp->hover_btn->value == BACK) {

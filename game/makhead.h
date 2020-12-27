@@ -5,9 +5,6 @@ MAKMAK from path: ./
 
 ------------------------------------------------------------
 */
-
-
-void draw_game_over_screen(gameOver *this,Game_Manager *GM);
 /* controllers/IA.c */
 void update_IA(Game_Manager *GM);
 
@@ -83,6 +80,7 @@ Event_Manager get_game_event();
 /* views/window_view.c */
 void draw_time(int time, Window *window);
 void draw_pause_screen(pauseScreen *this);
+void draw_game_over_screen(gameOver *this,Game_Manager *GM);
 void draw_window(Game_Manager *GM, Texture_Manager *TM);
 
 /* game.c */
