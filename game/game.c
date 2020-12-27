@@ -50,6 +50,7 @@ void set_GMS(GM_list_scores GMS) {
   if (scores == NULL) {
     for (i=0; i<SAVED_SCORES; i++) {
       GMS[i].id = 0;
+      GMS[i].p1.score = 0;
     }
   }
   else {
@@ -118,6 +119,7 @@ int get_unique_id() {
 void save_score(Game_Manager *GM, int time) {
   GM_list_scores GMS;
   GM_list_games GMG;
+  Game_Manager temp_GM, temp_GM2;
   int i;
 
   GM->duration += MLV_get_time() - time;
@@ -126,18 +128,8 @@ void save_score(Game_Manager *GM, int time) {
 
   if (GM->id == 0) {
     GM->id = get_unique_id();
-    for (i=SAVED_GAMES-1; i>0; i--) {
-      GMS[i] = GMS[i-1];
-    }
-    GMS[0] = *GM;
   }
   else {
-    for (i=0; i<SAVED_SCORES; i++) {
-      if (GMS[i].id == GM->id) {
-	GMS[i] = *GM;
-	break;
-      }
-    }
     set_GMG(GMG);
     for (i=0; i<SAVED_GAMES; i++) {
       if (GMG[i].id == GM->id) {
@@ -149,6 +141,17 @@ void save_score(Game_Manager *GM, int time) {
       }
     }
     write_GMG(GMG);
+  }
+
+  for (i=0; i<SAVED_SCORES; i++) {
+    if (GMS[i].p1.score <= GM->p1.score) {
+      temp_GM2 = *GM;
+      for (i=i; i<SAVED_SCORES; i++) {
+	temp_GM = GMS[i];
+	GMS[i] = temp_GM2;
+	temp_GM2 = temp_GM;
+      }
+    }
   }
 
   write_GMS(GMS);
