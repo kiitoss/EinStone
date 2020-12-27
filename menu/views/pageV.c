@@ -38,6 +38,27 @@ void draw_newgame_page(newgamePage *ngp) {
   MLV_update_window();
 }
 
+
+/* GLOBAL */
+void draw_resume_section(resumeSection *this) {
+  MLV_Color border_color = MLV_rgba(0,0,0,0);
+  if (!this->exist) {return;}
+  if (this->is_select || this->is_hover) {
+    if (this->is_select) {
+      border_color = MLV_COLOR_GREEN;
+    }
+    else {
+      border_color = MLV_COLOR_ORANGE;
+    }
+  }
+  MLV_draw_rectangle(this->posX, this->posY, this->width, this->height, border_color);
+  draw_label(&this->p1_name_lbl);
+  draw_label(&this->p1_score_lbl);
+  draw_label(&this->time_lbl);
+  draw_label(&this->p2_score_lbl);
+  draw_label(&this->p2_name_lbl);
+}
+
 /* GLOBAL */
 void draw_resume_page(resumePage *rp) {
   int i;
@@ -54,3 +75,29 @@ void draw_resume_page(resumePage *rp) {
   MLV_update_window();
 }
 
+/* GLOBAL */
+void draw_score_section(scoreSection *this) {
+  if (!this->exist) {return;}
+
+  MLV_draw_rectangle(this->posX, this->posY, this->width, this->height, MLV_rgba(0,0,0,0));
+  draw_label(&this->p1_name_lbl);
+  draw_label(&this->p1_score_lbl);
+  draw_label(&this->time_lbl);
+  draw_label(&this->p2_score_lbl);
+  draw_label(&this->p2_name_lbl);
+}
+
+/* GLOBAL */
+void draw_score_page(scorePage *sp) {
+  int i;
+  MLV_clear_window(MLV_COLOR_BLACK);
+
+  draw_label(&sp->title_lbl);
+  draw_button(&sp->back_btn);
+
+  for (i=0; i<SAVED_SCORES; i++) {
+    draw_score_section(&sp->sections[i]);
+  }
+  
+  MLV_update_window();
+}

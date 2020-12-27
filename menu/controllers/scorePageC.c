@@ -1,11 +1,61 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
+
+static void update_hover_btn(scorePage *sp, int posX, int posY) {
+  Button *hover_btn = get_score_page_hover_btn(sp, posX, posY);
+  if (sp->hover_btn != hover_btn) {
+    unset_hover_btn(sp->hover_btn);
+    set_hover_btn(hover_btn);
+    sp->hover_btn = hover_btn;
+  }
+}
+
+
+void update_score_page(scorePage *sp) {
+  Event_Manager em;
+  draw_score_page(sp);
+  em = get_event();
+  while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || sp->hover_btn == NULL) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
+    em = get_event();
+  }
+  MLV_flush_event_queue();
+  if (em.event == MLV_MOUSE_MOTION) {
+    update_hover_btn(sp, em.mouseX, em.mouseY);
+    update_score_page(sp);
+  }
+  else if ((em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE) && (em.event != MLV_MOUSE_BUTTON || sp->hover_btn == NULL)) {
+    update_score_page(sp);
+  }
+  else {
+    launch_main_page(sp->width, sp->height);
+  }
+}
+
 /* GLOBAL */
 void launch_score_page(int width, int height) {
-  printf("%d, %d\n", width, height);
-  /*mainPage mp = init_main_page(width, height);
-  draw_main_page(&mp);
+  GM_list_scores GMS;
+  scorePage sp;
+  int i;
+
+  FILE *data = fopen("resources/scores.bin", "rb");
+  if (data == NULL) {
+    printf("--> fichier de sauvegarde des scores introuvable.\n");
+    for (i=0; i<SAVED_SCORES; i++) {
+      GMS[i].id = 0;
+    }
+  }
+  else {
+    for (i=0; i<SAVED_SCORES; i++) {
+      if (!fread(&GMS[i], sizeof(Game_Manager), 1, data)) {
+	printf("--> erreur lors de la lecture des scores.\n");
+      }
+    }
+    fclose(data);
+  }
+  
+  sp = init_score_page(width, height, GMS);
+  draw_score_page(&sp);
   MLV_flush_event_queue();
-  update_main_page(&mp);*/
+  update_score_page(&sp);
 }

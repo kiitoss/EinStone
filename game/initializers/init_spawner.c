@@ -163,6 +163,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.range = window->rectsize/4;
     ES.padding = window->rectsize/2;
     ES.type_attack = CAC;
+    ES.score = 10;
     break;
   case 1:
     ES.id_enemy = 2;
@@ -174,6 +175,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.range = window->rectsize/4;
     ES.type_attack = DISTANCE;
     ES.padding = window->rectsize/2;
+    ES.score = 10;
     break;
   case 2:
     ES.id_enemy = 3;
@@ -185,6 +187,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.range = window->rectsize/4;
     ES.type_attack = CAC;
     ES.padding = window->rectsize/2;
+    ES.score = 10;
     break;
   default:
     printf("-->MAX atteint ! \n");

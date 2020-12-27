@@ -53,7 +53,7 @@ void set_friend_animation(Friend *this, MLV_Animation_player *animation) {
 
 
 /* Attaque tous les ennemies dans la range de l'allié. */
-void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM) {
+void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM, int *p1_score) {
   int i = 0;
   Enemy *e;
   
@@ -64,7 +64,7 @@ void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM) {
     if (e->posX + e->padding < this->posX + this->range + row->rectsize && e->posX + e->padding + row->rectsize > this->posX) {
       e->life -= this->attack;
       if (e->life <= 0) {
-	remove_enemy_from_row(row, i, SM);
+	remove_enemy_from_row(row, i, SM, p1_score);
 	i--;
       }
     }
@@ -93,10 +93,10 @@ void switch_friend_behavior(Friend *this) {
 
 
 /* Utilise le pouvoir de l'allié */
-void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM) {
+void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM, int *p1_score) {
   switch (this->ability) {
   case DEFENSE:
-    attack_all_enemies_in_range(this, row, SM);
+    attack_all_enemies_in_range(this, row, SM, p1_score);
     this->delay_ability = this->DELAY_ABILITY;
     break;
   case ATTACK:
@@ -124,7 +124,7 @@ void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM) {
 
 /* Met à jour l'allié. */
 /* GLOBAL */
-void update_friend(Friend *this, Row *row, Sound_Manager *SM) {
+void update_friend(Friend *this, Row *row, Sound_Manager *SM, int *p1_score) {
   int i;
   bool enemy_in_range = false;
   
@@ -147,7 +147,7 @@ void update_friend(Friend *this, Row *row, Sound_Manager *SM) {
   if (this->ability == MONEY || !this->is_passive) {
     this->delay_ability -= DELAY_REFRESH;
     if (this->delay_ability <= 0) {
-      use_friend_ability(this, row, SM);
+      use_friend_ability(this, row, SM, p1_score);
     }
   }
   

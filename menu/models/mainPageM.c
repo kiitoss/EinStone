@@ -2,6 +2,24 @@
 #include "../makhead.h"
 
 /* GLOBAL */
+Button *get_main_page_hover_btn(mainPage *this, int posX, int posY) {
+  Button *hover_btn = NULL;
+  if (is_btn_hover(&this->newgame_btn, posX, posY)) {
+    hover_btn = &this->newgame_btn;
+  }
+  else if (is_btn_hover(&this->resume_btn, posX, posY)) {
+    hover_btn = &this->resume_btn;
+  }
+  else if (is_btn_hover(&this->score_btn, posX, posY)) {
+    hover_btn = &this->score_btn;
+  }
+  else if (is_btn_hover(&this->quit_btn, posX, posY)) {
+    hover_btn = &this->quit_btn;
+  }
+  return hover_btn;
+}
+
+/* GLOBAL */
 mainPage init_main_page(int width, int height) {
   mainPage mp;
   Geometry g;
@@ -39,22 +57,4 @@ mainPage init_main_page(int width, int height) {
   mp.quit_btn = get_new_button(g, "Quit", MLV_COLOR_RED, MLV_rgba(0,0,0,0), font_path, BACK);
 
   return mp;
-}
-
-/* GLOBAL */
-Button *get_main_page_hover_btn(mainPage *this, int posX, int posY) {
-  Button *hover_btn = NULL;
-  if (is_btn_hover(&this->newgame_btn, posX, posY)) {
-    hover_btn = &this->newgame_btn;
-  }
-  else if (is_btn_hover(&this->resume_btn, posX, posY)) {
-    hover_btn = &this->resume_btn;
-  }
-  else if (is_btn_hover(&this->score_btn, posX, posY)) {
-    hover_btn = &this->score_btn;
-  }
-  else if (is_btn_hover(&this->quit_btn, posX, posY)) {
-    hover_btn = &this->quit_btn;
-  }
-  return hover_btn;
 }

@@ -18,8 +18,10 @@
 #define DELAY_FREE_GOLD_P1 1000
 #define DELAY_FREE_GOLD_P2 1000
 #define QTY_FREE_GOLD_P2 10
+#define LIFE_P1 1
 
 #define SAVED_GAMES 3
+#define SAVED_SCORES 5
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
@@ -119,6 +121,7 @@ typedef struct {
   MLV_Animation *animation_walking;
   enemy_type_attacks type_attack;
   int life;
+  int score;
   int attack;
   int speed;
   int price;
@@ -158,6 +161,7 @@ typedef struct {
   int range;
   int posX;
   int posY;
+  int score;
   bool is_walking;
   int padding;
 } Enemy;
@@ -188,7 +192,8 @@ typedef struct {
   int duration;
 } Game_Manager;
 
-typedef Game_Manager GM_List[SAVED_GAMES];
+typedef Game_Manager GM_list_games[SAVED_GAMES];
+typedef Game_Manager GM_list_scores[SAVED_SCORES];
 
 typedef struct {
   Button play_btn;

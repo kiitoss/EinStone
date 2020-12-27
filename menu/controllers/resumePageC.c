@@ -57,27 +57,27 @@ void update_resume_page(resumePage *rp) {
 
 /* GLOBAL */
 void launch_resume_page(int width, int height) {
-  GM_List GM_list;
+  GM_list_games GMG;
   resumePage rp;
   int i;
 
-  FILE *data = fopen("resources/data.bin", "rb");
+  FILE *data = fopen("resources/games.bin", "rb");
   if (data == NULL) {
-    printf("--> Fichier de données introuvable.\n");
+    printf("--> fichier de sauvegarde des parties introuvable.\n");
     for (i=0; i<SAVED_GAMES; i++) {
-      GM_list[i].id = 0;
+      GMG[i].id = 0;
     }
   }
   else {
     for (i=0; i<SAVED_GAMES; i++) {
-      if (!fread(&GM_list[i], sizeof(Game_Manager), 1, data)) {
-	printf("Erreur lors de la lecture des scores.\n");
+      if (!fread(&GMG[i], sizeof(Game_Manager), 1, data)) {
+	printf("--> erreur lors de la lecture des parties.\n");
       }
     }
     fclose(data);
   }
   
-  rp = init_resume_page(width, height, GM_list);
+  rp = init_resume_page(width, height, GMG);
   draw_resume_page(&rp);
   MLV_flush_event_queue();
   update_resume_page(&rp);

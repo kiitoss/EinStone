@@ -45,7 +45,7 @@ Player_1 init_p1(char *p1_name) {
   p1.last_free_gold = MLV_get_time();
   p1.score = 0;
   set_player_money_str(p1.money, p1.money_str);
-  p1.life = 5;
+  p1.life = LIFE_P1;
   set_player_life_str(p1.life, p1.life_str);
   p1.is_deleting = false;
   strncpy(p1.name, p1_name, 19);

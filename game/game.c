@@ -5,74 +5,188 @@
 
 
 
-/* Sauvegarde la partie en cours */
-void save_game(Game_Manager *GM, int time) {
-  GM_List GM_list;
-  Game_Manager empty_GM;
+void set_GMG(GM_list_games GMG) {
   int i;
-  bool is_free_id;
-  FILE *f = fopen("./resources/data.bin", "rb");
+  FILE *games = fopen("./resources/games.bin", "rb");
 
-  GM->duration += MLV_get_time() - time;
   
-  if (f == NULL) {
-    printf("--> fichier de sauvegarde introuvable.\n");
-    empty_GM.id = 0;
-    GM->id = 1;
-    for (i=1; i<SAVED_GAMES; i++) {
-      GM_list[i] = empty_GM;
+  if (games == NULL) {
+    for (i=0; i<SAVED_GAMES; i++) {
+      GMG[i].id = 0;
     }
-    GM->id = 1;
   }
   else {
-    /* Lecture des anciennes sauvegardes dans la liste des parties */
     for (i=0; i<SAVED_GAMES; i++) {
-      if (!fread(&GM_list[i], sizeof(Game_Manager), 1, f)) {
-	printf("Erreur lors de l'écriture des scores.\n");
+      if (!fread(&GMG[i], sizeof(Game_Manager), 1, games)) {
+	printf("--> erreur lors de la lecture des parties.\n");
       }
     }
-
-    /* Attribution d'un id à la partie en cours */
-    if (GM->id == 0) {
-      /* Incrémentation des sauvegardes */
-      for (i=SAVED_GAMES-1; i>0; i--) {
-	GM_list[i] = GM_list[i-1];
-      }
-    
-      GM->id = 1;
-      is_free_id = false;
-      while (!is_free_id) {
-	is_free_id = true;
-	for (i=1; i<SAVED_GAMES; i++) {
-	  if (GM_list[i].id == GM->id) {
-	    GM->id++;
-	    is_free_id = false;
-	    break;
-	  }
-	}
-      }
-      GM_list[0] = *GM;
-    }
-    else {
-      for (i=0; i<SAVED_GAMES; i++) {
-	if (GM_list[i].id == GM->id) {
-	  GM_list[i] = *GM;
-	  break;
-	}
-      }
-    }
-    fclose(f);
+    fclose(games);
   }
+}
+
+
+
+
+
+void write_GMG(GM_list_games GMG) {
+  int i;
+  FILE *games = fopen("./resources/games.bin", "wb");
+  for (i=0; i<SAVED_GAMES; i++) {
+    fwrite(&GMG[i], sizeof(Game_Manager), 1, games);
+  }
+  fclose(games);
+}
+
+
+
+
+
+void set_GMS(GM_list_scores GMS) {
+  int i;
+  FILE *scores = fopen("./resources/scores.bin", "rb");
 
   
-  /* Ecriture de la liste des parties sauvegardées */
-  f = fopen("resources/data.bin", "wb");
-  for (i=0; i<SAVED_GAMES; i++) {
-    fwrite(&GM_list[i], sizeof(Game_Manager), 1 ,f);
+  if (scores == NULL) {
+    for (i=0; i<SAVED_SCORES; i++) {
+      GMS[i].id = 0;
+    }
+  }
+  else {
+    for (i=0; i<SAVED_SCORES; i++) {
+      if (!fread(&GMS[i], sizeof(Game_Manager), 1, scores)) {
+	printf("--> erreur lors de la lecture des scores.\n");
+      }
+    }
+    fclose(scores);
+  }
+}
+
+
+
+
+
+void write_GMS(GM_list_scores GMS) {
+  int i;
+  FILE *scores = fopen("./resources/scores.bin", "wb");
+  for (i=0; i<SAVED_SCORES; i++) {
+    fwrite(&GMS[i], sizeof(Game_Manager), 1, scores);
+  }
+  fclose(scores);
+}
+
+
+
+
+
+int get_unique_id() {
+  GM_list_scores GMS;
+  GM_list_games GMG;
+  int id = 0;
+  int i;
+  bool is_free_id = false;
+
+  set_GMS(GMS);
+  set_GMG(GMG);
+ 
+  while (!is_free_id) {
+    id++;
+    is_free_id = true;
+    for (i=0; i<SAVED_SCORES; i++) {
+      if (GMS[i].id == id) {
+	is_free_id = false;
+	break;
+      }
+    }
+    if (!is_free_id) {continue;}
+    for (i=0; i<SAVED_GAMES; i++) {
+      if (GMG[i].id == id) {
+	is_free_id = false;
+	break;
+      }
+    }
   }
 
-  fclose(f);
+  return id;
 }
+
+
+
+
+
+/* Sauvegarde la partie en cours avant de quitter */
+void save_score(Game_Manager *GM, int time) {
+  GM_list_scores GMS;
+  GM_list_games GMG;
+  int i;
+
+  GM->duration += MLV_get_time() - time;
+
+  set_GMS(GMS);
+
+  if (GM->id == 0) {
+    GM->id = get_unique_id();
+    for (i=SAVED_GAMES-1; i>0; i--) {
+      GMS[i] = GMS[i-1];
+    }
+    GMS[0] = *GM;
+  }
+  else {
+    for (i=0; i<SAVED_SCORES; i++) {
+      if (GMS[i].id == GM->id) {
+	GMS[i] = *GM;
+	break;
+      }
+    }
+    set_GMG(GMG);
+    for (i=0; i<SAVED_GAMES; i++) {
+      if (GMG[i].id == GM->id) {
+	for (i=i; i<SAVED_GAMES-1; i++) {
+	  GMG[i] = GMG[i+1];
+	}
+	GMG[SAVED_GAMES-1].id = 0;
+        break;
+      }
+    }
+    write_GMG(GMG);
+  }
+
+  write_GMS(GMS);
+}
+
+
+
+
+
+/* Sauvegarde la partie en cours avant de quitter */
+void save_game(Game_Manager *GM, int time) {
+  GM_list_games GMG;
+  int i;
+
+  GM->duration += MLV_get_time() - time;
+
+  set_GMG(GMG);
+
+  if (GM->id == 0) {
+    GM->id = get_unique_id();
+    for (i=SAVED_GAMES-1; i>0; i--) {
+      GMG[i] = GMG[i-1];
+    }
+    GMG[0] = *GM;
+  }
+  else {
+    for (i=0; i<SAVED_GAMES; i++) {
+      if (GMG[i].id == GM->id) {
+	GMG[i] = *GM;
+	break;
+      }
+    }
+  }
+
+  write_GMG(GMG);
+}
+
+
 
 
 
@@ -367,6 +481,9 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Affichage du Game Over */
   if(GM->p1.life == 0){
+    if (GM->gamemode == SOLO) {
+      save_score(GM, MLV_get_time() - time);
+    }
     game_over(&GM->window,GM,&TM->game_over_screen);
   }
   

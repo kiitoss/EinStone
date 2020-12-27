@@ -10,6 +10,7 @@
 Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   Enemy e;
   e.id_enemy = spawner->id_enemy;
+  e.score = spawner->score;
   e.life = spawner->life;
   e.attack = spawner->attack;
   e.speed = spawner->speed;

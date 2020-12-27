@@ -1,6 +1,7 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
+
 static void update_hover_btn(mainPage *mp, int posX, int posY) {
   Button *hover_btn = get_main_page_hover_btn(mp, posX, posY);
   if (mp->hover_btn != hover_btn) {

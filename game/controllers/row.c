@@ -45,8 +45,9 @@ void remove_shot_from_row(Row *this, int index_shot) {
 
 /* Supprime un ennemie d'une ligne. */
 /* GLOBAL */
-void remove_enemy_from_row(Row *this, int index_enemy, Sound_Manager *SM) {
+void remove_enemy_from_row(Row *this, int index_enemy, Sound_Manager *SM, int *p1_score) {
   int i;
+  *p1_score += this->enemies[index_enemy].score;
   play_sound(SM, &SM->big_monster_roar);
   for (i=index_enemy; i<this->nb_enemies - 1; i++) {
     this->enemies[i] = this->enemies[i+1];
@@ -83,7 +84,7 @@ void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY) {
 
 
 /* Vérifie les collisions entre tirs alliés et ennemies. */
-void update_all_collisions_in_row(Row *this, Sound_Manager *SM) {
+void update_all_collisions_in_row(Row *this, Sound_Manager *SM, int *p1_score) {
   int i = 0;
   int j;
   Shot *s;
@@ -97,7 +98,7 @@ void update_all_collisions_in_row(Row *this, Sound_Manager *SM) {
 	e->life -= s->attack;
 	remove_shot_from_row(this, i);
 	if (e->life <= 0) {
-	  remove_enemy_from_row(this, j, SM);
+	  remove_enemy_from_row(this, j, SM, p1_score);
 	}
 	break;
       }
@@ -125,13 +126,13 @@ void remove_all_enemies_in_row(Row *this, Player_1 *p1) {
 
 
 /* Met à jour tous les alliés d'une ligne. */
-void update_all_friends_in_row(Row *this, Sound_Manager *SM) {
+void update_all_friends_in_row(Row *this, Sound_Manager *SM, int *p1_score) {
   int i;
   for (i=0; i<NB_COLUMNS;i++) {
     if (!is_friend(&this->friends[i])) {
       continue;
     }
-    update_friend(&this->friends[i], this, SM);
+    update_friend(&this->friends[i], this, SM, p1_score);
   }
 }
 
@@ -192,10 +193,10 @@ void update_all_golds_in_row(Row *this) {
 /* Met à jour une ligne du terrain. */
 /* GLOBAL */
 void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM) {
-  update_all_friends_in_row(this, SM);
+  update_all_friends_in_row(this, SM, &GM->p1.score);
   update_all_enemies_in_row(this, &GM->p1, SM);
   update_all_shots_in_row(this, GM);
   
-  update_all_collisions_in_row(this, SM);
+  update_all_collisions_in_row(this, SM, &GM->p1.score);
   update_all_golds_in_row(this);
 }

@@ -18,7 +18,7 @@ void reset_enemy_animations(Enemy *this, Enemy_Spawner *spawner);
 Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY);
 bool is_friend(Friend *this);
 void set_friend_animation(Friend *this, MLV_Animation_player *animation);
-void update_friend(Friend *this, Row *row, Sound_Manager *SM);
+void update_friend(Friend *this, Row *row, Sound_Manager *SM, int *p1_score);
 void reset_friend_animations(Friend *this, Friend_Spawner *spawner);
 
 /* controllers/player.c */
@@ -44,7 +44,7 @@ void create_new_shot(Row *row, int gridX, int gridY, int attack, Sound_Manager *
 void remove_friend_from_row(Friend *f);
 void remove_gold_from_row(Row *this, int index_gold);
 void remove_shot_from_row(Row *this, int index_shot);
-void remove_enemy_from_row(Row *this, int index_enemy, Sound_Manager *SM);
+void remove_enemy_from_row(Row *this, int index_enemy, Sound_Manager *SM, int *p1_score);
 void add_friend_in_row(Row *this, Friend_Spawner *spawner, int gridX, int gridY);
 void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
 void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM);

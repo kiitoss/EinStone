@@ -2,26 +2,6 @@
 #include "../makhead.h"
 
 /* GLOBAL */
-void draw_resume_section(resumeSection *this) {
-  MLV_Color border_color = MLV_rgba(0,0,0,0);
-  if (!this->exist) {return;}
-  if (this->is_select || this->is_hover) {
-    if (this->is_select) {
-      border_color = MLV_COLOR_GREEN;
-    }
-    else {
-      border_color = MLV_COLOR_ORANGE;
-    }
-  }
-  MLV_draw_rectangle(this->posX, this->posY, this->width, this->height, border_color);
-  draw_label(&this->p1_name_lbl);
-  draw_label(&this->p1_score_lbl);
-  draw_label(&this->time_lbl);
-  draw_label(&this->p2_score_lbl);
-  draw_label(&this->p2_name_lbl);
-}
-
-/* GLOBAL */
 bool is_resumeSection_hover(resumeSection *this, int posX, int posY) {
   if (this != NULL && this->exist && posX >= this->posX && posX <= this->posX + this->width && posY >= this->posY && posY <= this->posY + this->height) {
     return true;
@@ -57,7 +37,6 @@ resumeSection get_new_resumeSection(Game_Manager *GM, Geometry container, char *
   sprintf(time_str, "%dm : %ds", min, sec);
   sprintf(p1_score_str, "%d", GM->p1.score);
   sprintf(p2_score_str, "%d", GM->p2.score);
-  
   
   g.width = container.width/5;
   g.height = container.height;
@@ -112,7 +91,7 @@ void unset_select_resume_section(resumeSection *this) {
 
 
 /* GLOBAL */
-resumePage init_resume_page(int width, int height, GM_List GM_list) {
+resumePage init_resume_page(int width, int height, GM_list_games GMG) {
   resumePage rp;
   Geometry g;
   int i;
@@ -140,12 +119,12 @@ resumePage init_resume_page(int width, int height, GM_List GM_list) {
   g.height = row_height;
   g.posY += title_height + margin_title;
   for (i=0; i<SAVED_GAMES; i++) {
-    if (GM_list[i].id == 0) {
+    if (GMG[i].id == 0) {
       rp.sections[i] = get_new_resumeSection(NULL, g, font_path);
       rp.sections[i].exist = false;
     }
     else {
-      rp.sections[i] = get_new_resumeSection(&GM_list[i], g, font_path);
+      rp.sections[i] = get_new_resumeSection(&GMG[i], g, font_path);
     }
     g.posY += row_height + margin_row;
   }
