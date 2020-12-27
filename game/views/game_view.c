@@ -21,8 +21,9 @@ void draw_enemy(Enemy *e, Window *window) {
 
 void draw_row(Row *r, Window *window, Texture_Manager *TM) {
   int i;
+  
   for (i=0; i<NB_COLUMNS; i++) {
-    if (r->friends[i].id_friend == -1) {
+    if (!(is_friend(&r->friends[i]))) {
       continue;
     }
     draw_friend(&r->friends[i], window);

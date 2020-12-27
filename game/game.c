@@ -6,13 +6,15 @@
 
 
 /* Sauvegarde la partie en cours */
-void save_game(Game_Manager *GM) {
+void save_game(Game_Manager *GM, int time) {
   GM_List GM_list;
   Game_Manager empty_GM;
   int i;
   bool is_free_id;
   FILE *f = fopen("./resources/data.bin", "rb");
- 
+
+  GM->duration += MLV_get_time() - time;
+  
   if (f == NULL) {
     printf("--> fichier de sauvegarde introuvable.\n");
     empty_GM.id = 0;
@@ -30,13 +32,13 @@ void save_game(Game_Manager *GM) {
       }
     }
 
-    /* Incrémentation des sauvegardes */
-    for (i=SAVED_GAMES-1; i>0; i--) {
-      GM_list[i] = GM_list[i-1];
-    }
-
     /* Attribution d'un id à la partie en cours */
     if (GM->id == 0) {
+      /* Incrémentation des sauvegardes */
+      for (i=SAVED_GAMES-1; i>0; i--) {
+	GM_list[i] = GM_list[i-1];
+      }
+    
       GM->id = 1;
       is_free_id = false;
       while (!is_free_id) {
@@ -49,14 +51,19 @@ void save_game(Game_Manager *GM) {
 	  }
 	}
       }
+      GM_list[0] = *GM;
     }
-    
+    else {
+      for (i=0; i<SAVED_GAMES; i++) {
+	if (GM_list[i].id == GM->id) {
+	  GM_list[i] = *GM;
+	  break;
+	}
+      }
+    }
     fclose(f);
   }
 
-  /* Insertion de la partie en cours dans la liste des parties */
-  GM->duration += MLV_get_time();
-  GM_list[0] = *GM;
   
   /* Ecriture de la liste des parties sauvegardées */
   f = fopen("resources/data.bin", "wb");
@@ -119,7 +126,7 @@ void game_over(Window *window, Game_Manager *GM, gameOver *go) {
   
 
 /* Mise en pause du jeu */
-void pause(Window *window, Game_Manager *GM, pauseScreen *ps) {
+void pause(Window *window, Game_Manager *GM, pauseScreen *ps, int time) {
   Event_Manager em;
   Button *hover_btn;
   em.event = MLV_NONE;
@@ -161,7 +168,7 @@ void pause(Window *window, Game_Manager *GM, pauseScreen *ps) {
     case PAUSE_PLAY:
       break;
     case PAUSE_SAVE_QUIT:
-      save_game(GM);
+      save_game(GM, MLV_get_time() - time);
       GM->in_game = false;
       break;
     case PAUSE_QUIT:
@@ -178,8 +185,8 @@ void pause(Window *window, Game_Manager *GM, pauseScreen *ps) {
 
 
 /* Action faisant suite à une action du clavier */
-void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manager *TM) {
-  int pause_time, time;
+void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manager *TM, int time) {
+  int time_play;
   if (GM->gamemode != MULTI && touch != MLV_KEYBOARD_ESCAPE && touch != MLV_KEYBOARD_p) {return;}
   
   switch (touch) {
@@ -210,13 +217,12 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manage
     /* Pause dans le jeu */
   case MLV_KEYBOARD_ESCAPE:
   case MLV_KEYBOARD_p:
-    pause_time = MLV_get_time();
-    pause(&GM->window, GM, &TM->pause_screen);
-    time = MLV_get_time();
-    GM->p1.last_free_gold += time - pause_time;
-    GM->p2.last_free_gold += time - pause_time;
-    GM->last_refresh += time - pause_time;
-    GM->duration -= time - pause_time;
+    pause(&GM->window, GM, &TM->pause_screen, time);
+    time_play = MLV_get_time();
+    GM->p1.last_free_gold += time_play - time;
+    GM->p2.last_free_gold += time_play - time;
+    GM->last_refresh += time_play - time;
+    GM->duration -= time_play - time;
     break;
  
   default:
@@ -354,6 +360,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   }
 
   time = MLV_get_time();
+  
 
   /* Mise à jour de l'IA. */
   update_IA(GM);
@@ -362,6 +369,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   if(GM->p1.life == 0){
     game_over(&GM->window,GM,&TM->game_over_screen);
   }
+  
   /* Création d'or pour le joueur 1. */
   if (time >= GM->p1.last_free_gold + DELAY_FREE_GOLD_P1) {
     random_row = rand() % NB_ROWS;
@@ -386,7 +394,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Gère l'action du clavier et de la souris. */
   if ((em.event == MLV_KEY && GM->gamemode == MULTI) || em.touch == MLV_KEYBOARD_ESCAPE || em.touch == MLV_KEYBOARD_p) {
-    keyboard_action(GM, em.touch, TM);
+    keyboard_action(GM, em.touch, TM, time);
   }
   else if (em.event == MLV_MOUSE_BUTTON) {
     mouse_action(GM, em.mouseX, em.mouseY);
@@ -452,4 +460,67 @@ void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name,
   update_game(&GM, &TM, &SM);
 
   quit_game(&GM, &TM, &SM);
+}
+
+
+
+
+
+/* Reset les animations des spawners, des alliés et des ennemies. */
+void reset_entities_animations(Game_Manager *GM, Texture_Manager *TM, Window *window) {
+  int i, j;
+  
+  for (i=0; i<NB_FRIENDS; i++) {
+    set_friend_spawner_animations(&GM->friend_spawners[i], TM, window, i);
+  }
+  
+  for (i=0; i<NB_ENEMIES; i++) {
+    set_enemy_spawner_animations(&GM->enemy_spawners[i], TM, window, i);
+  }
+
+  
+  for (i=0; i<NB_ROWS; i++) {
+    for (j=0; j<NB_COLUMNS; j++) {
+      if (is_friend(&(GM->rows[i].friends[j]))) {
+	reset_friend_animations(&GM->rows[i].friends[j], &GM->friend_spawners[GM->rows[i].friends[j].id_friend-1]);
+      }
+    }
+    
+    for (j=0; j<GM->rows[i].nb_enemies; j++) {
+      reset_enemy_animations(&GM->rows[i].enemies[j], &GM->enemy_spawners[GM->rows[i].enemies[j].id_enemy-1]);
+    }
+  }
+}
+
+
+
+
+
+/* Lancement d'une ancienne partie */
+void launch_resume(Game_Manager *GM) {
+  Texture_Manager TM;
+  Window window;
+  Sound_Manager SM = init_game_SM();
+  unsigned int win_width, win_height;
+  
+  MLV_get_desktop_size(&win_width, &win_height);
+
+  window = init_window(win_width, win_height, GM->gamemode);
+  
+  MLV_change_window_size(window.width, window.height);
+  
+  TM = init_TM(window);
+
+  reset_entities_animations(GM, &TM, &window);
+  
+  GM->window = window;
+  GM->last_refresh = MLV_get_time();
+  GM->in_game = true;
+  GM->duration -= MLV_get_time();
+  
+  init_IA(GM);  
+  
+  update_game(GM, &TM, &SM);
+
+  quit_game(GM, &TM, &SM);
 }

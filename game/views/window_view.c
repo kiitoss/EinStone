@@ -45,9 +45,9 @@ void draw_game_over_screen(gameOver *this,Game_Manager *GM) {
   MLV_update_window();
 }
 void draw_home(Game_Manager *GM, Texture_Manager *TM) {
-   MLV_draw_image(TM->friend_home_background,GM->window.friend_home.posX, GM->window.friend_home.posY);
+  MLV_draw_image(TM->friend_home_background,GM->window.friend_home.posX, GM->window.friend_home.posY);
   
-   MLV_draw_image(TM->enemy_home_background, GM->window.enemy_home.posX, GM->window.friend_home.posY);
+  MLV_draw_image(TM->enemy_home_background, GM->window.enemy_home.posX, GM->window.friend_home.posY);
 }
 
 void draw_friend_spawner(Game_Manager *GM, Texture_Manager *TM) {
@@ -211,6 +211,7 @@ void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   MLV_Color Color;
 
   draw_home(GM, TM);
+  
   if (GM->gamemode == MULTI) {
     draw_enemy_spawner(GM, TM);
     draw_enemy_stats(GM,TM);

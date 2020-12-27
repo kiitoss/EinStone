@@ -12,12 +12,14 @@ void update_IA(Game_Manager *GM);
 Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY);
 void set_enemy_animation(Enemy *this, MLV_Animation_player *animation);
 void update_enemy(Enemy *this, Row *row, Sound_Manager *SM);
+void reset_enemy_animations(Enemy *this, Enemy_Spawner *spawner);
 
 /* controllers/friend.c */
 Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY);
 bool is_friend(Friend *this);
 void set_friend_animation(Friend *this, MLV_Animation_player *animation);
 void update_friend(Friend *this, Row *row, Sound_Manager *SM);
+void reset_friend_animations(Friend *this, Friend_Spawner *spawner);
 
 /* controllers/player.c */
 void set_player_money_str(int money, char money_str[10]);
@@ -62,6 +64,8 @@ Sound_Manager init_game_SM();
 void free_SM(Sound_Manager *SM);
 
 /* initializers/init_spawner.c */
+void set_enemy_spawner_animations(Enemy_Spawner *ES, Texture_Manager *TM, Window *window, int index_enemy);
+void set_friend_spawner_animations(Friend_Spawner *FS, Texture_Manager *TM, Window *window, int index_friend);
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window);
 Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window);
 

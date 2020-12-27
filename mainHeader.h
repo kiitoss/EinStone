@@ -92,7 +92,6 @@ typedef struct {
 
 typedef struct {
   char name[21];
-  char saved_name[10];
   int chosen_enemy;
   int chosen_row;
   int money;
@@ -115,6 +114,7 @@ typedef struct {
 } Friend_Spawner;
 
 typedef struct {
+  int id_enemy;
   MLV_Animation *animation_attack;
   MLV_Animation *animation_walking;
   enemy_type_attacks type_attack;
@@ -145,6 +145,7 @@ typedef struct {
 } Friend;
 
 typedef struct {
+  int id_enemy;
   MLV_Animation_player *animation_attack;
   MLV_Animation_player *animation_walking;
   MLV_Animation_player *animation;
@@ -229,3 +230,4 @@ typedef struct {
 
 void launch_main_page(int width, int height);
 void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name, char *p2_name);
+void launch_resume(Game_Manager *GM);

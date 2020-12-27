@@ -36,6 +36,23 @@ typedef struct {
   Button *select_difficulty;
 } newgamePage;
 
+
+typedef struct {
+  Game_Manager *GM;
+  bool exist;
+  int width;
+  int height;
+  int posX;
+  int posY;
+  Label p1_name_lbl;
+  Label p2_name_lbl;
+  Label p1_score_lbl;
+  Label p2_score_lbl;
+  Label time_lbl;
+  bool is_hover;
+  bool is_select;
+} resumeSection;
+
 typedef struct {
   int width;
   int height;

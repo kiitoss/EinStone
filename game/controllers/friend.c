@@ -153,3 +153,18 @@ void update_friend(Friend *this, Row *row, Sound_Manager *SM) {
   
   MLV_update_animation_player(this->animation);
 }
+
+
+
+/* GLOBAL */
+void reset_friend_animations(Friend *this, Friend_Spawner *spawner) {
+  this->animation_passive = MLV_create_animation_player(spawner->animation_passive);
+  this->animation_ability = MLV_create_animation_player(spawner->animation_ability);
+  if (this->is_passive) {
+    set_friend_animation(this, this->animation_passive);
+  }
+  else {
+    set_friend_animation(this, this->animation_ability);
+  }
+}
+			  

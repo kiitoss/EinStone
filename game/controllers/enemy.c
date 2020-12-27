@@ -9,7 +9,7 @@
 /* GLOBAL */
 Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   Enemy e;
-
+  e.id_enemy = spawner->id_enemy;
   e.life = spawner->life;
   e.attack = spawner->attack;
   e.speed = spawner->speed;
@@ -125,4 +125,18 @@ void update_enemy(Enemy *this, Row *row, Sound_Manager *SM) {
 
   
   MLV_update_animation_player(this->animation);
+}
+
+
+
+/* GLOBAL */
+void reset_enemy_animations(Enemy *this, Enemy_Spawner *spawner) {
+  this->animation_walking = MLV_create_animation_player(spawner->animation_walking);
+  this->animation_attack = MLV_create_animation_player(spawner->animation_attack);
+  if (this->is_walking) {
+    set_enemy_animation(this, this->animation_walking);
+  }
+  else {
+    set_enemy_animation(this, this->animation_attack);
+  }
 }

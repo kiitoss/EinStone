@@ -29,6 +29,13 @@ newgamePage init_newgame_page(int width, int height);
 Button *get_newgame_page_hover_btn(newgamePage *this, int posX, int posY);
 
 /* models/resumePageM.c */
+void draw_resume_section(resumeSection *this);
+bool is_resumeSection_hover(resumeSection *this, int posX, int posY);
+resumeSection get_new_resumeSection(Game_Manager *GM, Geometry container, char *font_path);
+void set_hover_resume_section(resumeSection *this);
+void unset_hover_resume_section(resumeSection *this);
+void set_select_resume_section(resumeSection *this);
+void unset_select_resume_section(resumeSection *this);
 resumePage init_resume_page(int width, int height, GM_List GM_list);
 Button *get_resume_page_hover_btn(resumePage *this, int posX, int posY);
 resumeSection *get_resume_page_hover_section(resumePage *this, int posX, int posY);

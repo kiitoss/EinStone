@@ -1,7 +1,7 @@
 #include "../menuHeader.h"
 #include "../makhead.h"
 
-void select_hover_btn_or_section(resumePage *rp) {
+void select_hover_section(resumePage *rp) {
   unset_select_resume_section(rp->select_section);
   set_select_resume_section(rp->hover_section);
   rp->select_section = rp->hover_section;
@@ -33,9 +33,14 @@ void update_resume_page(resumePage *rp) {
   }
   MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_BUTTON && (rp->hover_btn != NULL || rp->hover_section != NULL)) {
-    select_hover_btn_or_section(rp);
+    if (rp->hover_section != NULL) {
+      select_hover_section(rp);
+    }
     if (rp->hover_btn != NULL && rp->hover_btn->value == BACK) {
       launch_main_page(rp->width, rp->height);
+    }
+    else if (rp->hover_btn != NULL && rp->hover_btn->value == LAUNCH && rp->select_section != NULL) {
+      launch_resume(rp->select_section->GM);
     }
     else {
       update_resume_page(rp);

@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o resumeSection.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
 
 button.o: ./GUI/button.c
 	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
@@ -17,9 +17,6 @@ input.o: ./GUI/input.c
 
 label.o: ./GUI/label.c
 	$(CC) $(CFLAGS) ./GUI/label.c -c -I ./
-
-resumeSection.o: ./GUI/resumeSection.c
-	$(CC) $(CFLAGS) ./GUI/resumeSection.c -c -I ./
 
 IA.o: ./game/controllers/IA.c
 	$(CC) $(CFLAGS) ./game/controllers/IA.c -c -I ./

@@ -28,13 +28,78 @@ MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation,
 }
 
 
+/* GLOBAL */
+void set_enemy_spawner_animations(Enemy_Spawner *ES, Texture_Manager *TM, Window *window, int index_enemy) {
+  int row_animation_attack, first_frame_attack, last_frame_attack, time_attack;
+  switch (ES->type_attack) {
+  case CAC:
+    row_animation_attack = 13;
+    first_frame_attack = 0;
+    last_frame_attack = 6;
+    time_attack = 2;
+    break;
+  case DISTANCE:
+    row_animation_attack = 5;
+    first_frame_attack = 0;
+    last_frame_attack = 7;
+    time_attack = 2;
+    break;
+  default:
+    row_animation_attack = 13;
+    first_frame_attack = 0;
+    last_frame_attack = 6;
+    time_attack = 2;
+    break;
+  }
+  
+  ES->animation_attack = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize,row_animation_attack, first_frame_attack, last_frame_attack, time_attack);    
+  ES->animation_walking = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize, 9, 0, 9, 2);
+}
 
+
+
+/* GLOBAL */
+void set_friend_spawner_animations(Friend_Spawner *FS, Texture_Manager *TM, Window *window, int index_friend) {
+  int row_animation_ability, first_frame_ability, last_frame_ability, time_ability;
+  switch (FS->ability) {
+  case MONEY:
+    row_animation_ability = 3;
+    first_frame_ability = 0;
+    last_frame_ability = 7;
+    time_ability = 2;
+    FS->DELAY_ABILITY = 10000;
+    break;
+  case ATTACK:
+    row_animation_ability = 19;
+    first_frame_ability = 0;
+    last_frame_ability = 14;
+    time_ability = 2;
+    FS->DELAY_ABILITY = 1300;
+    break;
+  case DEFENSE:
+    row_animation_ability = 7;
+    first_frame_ability = 0;
+    last_frame_ability = 7;
+    time_ability = 2;
+    FS->DELAY_ABILITY = 700;
+    break;
+  default:
+    row_animation_ability = 3;
+    first_frame_ability = 0;
+    last_frame_ability = 7;
+    time_ability = 2;
+    FS->DELAY_ABILITY = 10000;
+    break;
+  }
+  FS->animation_passive = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, 3, 1, 3, 5);
+  
+  FS->animation_ability = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, row_animation_ability, first_frame_ability, last_frame_ability, time_ability);
+}
 
 
 /* GLOBAL */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   Friend_Spawner FS;
-  int row_animation_ability, first_frame_ability, last_frame_ability, time_ability;
   switch (index_friend) {
   case 0:
     FS.id_friend = 1;
@@ -76,39 +141,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   
   sprintf(FS.price_str, "%d", FS.price);
   
-  switch (FS.ability) {
-  case MONEY:
-    row_animation_ability = 3;
-    first_frame_ability = 0;
-    last_frame_ability = 7;
-    time_ability = 2;
-    FS.DELAY_ABILITY = 10000;
-    break;
-  case ATTACK:
-    row_animation_ability = 19;
-    first_frame_ability = 0;
-    last_frame_ability = 14;
-    time_ability = 2;
-    FS.DELAY_ABILITY = 1300;
-    break;
-  case DEFENSE:
-    row_animation_ability = 7;
-    first_frame_ability = 0;
-    last_frame_ability = 7;
-    time_ability = 2;
-    FS.DELAY_ABILITY = 700;
-    break;
-  default:
-    row_animation_ability = 3;
-    first_frame_ability = 0;
-    last_frame_ability = 7;
-    time_ability = 2;
-    FS.DELAY_ABILITY = 10000;
-    break;
-  }
-  FS.animation_passive = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, 3, 1, 3, 5);
-  
-  FS.animation_ability = get_animation(TM->friend_spawners_sprites[index_friend], window->rectsize, row_animation_ability, first_frame_ability, last_frame_ability, time_ability);
+  set_friend_spawner_animations(&FS, TM, window, index_friend);
   return FS;
 }
 
@@ -119,9 +152,9 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
 /* GLOBAL */
 Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
   Enemy_Spawner ES;
-  int row_animation_attack, first_frame_attack, last_frame_attack, time_attack;
   switch(index_enemy){
   case 0:
+    ES.id_enemy = 1;
     ES.life = 100;
     ES.attack = 20;
     ES.speed = 2;
@@ -132,6 +165,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.type_attack = CAC;
     break;
   case 1:
+    ES.id_enemy = 2;
     ES.life = 150;
     ES.attack = 50;
     ES.speed = 2;
@@ -142,6 +176,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
     ES.padding = window->rectsize/2;
     break;
   case 2:
+    ES.id_enemy = 3;
     ES.life = 150;
     ES.attack = 75;
     ES.speed = 1;
@@ -157,28 +192,7 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
   }
   sprintf(ES.price_str, "%d",ES.price);
 
-  switch (ES.type_attack) {
-  case CAC:
-    row_animation_attack = 13;
-    first_frame_attack = 0;
-    last_frame_attack = 6;
-    time_attack = 2;
-    break;
-  case DISTANCE:
-    row_animation_attack = 5;
-    first_frame_attack = 0;
-    last_frame_attack = 7;
-    time_attack = 2;
-    break;
-  default:
-    row_animation_attack = 13;
-    first_frame_attack = 0;
-    last_frame_attack = 6;
-    time_attack = 2;
-    break;
-  }
+  set_enemy_spawner_animations(&ES, TM, window, index_enemy);
   
-  ES.animation_attack = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize,row_animation_attack, first_frame_attack, last_frame_attack, time_attack);    
-  ES.animation_walking = get_animation(TM->enemy_spawners_sprites[index_enemy], window->rectsize, 9, 0, 9, 2);
   return ES;
 }
