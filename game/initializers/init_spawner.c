@@ -104,7 +104,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   case 0:
     FS.id_friend = 1;
     FS.ability = MONEY;
-    FS.life = 50;
+    FS.life = 120;
     FS.attack = 0;
     FS.price = 50;
     FS.range = 0;
@@ -112,25 +112,25 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   case 1:
     FS.id_friend = 2;
     FS.ability = ATTACK;
-    FS.life = 100;
-    FS.attack = 35;
+    FS.life = 200;
+    FS.attack = 20;
     FS.price = 100;
     FS.range = window->rectsize*NB_COLUMNS;
     break;
   case 2:
     FS.id_friend = 3;
     FS.ability = DEFENSE;
-    FS.life = 200;
-    FS.attack = 20;
+    FS.life = 600;
+    FS.attack = 5;
     FS.price = 75;
     FS.range = window->rectsize*1;
     break;
   case 3:
     FS.id_friend = 4;
     FS.ability = ATTACK;
-    FS.life = 150;
-    FS.attack = 50;
-    FS.price = 150;
+    FS.life = 200;
+    FS.attack = 40;
+    FS.price = 300;
     FS.range = window->rectsize*NB_COLUMNS;
     break;
   default:
@@ -155,39 +155,39 @@ Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
   switch(index_enemy){
   case 0:
     ES.id_enemy = 1;
-    ES.life = 100;
+    ES.life = 300;
     ES.attack = 20;
     ES.speed = 2;
-    ES.price= 100;
+    ES.price= 150;
     ES.DELAY_ATTACK = 600;
     ES.range = window->rectsize/4;
     ES.padding = window->rectsize/2;
     ES.type_attack = CAC;
-    ES.score = 10;
+    ES.score = 61;
     break;
   case 1:
     ES.id_enemy = 2;
-    ES.life = 150;
-    ES.attack = 50;
+    ES.life = 400;
+    ES.attack = 30;
     ES.speed = 2;
-    ES.price = 150;
+    ES.price = 200;
     ES.DELAY_ATTACK = 600;
     ES.range = window->rectsize/4;
     ES.type_attack = DISTANCE;
     ES.padding = window->rectsize/2;
-    ES.score = 10;
+    ES.score = 82;
     break;
   case 2:
     ES.id_enemy = 3;
-    ES.life = 150;
-    ES.attack = 75;
+    ES.life = 500;
+    ES.attack = 40;
     ES.speed = 1;
-    ES.price = 175;
+    ES.price = 300;
     ES.DELAY_ATTACK = 600;
     ES.range = window->rectsize/4;
     ES.type_attack = CAC;
     ES.padding = window->rectsize/2;
-    ES.score = 10;
+    ES.score = 103;
     break;
   default:
     printf("-->MAX atteint ! \n");

@@ -15,13 +15,15 @@
 /* MAX_FRAMES est le maximum de frames par animation */
 #define MAX_FRAMES 15
 #define DELAY_REFRESH 50
-#define DELAY_FREE_GOLD_P1 1000
-#define DELAY_FREE_GOLD_P2 1000
-#define QTY_FREE_GOLD_P2 10
-#define LIFE_P1 1
+#define DELAY_FREE_GOLD_P1 5000
+#define DELAY_FREE_GOLD_P2 2500
+#define QTY_FREE_GOLD_P2 25
+#define EXPO_GOLD_IA 5
+#define AMOUNT_GOLD_P1 25
+#define LIFE_P1 3
 
 #define SAVED_GAMES 5
-#define SAVED_SCORES 5
+#define SAVED_SCORES 10
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
@@ -70,7 +72,6 @@ typedef struct {
   int time_left;
   int radius;
   int max_radius;
-  int value;
 } Gold;
 
 typedef struct {

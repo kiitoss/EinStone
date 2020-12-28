@@ -28,8 +28,8 @@ void init_IA(Game_Manager *GM){
   
   switch(GM->difficulty){
   case EASY:
-    attack = -10;
-    life = -50;
+    attack = -5;
+    life = -10;
     speed = 0;
     printf("EASY\n");
     break;
@@ -37,8 +37,8 @@ void init_IA(Game_Manager *GM){
     printf("MEDIUM\n");
     break;
   case HARD:
-    attack = 100;
-    life = 50;
+    attack = 5;
+    life = 10;
     speed = 1;
     printf("HARD\n");
     break;

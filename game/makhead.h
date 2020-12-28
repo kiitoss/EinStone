@@ -27,7 +27,7 @@ void set_player_life_str(int life, char life_str[10]);
 void p1_add_gold(Player_1 *this, int gold);
 Player_1 init_p1(char *p1_name);
 Player_2 init_p2(char *p2_name);
-void p2_create_free_gold(Player_2 *this);
+void p2_create_free_gold(Player_2 *this, menu_choice difficulty, menu_choice gamemode);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);
 void p2_buy_enemy(Player_2 *this, Row *row, Enemy_Spawner *spawner, int posX, int posY);
 

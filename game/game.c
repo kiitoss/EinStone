@@ -375,7 +375,7 @@ void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
     for (j=0; j<GM->rows[i].nb_golds; j++) {
       g = &GM->rows[i].golds[j];
       if (is_clicked_gold(g, mouseX, mouseY)) {
-	p1_add_gold(&GM->p1, g->value);
+	p1_add_gold(&GM->p1, AMOUNT_GOLD_P1);
 	remove_gold_from_row(&GM->rows[i], j);
 	get = true;
 	break;
@@ -488,10 +488,6 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   }
 
   time = MLV_get_time();
-  
-
-  /* Mise à jour de l'IA. */
-  update_IA(GM);
 
   /* Affichage du Game Over */
   if(GM->p1.life == 0){
@@ -512,8 +508,12 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Création d'or pour le joueur 2 / IA. */
   if (time >+ GM->p2.last_free_gold + DELAY_FREE_GOLD_P2) {
-    p2_create_free_gold(&GM->p2);
+    p2_create_free_gold(&GM->p2, GM->difficulty, GM->gamemode);
     GM->p2.last_free_gold = time;
+    if (GM->gamemode == SOLO) {
+      /* Mise à jour de l'IA. */
+      update_IA(GM);
+    }
   }
 
   /* Mise à jour des lignes du terrain de jeu. */
@@ -586,8 +586,10 @@ void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name,
 
   TM = init_TM(window);
   GM = init_GM(&window, &TM, gamemode, difficulty, p1_name, p2_name);
-  
-  init_IA(&GM);  
+
+  if (GM.gamemode == SOLO) {
+    init_IA(&GM);
+  }
 
   update_game(&GM, &TM, &SM);
 
