@@ -1,15 +1,15 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
-void select_hover_section(resumePage *rp) {
+void select_hover_section(Resume_Page *rp) {
   unset_select_resume_section(rp->select_section);
   set_select_resume_section(rp->hover_section);
   rp->select_section = rp->hover_section;
 }
 
-void update_hover_btn_and_section(resumePage *rp, int posX, int posY) {
+void update_hover_btn_and_section(Resume_Page *rp, int posX, int posY) {
   Button *hover_btn = get_resume_page_hover_btn(rp, posX, posY);
-  resumeSection *hover_section = get_resume_page_hover_section(rp, posX, posY);
+  Resume_Section *hover_section = get_resume_page_hover_section(rp, posX, posY);
 
   if (rp->hover_btn != hover_btn) {
     unset_hover_btn(rp->hover_btn);
@@ -24,7 +24,7 @@ void update_hover_btn_and_section(resumePage *rp, int posX, int posY) {
   }
 }
 
-void update_resume_page(resumePage *rp) {
+void update_resume_page(Resume_Page *rp) {
   Event_Manager em;
   draw_resume_page(rp);
   em = get_event();
@@ -58,24 +58,9 @@ void update_resume_page(resumePage *rp) {
 /* GLOBAL */
 void launch_resume_page(int width, int height) {
   GM_list_games GMG;
-  resumePage rp;
-  int i;
+  Resume_Page rp;
 
-  FILE *data = fopen("resources/games.bin", "rb");
-  if (data == NULL) {
-    printf("--> fichier de sauvegarde des parties introuvable.\n");
-    for (i=0; i<SAVED_GAMES; i++) {
-      GMG[i].id = 0;
-    }
-  }
-  else {
-    for (i=0; i<SAVED_GAMES; i++) {
-      if (!fread(&GMG[i], sizeof(Game_Manager), 1, data)) {
-	printf("--> erreur lors de la lecture des parties.\n");
-      }
-    }
-    fclose(data);
-  }
+  set_GMG(GMG);
   
   rp = init_resume_page(width, height, GMG);
   draw_resume_page(&rp);

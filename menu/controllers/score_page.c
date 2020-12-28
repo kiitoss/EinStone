@@ -1,8 +1,8 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 
-static void update_hover_btn(scorePage *sp, int posX, int posY) {
+static void update_hover_btn(Score_Page *sp, int posX, int posY) {
   Button *hover_btn = get_score_page_hover_btn(sp, posX, posY);
   if (sp->hover_btn != hover_btn) {
     unset_hover_btn(sp->hover_btn);
@@ -12,7 +12,7 @@ static void update_hover_btn(scorePage *sp, int posX, int posY) {
 }
 
 
-void update_score_page(scorePage *sp) {
+void update_score_page(Score_Page *sp) {
   Event_Manager em;
   draw_score_page(sp);
   em = get_event();
@@ -35,24 +35,9 @@ void update_score_page(scorePage *sp) {
 /* GLOBAL */
 void launch_score_page(int width, int height) {
   GM_list_scores GMS;
-  scorePage sp;
-  int i;
+  Score_Page sp;
 
-  FILE *data = fopen("resources/scores.bin", "rb");
-  if (data == NULL) {
-    printf("--> fichier de sauvegarde des scores introuvable.\n");
-    for (i=0; i<SAVED_SCORES; i++) {
-      GMS[i].id = 0;
-    }
-  }
-  else {
-    for (i=0; i<SAVED_SCORES; i++) {
-      if (!fread(&GMS[i], sizeof(Game_Manager), 1, data)) {
-	printf("--> erreur lors de la lecture des scores.\n");
-      }
-    }
-    fclose(data);
-  }
+  set_GMS(GMS);
   
   sp = init_score_page(width, height, GMS);
   draw_score_page(&sp);

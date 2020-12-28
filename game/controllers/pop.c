@@ -1,8 +1,31 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
 
 
 
+
+/* Compare la position de la souris et celles des pièces d'or sur le terrain. */
+/* GLOBAL */
+void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
+  int i, j;
+  Gold *g;
+  bool get = false;
+
+  mouseX -= GM->window.field.posX;
+  mouseY -= GM->window.field.posY;
+  
+  for (i=0; i<NB_ROWS; i++) {
+    for (j=0; j<GM->rows[i].nb_golds; j++) {
+      g = &GM->rows[i].golds[j];
+      if (is_clicked_gold(g, mouseX, mouseY)) {
+	p1_add_gold(&GM->p1, AMOUNT_GOLD_P1);
+	remove_gold_from_row(&GM->rows[i], j);
+	get = true;
+	break;
+      }
+    }
+    if (get) {break;}
+  }
+}
 
 
 /* Retourne un nouveau tir. */

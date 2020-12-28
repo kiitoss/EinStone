@@ -1,4 +1,5 @@
-#include "../mainHeader.h"
+#include "../global_structures.h"
+#include "../global_functions.h"
 
 #define MAX_BUTTONS 10
 #define MAX_INPUTS 10
@@ -14,7 +15,7 @@ typedef struct {
   Button score_btn;
   Button quit_btn;
   Button *hover_btn;
-} mainPage;
+} Main_Page;
 
 typedef struct {
   int width;
@@ -34,7 +35,7 @@ typedef struct {
   Button *hover_btn;
   Button *select_gamemode;
   Button *select_difficulty;
-} newgamePage;
+} Newgame_Page;
 
 
 typedef struct {
@@ -51,19 +52,19 @@ typedef struct {
   Label time_lbl;
   bool is_hover;
   bool is_select;
-} resumeSection;
+} Resume_Section;
 
 typedef struct {
   int width;
   int height;
   Label title_lbl;
-  resumeSection sections[SAVED_GAMES];
+  Resume_Section sections[SAVED_GAMES];
   Button launch_btn;
   Button back_btn;
   Button *hover_btn;
-  resumeSection *select_section;
-  resumeSection *hover_section;
-} resumePage;
+  Resume_Section *select_section;
+  Resume_Section *hover_section;
+} Resume_Page;
 
 typedef struct {
   bool exist;
@@ -74,13 +75,13 @@ typedef struct {
   Label p1_name_lbl;
   Label p1_score_lbl;
   Label time_lbl;
-} scoreSection;
+} Score_Section;
 
 typedef struct {
   int width;
   int height;
   Label title_lbl;
-  scoreSection sections[SAVED_SCORES];
+  Score_Section sections[SAVED_SCORES];
   Button back_btn;
   Button *hover_btn;
-} scorePage;
+} Score_Page;

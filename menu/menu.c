@@ -1,5 +1,5 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "menu_structures.h"
+#include "menu_functions.h"
 
 int main(int argc, char *argv[]) {
   unsigned int win_width, win_height;

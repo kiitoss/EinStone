@@ -1,5 +1,5 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
+
 
 
 

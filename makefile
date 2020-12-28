@@ -3,8 +3,8 @@ CFLAGS = -W -Wall -std=c89 -pedantic -O3
 
 all: output clean
 
-output: button.o general.o input.o label.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o scorePageM.o pageV.o 
-	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o IA.o enemy.o friend.o player.o pop.o row.o init_IA.o init_gameManager.o init_row.o init_soundManager.o init_spawner.o init_textureManager.o init_window.o game_view.o window_view.o game.o mainPageC.o menuC.o newGamePageC.o resumePageC.o scorePageC.o mainPageM.o newgamePageM.o resumePageM.o scorePageM.o pageV.o `pkg-config --libs-only-l MLV` -o output
+output: button.o general.o input.o label.o IA.o enemy.o friend.o player.o pop.o row.o init_GM.o init_IA.o init_SM.o init_TM.o init_spawner.o init_window.o draw_game.o draw_object.o draw_window.o game.o main_page.o newgame_page.o resume_page.o score_page.o meth_main_page.o meth_newgame_page.o meth_resume_page.o meth_score_page.o draw_menu.o menu.o save.o 
+	$(CC) $(CFLAGS) `pkg-config --cflags MLV` `pkg-config --libs-only-other --libs-only-L MLV` button.o general.o input.o label.o IA.o enemy.o friend.o player.o pop.o row.o init_GM.o init_IA.o init_SM.o init_TM.o init_spawner.o init_window.o draw_game.o draw_object.o draw_window.o game.o main_page.o newgame_page.o resume_page.o score_page.o meth_main_page.o meth_newgame_page.o meth_resume_page.o meth_score_page.o draw_menu.o menu.o save.o `pkg-config --libs-only-l MLV` -o output
 
 button.o: ./GUI/button.c
 	$(CC) $(CFLAGS) ./GUI/button.c -c -I ./
@@ -36,65 +36,68 @@ pop.o: ./game/controllers/pop.c
 row.o: ./game/controllers/row.c
 	$(CC) $(CFLAGS) ./game/controllers/row.c -c -I ./
 
+init_GM.o: ./game/initializers/init_GM.c
+	$(CC) $(CFLAGS) ./game/initializers/init_GM.c -c -I ./
+
 init_IA.o: ./game/initializers/init_IA.c
 	$(CC) $(CFLAGS) ./game/initializers/init_IA.c -c -I ./
 
-init_gameManager.o: ./game/initializers/init_gameManager.c
-	$(CC) $(CFLAGS) ./game/initializers/init_gameManager.c -c -I ./
+init_SM.o: ./game/initializers/init_SM.c
+	$(CC) $(CFLAGS) ./game/initializers/init_SM.c -c -I ./
 
-init_row.o: ./game/initializers/init_row.c
-	$(CC) $(CFLAGS) ./game/initializers/init_row.c -c -I ./
-
-init_soundManager.o: ./game/initializers/init_soundManager.c
-	$(CC) $(CFLAGS) ./game/initializers/init_soundManager.c -c -I ./
+init_TM.o: ./game/initializers/init_TM.c
+	$(CC) $(CFLAGS) ./game/initializers/init_TM.c -c -I ./
 
 init_spawner.o: ./game/initializers/init_spawner.c
 	$(CC) $(CFLAGS) ./game/initializers/init_spawner.c -c -I ./
 
-init_textureManager.o: ./game/initializers/init_textureManager.c
-	$(CC) $(CFLAGS) ./game/initializers/init_textureManager.c -c -I ./
-
 init_window.o: ./game/initializers/init_window.c
 	$(CC) $(CFLAGS) ./game/initializers/init_window.c -c -I ./
 
-game_view.o: ./game/views/game_view.c
-	$(CC) $(CFLAGS) ./game/views/game_view.c -c -I ./
+draw_game.o: ./game/views/draw_game.c
+	$(CC) $(CFLAGS) ./game/views/draw_game.c -c -I ./
 
-window_view.o: ./game/views/window_view.c
-	$(CC) $(CFLAGS) ./game/views/window_view.c -c -I ./
+draw_object.o: ./game/views/draw_object.c
+	$(CC) $(CFLAGS) ./game/views/draw_object.c -c -I ./
+
+draw_window.o: ./game/views/draw_window.c
+	$(CC) $(CFLAGS) ./game/views/draw_window.c -c -I ./
 
 game.o: ./game/game.c
 	$(CC) $(CFLAGS) ./game/game.c -c -I ./
 
-mainPageC.o: ./menu/controllers/mainPageC.c
-	$(CC) $(CFLAGS) ./menu/controllers/mainPageC.c -c -I ./
+main_page.o: ./menu/controllers/main_page.c
+	$(CC) $(CFLAGS) ./menu/controllers/main_page.c -c -I ./
 
-menuC.o: ./menu/controllers/menuC.c
-	$(CC) $(CFLAGS) ./menu/controllers/menuC.c -c -I ./
+newgame_page.o: ./menu/controllers/newgame_page.c
+	$(CC) $(CFLAGS) ./menu/controllers/newgame_page.c -c -I ./
 
-newGamePageC.o: ./menu/controllers/newGamePageC.c
-	$(CC) $(CFLAGS) ./menu/controllers/newGamePageC.c -c -I ./
+resume_page.o: ./menu/controllers/resume_page.c
+	$(CC) $(CFLAGS) ./menu/controllers/resume_page.c -c -I ./
 
-resumePageC.o: ./menu/controllers/resumePageC.c
-	$(CC) $(CFLAGS) ./menu/controllers/resumePageC.c -c -I ./
+score_page.o: ./menu/controllers/score_page.c
+	$(CC) $(CFLAGS) ./menu/controllers/score_page.c -c -I ./
 
-scorePageC.o: ./menu/controllers/scorePageC.c
-	$(CC) $(CFLAGS) ./menu/controllers/scorePageC.c -c -I ./
+meth_main_page.o: ./menu/methods/meth_main_page.c
+	$(CC) $(CFLAGS) ./menu/methods/meth_main_page.c -c -I ./
 
-mainPageM.o: ./menu/models/mainPageM.c
-	$(CC) $(CFLAGS) ./menu/models/mainPageM.c -c -I ./
+meth_newgame_page.o: ./menu/methods/meth_newgame_page.c
+	$(CC) $(CFLAGS) ./menu/methods/meth_newgame_page.c -c -I ./
 
-newgamePageM.o: ./menu/models/newgamePageM.c
-	$(CC) $(CFLAGS) ./menu/models/newgamePageM.c -c -I ./
+meth_resume_page.o: ./menu/methods/meth_resume_page.c
+	$(CC) $(CFLAGS) ./menu/methods/meth_resume_page.c -c -I ./
 
-resumePageM.o: ./menu/models/resumePageM.c
-	$(CC) $(CFLAGS) ./menu/models/resumePageM.c -c -I ./
+meth_score_page.o: ./menu/methods/meth_score_page.c
+	$(CC) $(CFLAGS) ./menu/methods/meth_score_page.c -c -I ./
 
-scorePageM.o: ./menu/models/scorePageM.c
-	$(CC) $(CFLAGS) ./menu/models/scorePageM.c -c -I ./
+draw_menu.o: ./menu/views/draw_menu.c
+	$(CC) $(CFLAGS) ./menu/views/draw_menu.c -c -I ./
 
-pageV.o: ./menu/views/pageV.c
-	$(CC) $(CFLAGS) ./menu/views/pageV.c -c -I ./
+menu.o: ./menu/menu.c
+	$(CC) $(CFLAGS) ./menu/menu.c -c -I ./
+
+save.o: ./save/save.c
+	$(CC) $(CFLAGS) ./save/save.c -c -I ./
 
 clean:
 	rm -rf *.o

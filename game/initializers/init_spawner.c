@@ -1,5 +1,4 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
 
 MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation, int first_frame, int last_frame, int time) {
   int i;

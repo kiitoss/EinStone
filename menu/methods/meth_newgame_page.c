@@ -1,8 +1,8 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 /* GLOBAL */
-void set_player_name(newgamePage *this, MLV_Input_box *input_box, char *text_input) {
+void set_player_name(Newgame_Page *this, MLV_Input_box *input_box, char *text_input) {
   char *font_path = "./resources/font/Amatic-Bold.ttf";
   Geometry g;
   g.width = this->width/3;
@@ -29,7 +29,7 @@ void set_player_name(newgamePage *this, MLV_Input_box *input_box, char *text_inp
 }
 
 /* GLOBAL */
-void set_difficulty(newgamePage *this, menu_choice btn_value) {
+void set_difficulty(Newgame_Page *this, btn_value btn_value) {
   if (this->select_difficulty != NULL && this->select_difficulty->value == btn_value) {return;}
 
   unset_select_btn(this->select_difficulty);
@@ -53,7 +53,7 @@ void set_difficulty(newgamePage *this, menu_choice btn_value) {
 }
 
 /* GLOBAL */
-void set_gamemode(newgamePage *this, menu_choice btn_value) {
+void set_gamemode(Newgame_Page *this, btn_value btn_value) {
   if (this->select_gamemode != NULL && this->select_gamemode->value == btn_value) {return;}
 
   unset_select_btn(this->select_gamemode);
@@ -120,8 +120,8 @@ void set_gamemode(newgamePage *this, menu_choice btn_value) {
 }
 
 /* GLOBAL */
-newgamePage init_newgame_page(int width, int height) {
-  newgamePage ngp;
+Newgame_Page init_newgame_page(int width, int height) {
+  Newgame_Page ngp;
   Geometry g;
   int margin_title = height/3 * 0.2;
   int title_height = height/3 * 0.8;
@@ -181,7 +181,7 @@ newgamePage init_newgame_page(int width, int height) {
 
 
 /* GLOBAL */
-Button *get_newgame_page_hover_btn(newgamePage *this, int posX, int posY) {
+Button *get_newgame_page_hover_btn(Newgame_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->solo_btn, posX, posY)) {
     hover_btn = &this->solo_btn;

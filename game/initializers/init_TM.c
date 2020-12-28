@@ -1,5 +1,4 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
 
 MLV_Image *get_image_with_path(char *path) {
   MLV_Image *img = MLV_load_image(path);

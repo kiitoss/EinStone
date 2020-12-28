@@ -1,5 +1,4 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
 
 void draw_shot(Shot *this, MLV_Image *shot_img, Window *window) {
   MLV_draw_image(shot_img, this->posX + window->field.posX, this->posY + window->field.posY);
@@ -19,6 +18,7 @@ void draw_enemy(Enemy *e, Window *window) {
   MLV_draw_image_from_animation_player(e->animation, 0, e->posX + window->field.posX, e->posY + window->field.posY);
 }
 
+/* GLOBAL */
 void draw_row(Row *r, Window *window, Texture_Manager *TM) {
   int i;
   
@@ -37,22 +37,4 @@ void draw_row(Row *r, Window *window, Texture_Manager *TM) {
   for (i=0; i<r->nb_shots; i++) {
     draw_shot(&r->shots[i], TM->shot_img, window);
   }
-}
-
-/* GLOBAL */
-void draw_game(Game_Manager *GM, Texture_Manager *TM, int time) {
-  int i;
-  draw_window(GM, TM);
-  for (i=0; i<NB_ROWS; i++) {
-    draw_row(&GM->rows[i], &GM->window, TM);
-  }
-  draw_time(GM->duration + time, &GM->window);
-  MLV_update_window();
-}
-
-/* GLOBAL */
-Event_Manager get_game_event() {
-  Event_Manager em;
-  em.event = MLV_get_event(&em.touch, NULL, NULL, NULL, NULL, &em.mouseX, &em.mouseY, NULL, &em.btn_state);
-  return em;
 }

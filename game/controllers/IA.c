@@ -1,6 +1,5 @@
+#include "../game_header.h"
 
-#include "../../mainHeader.h"
-#include "../makhead.h"
 
 int get_weak_row(Game_Manager *GM){
   int k,i, j;

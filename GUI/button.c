@@ -43,7 +43,7 @@ bool is_btn_select(Button *this) {
 }
 
 /* GLOBAL */
-Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, menu_choice value) {
+Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, btn_value value) {
   Button btn;
   btn.container = g;
   btn.text = text;

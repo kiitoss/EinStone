@@ -1,11 +1,10 @@
-#include <string.h>
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
-void update_newgame_page(newgamePage *ngp);
+void update_newgame_page(Newgame_Page *ngp);
 
-void prepare_launching(newgamePage *ngp) {
-  menu_choice gamemode, difficulty;
+void prepare_launching(Newgame_Page *ngp) {
+  btn_value gamemode, difficulty;
   char *p1_name, *p2_name;
   gamemode = ngp->select_gamemode->value;
   difficulty = (gamemode == SOLO) ? ngp->select_difficulty->value : MEDIUM;
@@ -21,7 +20,7 @@ void prepare_launching(newgamePage *ngp) {
   launch_newgame(gamemode, difficulty, p1_name, p2_name);
 }
 
-static void select_hover_btn(newgamePage *ngp) {
+static void select_hover_btn(Newgame_Page *ngp) {
   switch (ngp->hover_btn->value) {
   case BACK:
     launch_main_page(ngp->width, ngp->height);
@@ -48,7 +47,7 @@ static void select_hover_btn(newgamePage *ngp) {
   }
 }
 
-static void update_hover_btn(newgamePage *ngp, int posX, int posY) {
+static void update_hover_btn(Newgame_Page *ngp, int posX, int posY) {
   Button *hover_btn = get_newgame_page_hover_btn(ngp, posX, posY);
   if (ngp->hover_btn != hover_btn) {
     unset_hover_btn(ngp->hover_btn);
@@ -57,7 +56,7 @@ static void update_hover_btn(newgamePage *ngp, int posX, int posY) {
   }
 }
 
-void update_newgame_page(newgamePage *ngp) {
+void update_newgame_page(Newgame_Page *ngp) {
   Event_Manager em;
   int launch_time = MLV_get_time();
   draw_newgame_page(ngp);
@@ -94,7 +93,7 @@ void update_newgame_page(newgamePage *ngp) {
 
 /* GLOBAL */
 void launch_newgame_page(int width, int height) {
-  newgamePage ngp = init_newgame_page(width, height);
+  Newgame_Page ngp = init_newgame_page(width, height);
   set_gamemode(&ngp, SOLO);
   set_difficulty(&ngp, MEDIUM);
   set_hidden_lbl(&ngp.p1_lbl);

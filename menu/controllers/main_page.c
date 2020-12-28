@@ -1,8 +1,8 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 
-static void update_hover_btn(mainPage *mp, int posX, int posY) {
+static void update_hover_btn(Main_Page *mp, int posX, int posY) {
   Button *hover_btn = get_main_page_hover_btn(mp, posX, posY);
   if (mp->hover_btn != hover_btn) {
     unset_hover_btn(mp->hover_btn);
@@ -11,7 +11,7 @@ static void update_hover_btn(mainPage *mp, int posX, int posY) {
   }
 }
 
-void change_page(mainPage *mp) {
+void change_page(Main_Page *mp) {
   switch (mp->hover_btn->value) {
   case NEWGAME:
     launch_newgame_page(mp->width, mp->height);
@@ -27,7 +27,7 @@ void change_page(mainPage *mp) {
   } 
 }
 
-void update_main_page(mainPage *mp) {
+void update_main_page(Main_Page *mp) {
   Event_Manager em;
   draw_main_page(mp);
   em = get_event();
@@ -49,7 +49,7 @@ void update_main_page(mainPage *mp) {
 
 /* GLOBAL */
 void launch_main_page(int width, int height) {
-  mainPage mp = init_main_page(width, height);
+  Main_Page mp = init_main_page(width, height);
   draw_main_page(&mp);
   MLV_flush_event_queue();
   update_main_page(&mp);

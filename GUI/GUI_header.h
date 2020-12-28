@@ -1,7 +1,7 @@
 #include "../global_header.h"
 
-enum menu_choices {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH, PAUSE_PLAY, PAUSE_QUIT, PAUSE_SAVE_QUIT,RESTART};
-typedef enum menu_choices menu_choice;
+enum btn_values {NONE, NEWGAME, RESUME, SCORE, BACK, SOLO, MULTI, EASY, MEDIUM, HARD, LAUNCH, PAUSE_PLAY, PAUSE_QUIT, PAUSE_SAVE_QUIT,RESTART};
+typedef enum btn_values btn_value;
 
 typedef struct {
   int posX;
@@ -42,7 +42,7 @@ typedef struct {
   MLV_Color background_color;
   bool is_hover;
   bool is_select;
-  menu_choice value;
+  btn_value value;
   bool is_hidden;
 } Button;
 
@@ -68,7 +68,7 @@ typedef struct {
 void draw_button(Button *this);
 bool is_btn_hover(Button *this, int posX, int posY);
 bool is_btn_select(Button *this);
-Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, menu_choice value);
+Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, btn_value value);
 void set_hover_btn(Button *this);
 void unset_hover_btn(Button *this);
 void set_select_btn(Button *this);

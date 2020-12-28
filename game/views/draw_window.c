@@ -1,5 +1,4 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
 
 /* GLOBAL */
 void draw_time(int time, Window *window) {

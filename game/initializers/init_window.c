@@ -1,7 +1,6 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
 
-int get_rectsize(unsigned int win_width, unsigned int win_height, menu_choice gamemode) {
+int get_rectsize(unsigned int win_width, unsigned int win_height, btn_value gamemode) {
   int rectsize;
   int nb_rows = (gamemode == SOLO) ? NB_ROWS + 1 : NB_ROWS + 2;
   rectsize = ((win_width / NB_COLUMNS) > (win_height / nb_rows)) ? win_height / nb_rows : win_width / NB_COLUMNS;
@@ -9,7 +8,7 @@ int get_rectsize(unsigned int win_width, unsigned int win_height, menu_choice ga
 }
 
 /* GLOBAL */
-Window init_window(unsigned int win_width, unsigned int win_height, menu_choice gamemode) {
+Window init_window(unsigned int win_width, unsigned int win_height, btn_value gamemode) {
   Window window;
   Geometry g;
   char *font_path = "resources/font/Amatic-Bold.ttf";

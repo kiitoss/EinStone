@@ -1,5 +1,5 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 /* GLOBAL */
 Event_Manager get_event() {
@@ -9,7 +9,7 @@ Event_Manager get_event() {
 }
 
 /* GLOBAL */
-void draw_main_page(mainPage *mp) {
+void draw_main_page(Main_Page *mp) {
   MLV_clear_window(MLV_COLOR_BLACK);
   draw_label(&mp->title_lbl);
   draw_button(&mp->newgame_btn);
@@ -20,7 +20,7 @@ void draw_main_page(mainPage *mp) {
 }
 
 /* GLOBAL */
-void draw_newgame_page(newgamePage *ngp) {
+void draw_newgame_page(Newgame_Page *ngp) {
   MLV_clear_window(MLV_COLOR_BLACK);
 
   draw_label(&ngp->title_lbl);
@@ -40,7 +40,7 @@ void draw_newgame_page(newgamePage *ngp) {
 
 
 /* GLOBAL */
-void draw_resume_section(resumeSection *this) {
+void draw_resume_section(Resume_Section *this) {
   MLV_Color border_color = MLV_rgba(0,0,0,0);
   if (!this->exist) {return;}
   if (this->is_select || this->is_hover) {
@@ -60,7 +60,7 @@ void draw_resume_section(resumeSection *this) {
 }
 
 /* GLOBAL */
-void draw_resume_page(resumePage *rp) {
+void draw_resume_page(Resume_Page *rp) {
   int i;
   MLV_clear_window(MLV_COLOR_BLACK);
 
@@ -76,7 +76,7 @@ void draw_resume_page(resumePage *rp) {
 }
 
 /* GLOBAL */
-void draw_score_section(scoreSection *this) {
+void draw_score_section(Score_Section *this) {
   if (!this->exist) {return;}
 
   MLV_draw_rectangle(this->posX, this->posY, this->width, this->height, MLV_rgba(0,0,0,0));
@@ -86,7 +86,7 @@ void draw_score_section(scoreSection *this) {
 }
 
 /* GLOBAL */
-void draw_score_page(scorePage *sp) {
+void draw_score_page(Score_Page *sp) {
   int i;
   MLV_clear_window(MLV_COLOR_BLACK);
 

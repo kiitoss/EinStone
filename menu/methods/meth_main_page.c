@@ -1,8 +1,8 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 /* GLOBAL */
-Button *get_main_page_hover_btn(mainPage *this, int posX, int posY) {
+Button *get_main_page_hover_btn(Main_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->newgame_btn, posX, posY)) {
     hover_btn = &this->newgame_btn;
@@ -20,8 +20,8 @@ Button *get_main_page_hover_btn(mainPage *this, int posX, int posY) {
 }
 
 /* GLOBAL */
-mainPage init_main_page(int width, int height) {
-  mainPage mp;
+Main_Page init_main_page(int width, int height) {
+  Main_Page mp;
   Geometry g;
   int margin_title = height/3 * 0.2;
   int title_height = height/3 * 0.8;

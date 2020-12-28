@@ -1,8 +1,8 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 /* GLOBAL */
-bool is_resumeSection_hover(resumeSection *this, int posX, int posY) {
+bool is_resume_section_hover(Resume_Section *this, int posX, int posY) {
   if (this != NULL && this->exist && posX >= this->posX && posX <= this->posX + this->width && posY >= this->posY && posY <= this->posY + this->height) {
     return true;
   }
@@ -12,8 +12,8 @@ bool is_resumeSection_hover(resumeSection *this, int posX, int posY) {
 
 
 /* GLOBAL */
-resumeSection get_new_resumeSection(Game_Manager *GM, Geometry container, char *font_path) {
-  resumeSection rs;
+Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char *font_path) {
+  Resume_Section rs;
   Geometry g;
   char *p1_score_str, *time_str, *p2_score_str;
   int min, sec;
@@ -66,33 +66,33 @@ resumeSection get_new_resumeSection(Game_Manager *GM, Geometry container, char *
 
 
 /* GLOBAL */
-void set_hover_resume_section(resumeSection *this) {
+void set_hover_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || this->is_hover) {return;}
   this->is_hover = true;
 }
 
 /* GLOBAL */
-void unset_hover_resume_section(resumeSection *this) {
+void unset_hover_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || !this->is_hover) {return;}
   this->is_hover = false;
 }
 
 /* GLOBAL */
-void set_select_resume_section(resumeSection *this) {
+void set_select_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || this->is_select) {return;}
   this->is_select = true;
 }
 
 /* GLOBAL */
-void unset_select_resume_section(resumeSection *this) {
+void unset_select_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || !this->is_select) {return;}
   this->is_select = false;
 }
 
 
 /* GLOBAL */
-resumePage init_resume_page(int width, int height, GM_list_games GMG) {
-  resumePage rp;
+Resume_Page init_resume_page(int width, int height, GM_list_games GMG) {
+  Resume_Page rp;
   Geometry g;
   int i;
   int margin_title = height/3 * 0.2;
@@ -120,11 +120,11 @@ resumePage init_resume_page(int width, int height, GM_list_games GMG) {
   g.posY += title_height + margin_title;
   for (i=0; i<SAVED_GAMES; i++) {
     if (GMG[i].id == 0) {
-      rp.sections[i] = get_new_resumeSection(NULL, g, font_path);
+      rp.sections[i] = get_new_resume_section(NULL, g, font_path);
       rp.sections[i].exist = false;
     }
     else {
-      rp.sections[i] = get_new_resumeSection(&GMG[i], g, font_path);
+      rp.sections[i] = get_new_resume_section(&GMG[i], g, font_path);
     }
     g.posY += row_height + margin_row;
   }
@@ -140,7 +140,7 @@ resumePage init_resume_page(int width, int height, GM_list_games GMG) {
 
 
 /* GLOBAL */
-Button *get_resume_page_hover_btn(resumePage *this, int posX, int posY) {
+Button *get_resume_page_hover_btn(Resume_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->back_btn, posX, posY)) {
     hover_btn = &this->back_btn;
@@ -152,11 +152,11 @@ Button *get_resume_page_hover_btn(resumePage *this, int posX, int posY) {
 }
 
 /* GLOBAL */
-resumeSection *get_resume_page_hover_section(resumePage *this, int posX, int posY) {
-  resumeSection *hover_section = NULL;
+Resume_Section *get_resume_page_hover_section(Resume_Page *this, int posX, int posY) {
+  Resume_Section *hover_section = NULL;
   int i;
   for (i=0; i<SAVED_GAMES; i++) {
-    if (is_resumeSection_hover(&this->sections[i], posX, posY)) {
+    if (is_resume_section_hover(&this->sections[i], posX, posY)) {
       hover_section = &this->sections[i];
     }
   }

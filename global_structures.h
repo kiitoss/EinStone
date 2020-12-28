@@ -1,6 +1,5 @@
 #include "global_header.h"
 #include "GUI/GUI_header.h"
-#include <time.h>
 
 #define NB_FRIENDS 4
 #define NB_ENEMIES 3
@@ -181,8 +180,8 @@ typedef struct {
 typedef struct {
   int id;
   bool in_game;
-  menu_choice gamemode;
-  menu_choice difficulty;
+  btn_value gamemode;
+  btn_value difficulty;
   Window window;
   Friend_Spawner friend_spawners[NB_FRIENDS];
   Enemy_Spawner enemy_spawners[NB_ENEMIES];
@@ -207,7 +206,7 @@ typedef struct {
   Button quit_btn;
   Button restart_btn;
   Button *hover_btn;
-}gameOver;
+} gameOver;
 
 typedef struct {
   MLV_Image *field_light_grass_img;
@@ -230,10 +229,3 @@ typedef struct {
   pauseScreen pause_screen;
   gameOver game_over_screen;
 } Texture_Manager;
-
-
-
-
-void launch_main_page(int width, int height);
-void launch_newgame(menu_choice gamemode, menu_choice difficulty, char *p1_name, char *p2_name);
-void launch_resume(Game_Manager *GM);

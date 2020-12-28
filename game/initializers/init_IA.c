@@ -1,5 +1,5 @@
-#include "../../mainHeader.h"
-#include "../makhead.h"
+#include "../game_header.h"
+
 void set_enemy_attack(Game_Manager *GM,int attack){
   int i;
   for(i=0;i<NB_ENEMIES;i++){

@@ -1,8 +1,8 @@
-#include "../menuHeader.h"
-#include "../makhead.h"
+#include "../menu_structures.h"
+#include "../menu_functions.h"
 
 /* GLOBAL */
-Button *get_score_page_hover_btn(scorePage *this, int posX, int posY) {
+Button *get_score_page_hover_btn(Score_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->back_btn, posX, posY)) {
     hover_btn = &this->back_btn;
@@ -11,8 +11,8 @@ Button *get_score_page_hover_btn(scorePage *this, int posX, int posY) {
 }
 
 /* GLOBAL */
-scoreSection get_new_scoreSection(Game_Manager *GM, Geometry container, char *font_path) {
-  scoreSection ss;
+Score_Section get_new_score_section(Game_Manager *GM, Geometry container, char *font_path) {
+  Score_Section ss;
   Geometry g;
   char *p1_score_str, *time_str;
   int min, sec;
@@ -56,8 +56,8 @@ scoreSection get_new_scoreSection(Game_Manager *GM, Geometry container, char *fo
 }
 
 /* GLOBAL */
-scorePage init_score_page(int width, int height, GM_list_scores GMS) {
-  scorePage sp;
+Score_Page init_score_page(int width, int height, GM_list_scores GMS) {
+  Score_Page sp;
   Geometry g;
   int i;
   int margin_title = height/3 * 0.2;
@@ -83,11 +83,11 @@ scorePage init_score_page(int width, int height, GM_list_scores GMS) {
   g.posY += title_height + margin_title;
   for (i=0; i<SAVED_SCORES; i++) {
     if (GMS[i].id == 0) {
-      sp.sections[i] = get_new_scoreSection(NULL, g, font_path);
+      sp.sections[i] = get_new_score_section(NULL, g, font_path);
       sp.sections[i].exist = false;
     }
     else {
-      sp.sections[i] = get_new_scoreSection(&GMS[i], g, font_path);
+      sp.sections[i] = get_new_score_section(&GMS[i], g, font_path);
     }
     g.posY += row_height + margin_row;
   }
