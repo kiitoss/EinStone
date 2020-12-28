@@ -80,6 +80,31 @@ void write_GMS(GM_list_scores GMS) {
 
 
 
+void remove_saved_game(int id_game) {
+  GM_list_games GMG;
+  int i;
+  
+  if (id_game == 0) {
+    return;
+  }
+  
+  set_GMG(GMG);
+  for (i=0; i<SAVED_GAMES; i++) {
+    if (GMG[i].id == id_game) {
+      for (i=i; i<SAVED_GAMES-1; i++) {
+	GMG[i] = GMG[i+1];
+      }
+      GMG[SAVED_GAMES-1].id = 0;
+      break;
+    }
+  }
+  write_GMG(GMG);
+}
+
+
+
+
+
 int get_unique_id() {
   GM_list_scores GMS;
   GM_list_games GMG;
@@ -118,7 +143,6 @@ int get_unique_id() {
 /* Sauvegarde la partie en cours avant de quitter */
 void save_score(Game_Manager *GM, int time) {
   GM_list_scores GMS;
-  GM_list_games GMG;
   Game_Manager temp_GM, temp_GM2;
   int i;
 
@@ -128,19 +152,6 @@ void save_score(Game_Manager *GM, int time) {
 
   if (GM->id == 0) {
     GM->id = get_unique_id();
-  }
-  else {
-    set_GMG(GMG);
-    for (i=0; i<SAVED_GAMES; i++) {
-      if (GMG[i].id == GM->id) {
-	for (i=i; i<SAVED_GAMES-1; i++) {
-	  GMG[i] = GMG[i+1];
-	}
-	GMG[SAVED_GAMES-1].id = 0;
-        break;
-      }
-    }
-    write_GMG(GMG);
   }
 
   for (i=0; i<SAVED_SCORES; i++) {
@@ -484,6 +495,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Affichage du Game Over */
   if(GM->p1.life == 0){
+    remove_saved_game(GM->id);
     if (GM->gamemode == SOLO) {
       save_score(GM, MLV_get_time() - time);
     }
