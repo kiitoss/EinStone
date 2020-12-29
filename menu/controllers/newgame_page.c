@@ -84,12 +84,13 @@ void update_newgame_page(Newgame_Page *ngp, Sound_Manager *SM) {
   MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_BUTTON && em.btn_state == MLV_PRESSED && ngp->hover_btn != NULL) {
     select_hover_btn(ngp, SM);
-    if (ngp->hover_btn->value != BACK) {
+    if (ngp->hover_btn->value != BACK && ngp->hover_btn->value != LAUNCH) {
       update_newgame_page(ngp, SM);
     }
   }
   else if (em.event == MLV_KEY && em.touch == MLV_KEYBOARD_ESCAPE) {
     launch_main_page(ngp->width, ngp->height, SM);
+    return;
   }
   else if (em.event == MLV_MOUSE_MOTION) {
     update_hover_btn(ngp, em.mouseX, em.mouseY);

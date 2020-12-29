@@ -45,7 +45,9 @@ void game_over(Window *window, Game_Manager *GM, Game_Over *go, Sound_Manager *S
     case RESTART:
       launch_newgame(GM->gamemode,GM->difficulty,GM->p1.name,GM->p2.name, SM);
       GM->in_game = true;
-    default:break;
+      break;
+    default:
+      break;
     }
   }
 }
@@ -250,6 +252,10 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   em.event = MLV_NONE;
   em.btn_state = MLV_RELEASED;
   em.touch = MLV_NONE;
+
+  if (!GM->in_game) {
+    return;
+  }
   
   while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY) && (em.event != MLV_MOUSE_BUTTON)) {
     em = get_game_event();
@@ -281,7 +287,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   time = MLV_get_time();
 
   /* Affichage du Game Over */
-  if(GM->p1.life == 0){
+  if(GM->p1.life <= 0 && GM->in_game){
     remove_saved_game(GM->id);
     if (GM->gamemode == SOLO) {
       save_score(GM, MLV_get_time() - time);
@@ -325,10 +331,6 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     mouse_action(GM, em.mouseX, em.mouseY);
   }
 
-  if (em.btn_state == MLV_PRESSED) {
-    em.btn_state = MLV_RELEASED;
-  }
-
   /* S'auto-appel tant que le jeu continue. */
   if (GM->in_game) {
     draw_game(GM, TM, time);
@@ -351,10 +353,6 @@ void quit_game(Texture_Manager *TM, Sound_Manager *SM) {
   MLV_change_window_size(3*win_width/4, 3*win_height/4);
 
   launch_main_page(3*win_width/4, 3*win_height/4, SM);
-
-  MLV_free_window();
-  
-  exit(0);
 }
 
 

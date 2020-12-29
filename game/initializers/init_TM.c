@@ -203,6 +203,4 @@ void free_TM(Texture_Manager *this) {
   MLV_free_image(this->life_friend_img);
   MLV_free_image(this->delete_friend_img);
   MLV_free_image(this->score_img);
-
-  MLV_free_font(this->font);
 }
