@@ -1,6 +1,8 @@
 #include "../headers/global_header.h"
 
 
+
+/* Affiche l'écran de Game Over et propose de recommencer ou de quiteer. */
 void game_over(Window *window, Game_Manager *GM, Game_Over *go, Sound_Manager *SM) {
   Event_Manager em;
   Button *hover_btn;
@@ -109,8 +111,6 @@ void pause(Window *window, Game_Manager *GM, Pause_Screen *ps, int time) {
 
 
 
-
-
 /* Action faisant suite à une action du clavier */
 void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manager *TM, int time) {
   int time_play;
@@ -156,7 +156,6 @@ void keyboard_action(Game_Manager *GM, MLV_Keyboard_button touch, Texture_Manage
     break;
   }
 }
-
 
 
 
@@ -243,8 +242,6 @@ void mouse_action(Game_Manager *GM, int mouseX, int mouseY) {
 
 
 
-
-
 /* Met à jour le jeu. */
 void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   Event_Manager em;
@@ -258,6 +255,12 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     em = get_game_event();
   }
 
+  /*
+    Subterfuge permettant de valider un clique de souris lorsque MLV_get_event() ne le détecte pas.
+    Sur plusieurs cliques, "MLV_buton_state" n'est pas mis à jour en tant que MLV_PRESSED, le clique n'est donc pas detecté.
+    En revanche, lorsque le bouton est relaché, le button_state se met bien à jour en tant que MLV_RELEASED, il est donc
+    possible d'utiliser un subterfuge pour récupérer tous les cliques, même ceux qui ne sont pas détéctés par MLV.
+  */
   if (em.event == MLV_MOUSE_BUTTON && GM->last_state_mouse != MLV_RELEASED && em.btn_state != MLV_PRESSED) {
     GM->last_state_mouse = em.btn_state;
     update_game(GM, TM, SM);
@@ -266,8 +269,6 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     GM->last_state_key = em.btn_state;
     update_game(GM, TM, SM);
   }
-
-  
   if (em.event == MLV_MOUSE_BUTTON) {
     GM->last_state_mouse = em.btn_state;
   }
@@ -337,10 +338,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
 
 
-
-
-/* Libère des images et des sons du jeu avant de retourner au menu */
-/* GLOBAL */
+/* Libere des images et des sons du jeu avant de retourner au menu. */
 void quit_game(Texture_Manager *TM, Sound_Manager *SM) {
   unsigned int win_width, win_height;
   
@@ -361,10 +359,7 @@ void quit_game(Texture_Manager *TM, Sound_Manager *SM) {
 
 
 
-
-
-/* Lancement d'une nouvelle partie */
-/* GLOBAL */
+/* Lancement d'une nouvelle partie. */
 void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, char *p2_name, Sound_Manager *SM) {
   Texture_Manager TM;
   Game_Manager GM;
@@ -402,8 +397,6 @@ void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, cha
 
 
 
-
-
 /* Reset les animations des spawners, des alliés et des ennemies. */
 void reset_entities_animations(Game_Manager *GM, Texture_Manager *TM, Window *window) {
   int i, j;
@@ -432,10 +425,7 @@ void reset_entities_animations(Game_Manager *GM, Texture_Manager *TM, Window *wi
 
 
 
-
-
-/* Lancement d'une ancienne partie */
-/* GLOBAL */
+/* Lancement d'une ancienne partie. */
 void launch_resume(Game_Manager *GM, Sound_Manager *SM) {
   Texture_Manager TM;
   Window window;

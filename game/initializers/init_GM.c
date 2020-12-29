@@ -1,8 +1,8 @@
 #include "../../headers/global_header.h"
 
 
+
 /* Retourne le joueur 1 initialisé. */
-/* GLOBAL */
 Player_1 init_p1(char *p1_name) {
   Player_1 p1;
   p1.chosen_friend = -1;
@@ -19,10 +19,7 @@ Player_1 init_p1(char *p1_name) {
 
 
 
-
-
 /* Retourne le joueur 2 initialisé. */
-/* GLOBAL */
 Player_2 init_p2(char *p2_name) {
   Player_2 p2;
   p2.chosen_row = 0;
@@ -36,8 +33,8 @@ Player_2 init_p2(char *p2_name) {
 }
 
 
+
 /* Retourne une ligne initialisée. */
-/* GLOBAL */
 Row init_row(int rectsize) {
   Row r;
   int i;
@@ -52,7 +49,8 @@ Row init_row(int rectsize) {
 }
 
 
-/* GLOBAL */
+
+/* Retourne un objet Game_Manager initialisé. */
 Game_Manager init_GM(Window *window, Texture_Manager *TM, btn_value gamemode,btn_value difficulty,char *p1_name,char *p2_name) {
   Game_Manager GM;
   int i;

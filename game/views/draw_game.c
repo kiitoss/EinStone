@@ -1,6 +1,8 @@
 #include "../../headers/global_header.h"
 
-/* GLOBAL */
+
+
+/* Dessine la fenêtre et le plateau de jeu, ainsi que les objets. */
 void draw_game(Game_Manager *GM, Texture_Manager *TM, int time) {
   int i;
   draw_window(GM, TM);
@@ -11,7 +13,9 @@ void draw_game(Game_Manager *GM, Texture_Manager *TM, int time) {
   MLV_update_window();
 }
 
-/* GLOBAL */
+
+
+/* Recupere et renvoie l'evenemnt de l'utilisateur. */
 Event_Manager get_game_event() {
   Event_Manager em;
   em.event = MLV_get_event(&em.touch, NULL, NULL, NULL, NULL, &em.mouseX, &em.mouseY, NULL, &em.btn_state);

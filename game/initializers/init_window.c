@@ -1,5 +1,11 @@
 #include "../../headers/global_header.h"
 
+
+
+/*
+  Retourne la taille optimale du rectsize.
+  La valeur de rectsize servira de base pour représenter tout le jeu.
+*/
 int get_rectsize(unsigned int win_width, unsigned int win_height, btn_value gamemode) {
   int rectsize;
   int nb_rows = (gamemode == SOLO) ? NB_ROWS + 1 : NB_ROWS + 2;
@@ -7,7 +13,9 @@ int get_rectsize(unsigned int win_width, unsigned int win_height, btn_value game
   return rectsize;
 }
 
-/* GLOBAL */
+
+
+/* Initialise et retourne un nouvel objet Window. */
 Window init_window(unsigned int win_width, unsigned int win_height, btn_value gamemode) {
   Window window;
   Geometry g;

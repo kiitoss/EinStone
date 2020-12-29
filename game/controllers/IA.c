@@ -1,17 +1,26 @@
 #include "../../headers/global_header.h"
 
+
+
+/*
+  Cherche la ligne la plus fragile,
+  calcule la somme de la vie des alliés par ligne
+  et retourne le nombre d'alliés minimum de la ligne la plus faible.
+*/
 int get_weak_row(Game_Manager *GM){
-  int k,i, j;
-  int nb_friends, max_friends;
-  int nb_friends_min,max_enemies,max_life;
-  int weak_row[NB_ROWS+1],sum_life_friend[NB_ROWS+1];
+  int i, j, k;
+  int nb_friends, min_friends, min_enemies, max_life;
+  int weak_row[NB_ROWS], sum_life_friend[NB_ROWS];
   
-  max_friends = NB_COLUMNS;
-  max_life = 10000000;
+  min_friends = NB_COLUMNS;
   GM->p2.chosen_row = 0;
   k = 0;
-  
-  for(i=0;i<NB_ROWS;i++){
+
+  /*
+    Affecte les lignes avec le plus faible nombre d'ennemies dans week_row.
+    Calcule la somme de la vie des alliés dans chaque lignes.
+  */
+  for(i=0; i<NB_ROWS; i++){
     nb_friends = 0;
     sum_life_friend[i] = 0;
     for (j=0; j<NB_COLUMNS; j++) {
@@ -20,42 +29,40 @@ int get_weak_row(Game_Manager *GM){
 	sum_life_friend[i] += GM->rows[i].friends[j].life;
       }
     }
-    if (nb_friends < max_friends) {
-      max_friends = nb_friends;
-    }
-  }
-  nb_friends_min = max_friends;
-  
-  for(i=0;i<NB_ROWS;i++){
-    nb_friends = 0;
-    for (j=0; j<NB_COLUMNS; j++) {
-      if (is_friend(&GM->rows[i].friends[j])) {
-	nb_friends++;
-      }
-    }
-    if (nb_friends_min == nb_friends) {
+    
+    if (nb_friends < min_friends) {
+      min_friends = nb_friends;
+      k = 0;
       weak_row[k++] = i;
-    } 
+    }
+    else if (nb_friends == min_friends) {
+      weak_row[k++] = i;
+    }
   }
-  
-  max_enemies = MAX_ENEMIES;
 
-  for(i=0;i<k;i++){
-    if (GM->rows[weak_row[i]].nb_enemies  < max_enemies ||  sum_life_friend[weak_row[i]] < max_life){
-      max_enemies = GM->rows[weak_row[i]].nb_enemies;
+  
+  min_enemies = MAX_ENEMIES;
+  max_life = sum_life_friend[weak_row[0]];
+
+  /* Choisis ensuite la ligne la plus faible. */
+  for(i=0; i<k; i++){
+    if (GM->rows[weak_row[i]].nb_enemies  < min_enemies || sum_life_friend[weak_row[i]] < max_life){
+      min_enemies = GM->rows[weak_row[i]].nb_enemies;
       max_life = sum_life_friend[weak_row[i]];
 
       GM->p2.chosen_row = weak_row[i];
     }
-    
   }
   
-  return max_friends;
+  return min_friends;
 }
 
-void get_enemy(Game_Manager *GM,int max_friend){
+
+
+/* Envoie le bon ennemie sur la ligne la plus faible. */
+void get_enemy(Game_Manager *GM,int min_friend){
   int i;
-  if(max_friend == 0){
+  if(min_friend == 0){
     for(i=0;i<GM->rows[GM->p2.chosen_row].nb_enemies;i++){
       if (GM->p2.money >= GM->enemy_spawners[0].price && GM->rows[GM->p2.chosen_row].enemies[i].posX > GM->window.field.posX){
 	GM->p2.chosen_enemy = 0;
@@ -63,14 +70,15 @@ void get_enemy(Game_Manager *GM,int max_friend){
       else {return;}
     }
   }
-  if (max_friend >0 && max_friend <= 2){
+  
+  if (min_friend > 0 && min_friend <= 2){
     if (GM->p2.money >= GM->enemy_spawners[NB_ENEMIES/2].price){
       GM->p2.chosen_enemy = rand() % (NB_ENEMIES/2 - 0 + 1) + 0;
     }
     else {return;}
   }
   
-  else if (max_friend >2){
+  else if (min_friend>2){
     if (GM->p2.money >= GM->enemy_spawners[NB_ENEMIES-1].price){
       GM->p2.chosen_enemy = rand() % NB_ENEMIES;
     }
@@ -80,8 +88,10 @@ void get_enemy(Game_Manager *GM,int max_friend){
 
 }
 
-/* GLOBAL */
+
+
+/* Met à jour l'IA. */
 void update_IA(Game_Manager *GM){
-  int max_friend = get_weak_row(GM);
-  get_enemy(GM,max_friend);
+  int min_friend = get_weak_row(GM);
+  get_enemy(GM, min_friend);
 }

@@ -1,24 +1,38 @@
 #include "../../headers/global_header.h"
 
+
+
+/* Dessine les flèches. */
 void draw_shot(Shot *this, MLV_Image *shot_img, Window *window) {
   MLV_draw_image(shot_img, this->posX + window->field.posX, this->posY + window->field.posY);
 }
 
+
+
+/* Dessine les pèces d'or. */
 void draw_gold(Gold *this, MLV_Image *gold_img, Window *window) {
   MLV_Image *img = MLV_copy_image(gold_img);
   set_img_size(img, this->radius, this->radius);
   MLV_draw_image(img, this->centerX - this->radius/2 + window->field.posX, this->centerY - this->radius/2 + window->field.posY);
 }
 
+
+
+/* Dessine les alliés. */
 void draw_friend(Friend *f, Window *window) {
   MLV_draw_image_from_animation_player(f->animation, 0, f->posX + window->field.posX, f->posY + window->field.posY);
 }
 
+
+
+/* Dessine les ennemies. */
 void draw_enemy(Enemy *e, Window *window) {
   MLV_draw_image_from_animation_player(e->animation, 0, e->posX + window->field.posX, e->posY + window->field.posY);
 }
 
-/* GLOBAL */
+
+
+/* Dessine les lignes et leurs objets. */
 void draw_row(Row *r, Window *window, Texture_Manager *TM) {
   int i;
   

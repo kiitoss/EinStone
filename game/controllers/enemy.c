@@ -2,11 +2,7 @@
 
 
 
-
-
-
 /* Retourne un nouvel ennemie. */
-/* GLOBAL */
 Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
   Enemy e;
   e.id_enemy = spawner->id_enemy;
@@ -32,16 +28,11 @@ Enemy get_new_enemy(Enemy_Spawner *spawner, int posX, int posY) {
 
 
 
-
-
 /* Affecte une animation à un ennemie. */
-/* GLOBAL */
 void set_enemy_animation(Enemy *this, MLV_Animation_player *animation) {
   this->animation = animation;
   MLV_play_animation_player(this->animation);
 }
-
-
 
 
 
@@ -52,8 +43,6 @@ void move_enemy(Enemy *this) {
   }
   this->posX -= this->speed;
 }
-
-
 
 
 
@@ -71,8 +60,6 @@ void attack_friend_in_front(Enemy *this, Row *row, int gridY_friend, Sound_Manag
 
 
 
-
-
 /* Change le comportement de l'ennemie. */
 void switch_enemy_behavior(Enemy *this) {
   if (this->is_walking) {
@@ -86,10 +73,7 @@ void switch_enemy_behavior(Enemy *this) {
 
 
 
-
-
 /* Met à jour l'ennemie. */
-/* GLOBAL */
 void update_enemy(Enemy *this, Row *row, Sound_Manager *SM) {
   int gridY_far, gridY_close, i, gridY_friend = 0;
   bool friend_in_range = false;
@@ -130,7 +114,7 @@ void update_enemy(Enemy *this, Row *row, Sound_Manager *SM) {
 
 
 
-/* GLOBAL */
+/* Recharge les animations de l'ennemie (utile pour le relancement des parties). */
 void reset_enemy_animations(Enemy *this, Enemy_Spawner *spawner) {
   this->animation_walking = MLV_create_animation_player(spawner->animation_walking);
   this->animation_attack = MLV_create_animation_player(spawner->animation_attack);

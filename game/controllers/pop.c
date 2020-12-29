@@ -2,9 +2,7 @@
 
 
 
-
 /* Compare la position de la souris et celles des pièces d'or sur le terrain. */
-/* GLOBAL */
 void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
   int i, j;
   Gold *g;
@@ -28,8 +26,8 @@ void check_click_gold(Game_Manager *GM, int mouseX, int mouseY) {
 }
 
 
+
 /* Retourne un nouveau tir. */
-/* GLOBAL */
 Shot get_new_shot(int posX, int posY, int rectsize, int attack) {
   Shot s;
   s.posX = posX;
@@ -41,10 +39,7 @@ Shot get_new_shot(int posX, int posY, int rectsize, int attack) {
 
 
 
-
-
 /* Retourne vrai si le joueur a cliqué sur la pièce d'or. */
-/* GLOBAL */
 bool is_clicked_gold(Gold *this, int mouseX, int mouseY) {
   bool is_clicked = false;
   if (mouseX >= this->centerX - this->radius/2 && mouseX <= this->centerX + this->radius/2 && mouseY >= this->centerY - this->radius/2 && mouseY <= this->centerY + this->radius/2) {
@@ -55,10 +50,7 @@ bool is_clicked_gold(Gold *this, int mouseX, int mouseY) {
 
 
 
-
-
 /* Retourne une nouvelle pièce d'or. */
-/* GLOBAL */
 Gold get_new_gold(int centerX, int centerY, int rectsize) {
   Gold g;
   g.centerX = centerX;
@@ -71,9 +63,7 @@ Gold get_new_gold(int centerX, int centerY, int rectsize) {
 
 
 
-
 /* Met à jour une pièce d'or du terrain. */
-/* GLOBAL */
 void update_gold(Gold *this) {
   if (this->radius < this->max_radius) {
     this->radius += 10;
@@ -83,20 +73,14 @@ void update_gold(Gold *this) {
 
 
 
-
-
 /* Met à jour un tir allié. */
-/* GLOBAL */
 void move_shot(Shot *this) {
   this->posX += this->speed;
 }
 
 
 
-
-
 /* Créé de l'or dans une position aléatoire d'un carré du terrain. */
-/* GLOBAL */
 void create_new_gold(Row *row, int gridX, int gridY, Sound_Manager *SM) {
   if (row->nb_golds >= MAX_GOLDS) {return;}
 
@@ -109,10 +93,7 @@ void create_new_gold(Row *row, int gridX, int gridY, Sound_Manager *SM) {
 
 
 
-
-
 /* Créé un tir allié. */
-/* GLOBAL */
 void create_new_shot(Row *row, int gridX, int gridY, int attack, Sound_Manager *SM) {
   if (row->nb_shots >= MAX_SHOTS) {return;}
 

@@ -2,10 +2,7 @@
 
 
 
-
-
 /* Retourne un nouvel allié. */
-/* GLOBAL */
 Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY) {
   Friend f;
   
@@ -28,26 +25,18 @@ Friend get_new_friend(Friend_Spawner *spawner, int posX, int posY) {
 
 
 
-
-
-/* Retourne vrai si le paramètre est un allié. */
-/* GLOBAL */
+/* Retourne vrai si le paramètre est un allié, faux sinon. */
 bool is_friend(Friend *this) {
   return this->id_friend != -1;
 }
 
 
 
-
-
 /* Affecte une animation à un allié. */
-/* GLOBAL */
 void set_friend_animation(Friend *this, MLV_Animation_player *animation) {
   this->animation = animation;
   MLV_play_animation_player(this->animation);
 }
-
-
 
 
 
@@ -73,8 +62,6 @@ void attack_all_enemies_in_range(Friend *this, Row *row, Sound_Manager *SM, int 
 
 
 
-
-
 /* Change le comportement de l'allié. */
 void switch_friend_behavior(Friend *this) {
   if (this->is_passive) {
@@ -86,8 +73,6 @@ void switch_friend_behavior(Friend *this) {
   }
   this->is_passive = !this->is_passive;
 }
-
-
 
 
 
@@ -119,10 +104,7 @@ void use_friend_ability(Friend *this, Row *row, Sound_Manager *SM, int *p1_score
 
 
 
-
-
 /* Met à jour l'allié. */
-/* GLOBAL */
 void update_friend(Friend *this, Row *row, Sound_Manager *SM, int *p1_score) {
   int i;
   bool enemy_in_range = false;
@@ -155,7 +137,7 @@ void update_friend(Friend *this, Row *row, Sound_Manager *SM, int *p1_score) {
 
 
 
-/* GLOBAL */
+/* Recharge les animations de l'allié (utile pour le relancement des parties). */
 void reset_friend_animations(Friend *this, Friend_Spawner *spawner) {
   this->animation_passive = MLV_create_animation_player(spawner->animation_passive);
   this->animation_ability = MLV_create_animation_player(spawner->animation_ability);

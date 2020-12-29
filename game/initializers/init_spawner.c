@@ -1,5 +1,8 @@
 #include "../../headers/global_header.h"
 
+
+
+/* Retourne une nouvelle animation à partir d'un sprite. */
 MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation, int first_frame, int last_frame, int time) {
   int i;
   MLV_Image *images[MAX_FRAMES];
@@ -27,7 +30,8 @@ MLV_Animation *get_animation(MLV_Image *sprite, int rectsize, int row_animation,
 }
 
 
-/* GLOBAL */
+
+/* Affecte les animations aux spawners ennemies selon le type d'attaquant. */
 void set_enemy_spawner_animations(Enemy_Spawner *ES, Texture_Manager *TM, Window *window, int index_enemy) {
   int row_animation_attack, first_frame_attack, last_frame_attack, time_attack;
   switch (ES->type_attack) {
@@ -57,7 +61,7 @@ void set_enemy_spawner_animations(Enemy_Spawner *ES, Texture_Manager *TM, Window
 
 
 
-/* GLOBAL */
+/* Affecte les animations au spawners alliés selon l'abilité. */
 void set_friend_spawner_animations(Friend_Spawner *FS, Texture_Manager *TM, Window *window, int index_friend) {
   int row_animation_ability, first_frame_ability, last_frame_ability, time_ability;
   switch (FS->ability) {
@@ -96,7 +100,8 @@ void set_friend_spawner_animations(Friend_Spawner *FS, Texture_Manager *TM, Wind
 }
 
 
-/* GLOBAL */
+
+/* Initialise et retourne un nouveau spawner allié. */
 Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
   Friend_Spawner FS;
   switch (index_friend) {
@@ -146,9 +151,7 @@ Friend_Spawner init_FS(int index_friend, Texture_Manager *TM, Window *window) {
 
 
 
-
-
-/* GLOBAL */
+/* Initialise et retourne un nouveau spawner ennemie. */
 Enemy_Spawner init_ES(int index_enemy, Texture_Manager *TM, Window *window){
   Enemy_Spawner ES;
   switch(index_enemy){

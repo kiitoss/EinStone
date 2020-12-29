@@ -1,6 +1,8 @@
 #include "../../headers/global_header.h"
 
-/* GLOBAL */
+
+
+/* Lance l'effet sonore. */
 void play_sound(Sound_Manager *SM, Sound *this) {
   if (!SM->sound_works) {
     return;
@@ -8,7 +10,9 @@ void play_sound(Sound_Manager *SM, Sound *this) {
   MLV_play_sound(this->sound, this->sound_level);
 }
 
-/* GLOBAL */
+
+
+/* Lance la musique. */
 void play_music(Sound_Manager *SM, Music *this) {
   if (!SM->sound_works) {
     return;
@@ -16,11 +20,14 @@ void play_music(Sound_Manager *SM, Music *this) {
   MLV_play_music(this->music, this->music_level, -1);
 }
 
-/* GLOBAL */
-Sound_Manager init_game_SM() {
+
+
+/* Initialise l'objet gestionnaire de son.  */
+Sound_Manager init_SM() {
   Sound_Manager SM;
-  
-  if( MLV_init_audio() ){
+
+  /* Si l'audio n'est pas géré (WSL par exemple), on ne les jouera pas. */
+  if(MLV_init_audio()){
     SM.sound_works = false;
     return SM;
   }
@@ -52,7 +59,8 @@ Sound_Manager init_game_SM() {
 }
 
 
-/* GLOBAL */
+
+/* Libère tous les sons chargés. */
 void free_SM(Sound_Manager *SM) {
   if (!SM->sound_works) {return;}
   

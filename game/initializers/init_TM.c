@@ -1,5 +1,8 @@
 #include "../../headers/global_header.h"
 
+
+
+/* Charge et retourne une nouvelle image. */
 MLV_Image *get_image_with_path(char *path) {
   MLV_Image *img = MLV_load_image(path);
   if (!img) {
@@ -9,6 +12,9 @@ MLV_Image *get_image_with_path(char *path) {
   return img;
 }
 
+
+
+/* Récupère tous les sprites des alliés. */
 MLV_Image *get_friend_spawner_sprite(int id_friend) {
   char *path;
   switch (id_friend) {
@@ -32,6 +38,9 @@ MLV_Image *get_friend_spawner_sprite(int id_friend) {
   return get_image_with_path(path);
 }
 
+
+
+/* Récupère tous les sprites des ennemies. */
 MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
   char *path;
   switch (id_enemy) {
@@ -54,6 +63,7 @@ MLV_Image *get_enemy_spawner_sprite(int id_enemy) {
 
 
 
+/* Retourne l'image du spawner depuis un sprite. */
 MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spawner_height) {
   MLV_Image *spawner_img;
   spawner_img = MLV_copy_partial_image(sprite, 64, 3*64, 64, 64); 
@@ -61,14 +71,23 @@ MLV_Image *get_spawner_img_from_sprite(MLV_Image *sprite, int rectsize, int spaw
   return spawner_img;
 }
 
-/* GLOBAL */
+
+
+/* Change la taille de l'image. */
 void set_img_size(MLV_Image *img, int width, int height) {
   MLV_resize_image(img, width, height);
 }
+
+
+
+/* Change la taille de l'image en conservant les proportions. */
 void set_img_proportional_size(MLV_Image *img, int width, int height){
   MLV_resize_image_with_proportions(img, width, height);
 }
 
+
+
+/* Retourne l'ecran de pause. */
 Pause_Screen get_pause_screen(Window window) {
   Geometry g;
   Pause_Screen pause_screen;
@@ -85,6 +104,9 @@ Pause_Screen get_pause_screen(Window window) {
   return pause_screen;
 }
 
+
+
+/* Retourne l'ecran de Game Over. */
 Game_Over get_game_over_screen(Window window) {
   Geometry g;
   Game_Over GO_screen;
@@ -100,7 +122,8 @@ Game_Over get_game_over_screen(Window window) {
 }
 
 
-/* GLOBAL */
+
+/* Initialise et retourne le gestionnaire d'images. */
 Texture_Manager init_TM(Window window) {
   int i;
   Texture_Manager TM;
@@ -154,7 +177,9 @@ Texture_Manager init_TM(Window window) {
   return TM;
 }
 
-/* GLOBAL */
+
+
+/* Libère toutes les images chargées. */
 void free_TM(Texture_Manager *this) {
   int i;
   MLV_free_image(this->field_light_grass_img);
@@ -178,4 +203,6 @@ void free_TM(Texture_Manager *this) {
   MLV_free_image(this->life_friend_img);
   MLV_free_image(this->delete_friend_img);
   MLV_free_image(this->score_img);
+
+  MLV_free_font(this->font);
 }

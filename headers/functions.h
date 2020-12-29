@@ -104,7 +104,7 @@ void reset_friend_animations(Friend *this, Friend_Spawner *spawner);
 /* game/initializers/init_SM.c */
 void play_sound(Sound_Manager *SM, Sound *this);
 void play_music(Sound_Manager *SM, Music *this);
-Sound_Manager init_game_SM();
+Sound_Manager init_SM();
 void free_SM(Sound_Manager *SM);
 
 /* game/initializers/init_IA.c */

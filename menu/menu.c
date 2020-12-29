@@ -3,7 +3,7 @@
 int main(int argc, char *argv[]) {
   unsigned int win_width, win_height;
   int width, height;
-  Sound_Manager SM = init_game_SM();
+  Sound_Manager SM = init_SM();
   
   printf("%d, %s\n", argc, *argv);
   MLV_get_desktop_size(&win_width, &win_height);
