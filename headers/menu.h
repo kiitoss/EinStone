@@ -45,7 +45,6 @@ typedef struct {
   Label p1_name_lbl;
   Label p2_name_lbl;
   Label p1_score_lbl;
-  Label p2_score_lbl;
   Label time_lbl;
   bool is_hover;
   bool is_select;

@@ -64,8 +64,8 @@ void get_enemy(Game_Manager *GM,int max_friend){
     }
   }
   if (max_friend >0 && max_friend <= 2){
-    if (GM->p2.money >= GM->enemy_spawners[1].price){
-      GM->p2.chosen_enemy = rand() % (1 - 0 + 1) + 0;
+    if (GM->p2.money >= GM->enemy_spawners[NB_ENEMIES/2].price){
+      GM->p2.chosen_enemy = rand() % (NB_ENEMIES/2 - 0 + 1) + 0;
     }
     else {return;}
   }
@@ -82,10 +82,6 @@ void get_enemy(Game_Manager *GM,int max_friend){
 
 /* GLOBAL */
 void update_IA(Game_Manager *GM){
-  int max_friend;
-  
-  if(GM->gamemode == MULTI){return;}
-
-  max_friend = get_weak_row(GM);
+  int max_friend = get_weak_row(GM);
   get_enemy(GM,max_friend);
 }

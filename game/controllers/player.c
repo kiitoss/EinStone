@@ -15,16 +15,6 @@ void set_player_money_str(int money, char money_str[10]) {
 
 
 
-/* Convertit la vie (int) en string. */
-/* GLOBAL */
-void set_player_life_str(int life, char life_str[10]) {
-  sprintf(life_str, "%d", life);
-}
-
-
-
-
-
 /* Ajoute un montant au total d'or du joueur 1. */
 /* GLOBAL */
 void p1_add_gold(Player_1 *this, int gold) {
@@ -44,19 +34,14 @@ void p2_create_free_gold(Player_2 *this, btn_value difficulty, btn_value gamemod
   int expo = EXPO_GOLD_IA;
   int amount;
 
-  if (gamemode == SOLO) {
-    if (difficulty == EASY) {
-      expo /= 2;
-    }
-    else if (difficulty == HARD) {
-      expo *= 2;
-    }
-    /* amount: Un = U(n-1) + n*expo = U0 + n*(n+1)/2 * expo */
-    amount = QTY_FREE_GOLD_P2 + (min*(min+1)/2)*expo;
+  if (difficulty == EASY) {
+    expo /= 2;
   }
-  else {
-    amount = QTY_FREE_GOLD_P2;
+  else if (difficulty == HARD) {
+    expo *= 2;
   }
+  /* amount: Un = U(n-1) + n*expo = U0 + n*(n+1)/2 * expo */
+  amount = QTY_FREE_GOLD_P2 + (min*(min+1)/2)*expo;
   
   this->money += amount;
   set_player_money_str(this->money, this->money_str);

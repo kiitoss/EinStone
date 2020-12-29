@@ -115,7 +115,6 @@ void update_all_collisions_in_row(Row *this, Sound_Manager *SM, int *p1_score) {
 void remove_all_enemies_in_row(Row *this, Player_1 *p1) {
   this->nb_enemies = 0;
   p1->life--;
-  set_player_life_str(p1->life, p1->life_str);
   if (p1->life == 0) {
     printf("You loose\n");
   }

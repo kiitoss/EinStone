@@ -50,7 +50,6 @@ void reset_friend_animations(Friend *this, Friend_Spawner *spawner);
 
 /* game/controllers/player.c */
 void set_player_money_str(int money, char money_str[10]);
-void set_player_life_str(int life, char life_str[10]);
 void p1_add_gold(Player_1 *this, int gold);
 void p2_create_free_gold(Player_2 *this, btn_value difficulty, btn_value gamemode);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);

@@ -55,7 +55,6 @@ void draw_resume_section(Resume_Section *this) {
   draw_label(&this->p1_name_lbl);
   draw_label(&this->p1_score_lbl);
   draw_label(&this->time_lbl);
-  draw_label(&this->p2_score_lbl);
   draw_label(&this->p2_name_lbl);
 }
 

@@ -13,10 +13,12 @@
 #define DELAY_REFRESH 50
 #define DELAY_FREE_GOLD_P1 5000
 #define DELAY_FREE_GOLD_P2 2500
-#define QTY_FREE_GOLD_P2 25
+#define QTY_FREE_GOLD_P2 100
 #define EXPO_GOLD_IA 5
-#define AMOUNT_GOLD_P1 25
+#define AMOUNT_GOLD_P1 100
 #define LIFE_P1 3
+#define INIT_GOLD_P1 300
+#define INIT_GOLD_P2 0
 
 #define SAVED_GAMES 5
 #define SAVED_SCORES 10
@@ -85,7 +87,6 @@ typedef struct {
   int last_free_gold;
   int score;
   int life;
-  char life_str[2];
   bool is_deleting;
 } Player_1;
 
@@ -96,7 +97,6 @@ typedef struct {
   int money;
   char money_str[10];
   int last_free_gold;
-  int score;
 } Player_2;
 
 typedef struct {

@@ -15,7 +15,7 @@ bool is_resume_section_hover(Resume_Section *this, int posX, int posY) {
 Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char *font_path) {
   Resume_Section rs;
   Geometry g;
-  char *p1_score_str, *time_str, *p2_score_str;
+  char *p1_score_str, *time_str;
   int min, sec;
   
   if (GM == NULL) {
@@ -28,17 +28,14 @@ Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char
 
   p1_score_str = malloc(21*sizeof(char));
   time_str = malloc(21*sizeof(char));
-  p2_score_str = malloc(21*sizeof(char));
-
 
   min = (GM->duration / 1000) / 60;
   sec = (GM->duration / 1000) - min*60;
 
   sprintf(time_str, "%dm : %ds", min, sec);
   sprintf(p1_score_str, "%d", GM->p1.score);
-  sprintf(p2_score_str, "%d", GM->p2.score);
   
-  g.width = container.width/5;
+  g.width = container.width/4;
   g.height = container.height;
   g.posX = container.posX;
   g.posY = container.posY;
@@ -54,8 +51,6 @@ Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char
   rs.p1_score_lbl = get_new_label(g, p1_score_str, MLV_COLOR_RED, font_path);
   g.posX += g.width;
   rs.time_lbl = get_new_label(g, time_str, MLV_COLOR_RED, font_path);
-  g.posX += g.width;
-  rs.p2_score_lbl = get_new_label(g, p2_score_str, MLV_COLOR_RED, font_path);
   g.posX += g.width;
   rs.p2_name_lbl = get_new_label(g, GM->p2.name, MLV_COLOR_RED, font_path);
   rs.is_hover = false;

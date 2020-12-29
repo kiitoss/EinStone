@@ -31,15 +31,18 @@ void init_IA(Game_Manager *GM){
     attack = -5;
     life = -10;
     speed = 0;
+    GM->p1.life = LIFE_P1 + 1;
     printf("EASY\n");
     break;
   case MEDIUM:
+    
     printf("MEDIUM\n");
     break;
   case HARD:
     attack = 5;
     life = 10;
     speed = 1;
+    GM->p1.life = (LIFE_P1 - 1 > 0) ? LIFE_P1 - 1 : 1;
     printf("HARD\n");
     break;
   default:break;
