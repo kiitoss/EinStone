@@ -24,7 +24,7 @@ void update_hover_btn_and_section(Resume_Page *rp, int posX, int posY) {
   }
 }
 
-void update_resume_page(Resume_Page *rp) {
+void update_resume_page(Resume_Page *rp, Sound_Manager *SM) {
   Event_Manager em;
   draw_resume_page(rp);
   em = get_event();
@@ -37,26 +37,26 @@ void update_resume_page(Resume_Page *rp) {
       select_hover_section(rp);
     }
     if (rp->hover_btn != NULL && rp->hover_btn->value == BACK) {
-      launch_main_page(rp->width, rp->height);
+      launch_main_page(rp->width, rp->height, SM);
     }
     else if (rp->hover_btn != NULL && rp->hover_btn->value == LAUNCH && rp->select_section != NULL) {
-      launch_resume(rp->select_section->GM);
+      launch_resume(rp->select_section->GM, SM);
     }
     else {
-      update_resume_page(rp);
+      update_resume_page(rp, SM);
     }
   }
   else if (em.event == MLV_KEY && em.touch == MLV_KEYBOARD_ESCAPE) {
-    launch_main_page(rp->width, rp->height);
+    launch_main_page(rp->width, rp->height, SM);
   }
   else if (em.event == MLV_MOUSE_MOTION) {
     update_hover_btn_and_section(rp, em.mouseX, em.mouseY);
-    update_resume_page(rp);
+    update_resume_page(rp, SM);
   }
 }
 
 /* GLOBAL */
-void launch_resume_page(int width, int height) {
+void launch_resume_page(int width, int height, Sound_Manager *SM) {
   GM_list_games GMG;
   Resume_Page rp;
 
@@ -65,5 +65,5 @@ void launch_resume_page(int width, int height) {
   rp = init_resume_page(width, height, GMG);
   draw_resume_page(&rp);
   MLV_flush_event_queue();
-  update_resume_page(&rp);
+  update_resume_page(&rp, SM);
 }

@@ -1,7 +1,7 @@
 #include "../headers/global_header.h"
 
 
-void game_over(Window *window, Game_Manager *GM, Game_Over *go) {
+void game_over(Window *window, Game_Manager *GM, Game_Over *go, Sound_Manager *SM) {
   Event_Manager em;
   Button *hover_btn;
   em.event = MLV_NONE;
@@ -41,7 +41,7 @@ void game_over(Window *window, Game_Manager *GM, Game_Over *go) {
       GM->in_game = false;
       break;
     case RESTART:
-      launch_newgame(GM->gamemode,GM->difficulty,GM->p1.name,GM->p2.name);
+      launch_newgame(GM->gamemode,GM->difficulty,GM->p1.name,GM->p2.name, SM);
       GM->in_game = true;
     default:break;
     }
@@ -264,7 +264,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     if (GM->gamemode == SOLO) {
       save_score(GM, MLV_get_time() - time);
     }
-    game_over(&GM->window,GM,&TM->game_over_screen);
+    game_over(&GM->window,GM,&TM->game_over_screen, SM);
   }
   
   /* Création d'or pour le joueur 1. */
@@ -277,7 +277,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
   /* Création d'or pour le joueur 2 / IA. */
   if (time >+ GM->p2.last_free_gold + DELAY_FREE_GOLD_P2) {
-    p2_create_free_gold(&GM->p2, GM->difficulty, GM->gamemode);
+    p2_create_free_gold(&GM->p2, GM->difficulty);
     GM->p2.last_free_gold = time;
     if (GM->gamemode == SOLO) {
       /* Mise à jour de l'IA. */
@@ -315,9 +315,6 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 /* Libère des images et des sons du jeu avant de retourner au menu */
 /* GLOBAL */
 void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
-  /* Libération des sons */
-  free_SM(SM);
-
   /* Libération des images. */
   free_TM(TM);
 
@@ -326,7 +323,7 @@ void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   
   MLV_change_window_size(GM->window.width/2, GM->window.height/2);
   
-  launch_main_page(GM->window.width/2, GM->window.height/2);
+  launch_main_page(GM->window.width/2, GM->window.height/2, SM);
   
   MLV_free_window();
   
@@ -339,12 +336,15 @@ void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
 /* Lancement d'une nouvelle partie */
 /* GLOBAL */
-void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, char *p2_name) {
+void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, char *p2_name, Sound_Manager *SM) {
   Texture_Manager TM;
   Game_Manager GM;
   Window window;
-  Sound_Manager SM = init_game_SM();
   unsigned int win_width, win_height;
+
+  MLV_stop_music();
+  play_music(SM, &SM->game);
+  SM->menu_music_playing = false;
   
   printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
   
@@ -361,9 +361,9 @@ void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, cha
     init_IA(&GM);
   }
 
-  update_game(&GM, &TM, &SM);
+  update_game(&GM, &TM, SM);
 
-  quit_game(&GM, &TM, &SM);
+  quit_game(&GM, &TM, SM);
 }
 
 
@@ -402,11 +402,14 @@ void reset_entities_animations(Game_Manager *GM, Texture_Manager *TM, Window *wi
 
 /* Lancement d'une ancienne partie */
 /* GLOBAL */
-void launch_resume(Game_Manager *GM) {
+void launch_resume(Game_Manager *GM, Sound_Manager *SM) {
   Texture_Manager TM;
   Window window;
-  Sound_Manager SM = init_game_SM();
   unsigned int win_width, win_height;
+
+  MLV_stop_music();
+  play_music(SM, &SM->game);
+  SM->menu_music_playing = false;
   
   MLV_get_desktop_size(&win_width, &win_height);
 
@@ -425,7 +428,7 @@ void launch_resume(Game_Manager *GM) {
   
   init_IA(GM);  
   
-  update_game(GM, &TM, &SM);
+  update_game(GM, &TM, SM);
 
-  quit_game(GM, &TM, &SM);
+  quit_game(GM, &TM, SM);
 }

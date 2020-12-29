@@ -44,12 +44,20 @@ typedef struct {
 } Sound;
 
 typedef struct {
+  MLV_Music *music;
+  float music_level;
+} Music;
+
+typedef struct {
   bool sound_works;
   Sound arrow;
   Sound big_monster_roar;
   Sound gold;
   Sound punch;
   Sound spear;
+  Music game;
+  Music menu;
+  bool menu_music_playing;
 } Sound_Manager;
 
 typedef struct {

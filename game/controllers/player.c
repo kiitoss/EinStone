@@ -28,7 +28,7 @@ void p1_add_gold(Player_1 *this, int gold) {
 
 /* Ajoute de l'or au joueur 2. */
 /* GLOBAL */
-void p2_create_free_gold(Player_2 *this, btn_value difficulty, btn_value gamemode) {
+void p2_create_free_gold(Player_2 *this, btn_value difficulty) {
   /* min est le nombre de minutes depuis le lancement de partie. */
   int min = MLV_get_time() / 1000 / 60;
   int expo = EXPO_GOLD_IA;

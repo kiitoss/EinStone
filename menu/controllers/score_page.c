@@ -12,7 +12,7 @@ static void update_hover_btn(Score_Page *sp, int posX, int posY) {
 }
 
 
-void update_score_page(Score_Page *sp) {
+void update_score_page(Score_Page *sp, Sound_Manager *SM) {
   Event_Manager em;
   draw_score_page(sp);
   em = get_event();
@@ -22,18 +22,18 @@ void update_score_page(Score_Page *sp) {
   MLV_flush_event_queue();
   if (em.event == MLV_MOUSE_MOTION) {
     update_hover_btn(sp, em.mouseX, em.mouseY);
-    update_score_page(sp);
+    update_score_page(sp, SM);
   }
   else if ((em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE) && (em.event != MLV_MOUSE_BUTTON || sp->hover_btn == NULL)) {
-    update_score_page(sp);
+    update_score_page(sp, SM);
   }
   else {
-    launch_main_page(sp->width, sp->height);
+    launch_main_page(sp->width, sp->height, SM);
   }
 }
 
 /* GLOBAL */
-void launch_score_page(int width, int height) {
+void launch_score_page(int width, int height, Sound_Manager *SM) {
   GM_list_scores GMS;
   Score_Page sp;
 
@@ -42,5 +42,5 @@ void launch_score_page(int width, int height) {
   sp = init_score_page(width, height, GMS);
   draw_score_page(&sp);
   MLV_flush_event_queue();
-  update_score_page(&sp);
+  update_score_page(&sp, SM);
 }

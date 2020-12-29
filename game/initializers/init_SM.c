@@ -9,6 +9,14 @@ void play_sound(Sound_Manager *SM, Sound *this) {
 }
 
 /* GLOBAL */
+void play_music(Sound_Manager *SM, Music *this) {
+  if (!SM->sound_works) {
+    return;
+  }
+  MLV_play_music(this->music, this->music_level, -1);
+}
+
+/* GLOBAL */
 Sound_Manager init_game_SM() {
   Sound_Manager SM;
   
@@ -33,7 +41,13 @@ Sound_Manager init_game_SM() {
   
   SM.spear.sound = MLV_load_sound("resources/sounds/spear_sound.ogg");
   SM.spear.sound_level = 100;
-  
+
+  SM.game.music = MLV_load_music("resources/sounds/game_music.ogg");
+  SM.game.music_level = 100;
+
+  SM.menu.music = MLV_load_music("resources/sounds/menu_music.ogg");
+  SM.menu.music_level = 100;
+
   return SM;
 }
 
@@ -49,4 +63,7 @@ void free_SM(Sound_Manager *SM) {
   MLV_free_sound(SM->gold.sound);
   MLV_free_sound(SM->punch.sound);
   MLV_free_sound(SM->spear.sound);
+
+  MLV_free_music(SM->game.music);
+  MLV_free_music(SM->menu.music);
 }
