@@ -75,6 +75,9 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM, btn_value gamemode,btn
   }
   
   GM.last_refresh = MLV_get_time();
+  
   GM.duration = -MLV_get_time();
+  GM.last_state_mouse = MLV_RELEASED;
+  GM.last_state_key = MLV_RELEASED;
   return GM;
 }

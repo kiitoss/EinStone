@@ -72,7 +72,7 @@ void add_enemy_in_row(Row *this, Enemy_Spawner *spawner, int posX, int posY);
 void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM);
 
 /* game/controllers/player.c */
-void set_player_money_str(int money, char money_str[10]);
+void set_player_money_str(long money, char money_str[10]);
 void p1_add_gold(Player_1 *this, int gold);
 void p2_create_free_gold(Player_2 *this, btn_value difficulty);
 void p1_buy_friend(Player_1 *this, Row *row, Friend_Spawner *spawner, int gridX, int gridY);

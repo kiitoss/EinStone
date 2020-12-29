@@ -17,8 +17,8 @@
 #define EXPO_GOLD_IA 5
 #define AMOUNT_GOLD_P1 100
 #define LIFE_P1 3
-#define INIT_GOLD_P1 300
-#define INIT_GOLD_P2 0
+#define INIT_GOLD_P1 100
+#define INIT_GOLD_P2 100
 
 #define SAVED_GAMES 5
 #define SAVED_SCORES 10
@@ -91,7 +91,7 @@ typedef struct {
 typedef struct {
   char name[21];
   int chosen_friend;
-  int money;
+  long money;
   char money_str[10];
   int last_free_gold;
   int score;
@@ -103,7 +103,7 @@ typedef struct {
   char name[21];
   int chosen_enemy;
   int chosen_row;
-  int money;
+  long money;
   char money_str[10];
   int last_free_gold;
 } Player_2;
@@ -195,7 +195,9 @@ typedef struct {
   Player_1 p1;
   Player_2 p2;
   int last_refresh;
-  int duration;
+  long duration;
+  MLV_Button_state last_state_mouse;
+  MLV_Button_state last_state_key;
 } Game_Manager;
 
 typedef Game_Manager GM_list_games[SAVED_GAMES];

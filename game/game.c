@@ -254,9 +254,28 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   em.btn_state = MLV_RELEASED;
   em.touch = MLV_NONE;
   
-  while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY || em.btn_state != MLV_PRESSED) && (em.event != MLV_MOUSE_BUTTON || em.btn_state != MLV_PRESSED)) {
+  while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY) && (em.event != MLV_MOUSE_BUTTON)) {
     em = get_game_event();
   }
+
+  if (em.event == MLV_MOUSE_BUTTON && GM->last_state_mouse != MLV_RELEASED && em.btn_state != MLV_PRESSED) {
+    GM->last_state_mouse = em.btn_state;
+    update_game(GM, TM, SM);
+  }
+  else if (em.event == MLV_KEY && GM->last_state_key != MLV_RELEASED && em.btn_state != MLV_PRESSED) {
+    GM->last_state_key = em.btn_state;
+    update_game(GM, TM, SM);
+  }
+
+  
+  if (em.event == MLV_MOUSE_BUTTON) {
+    GM->last_state_mouse = em.btn_state;
+  }
+  else if (em.event == MLV_KEY) {
+    GM->last_state_key = em.btn_state;
+  }
+  
+  MLV_flush_event_queue();
 
   time = MLV_get_time();
 
@@ -275,6 +294,7 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     random_column = rand() % NB_COLUMNS;
     create_new_gold(&GM->rows[random_row], random_column, random_row, SM);
     GM->p1.last_free_gold = time;
+    
   }
 
   /* Création d'or pour le joueur 2 / IA. */
@@ -295,12 +315,17 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
     GM->last_refresh = time;
   }
 
+
   /* Gère l'action du clavier et de la souris. */
   if ((em.event == MLV_KEY && GM->gamemode == MULTI) || em.touch == MLV_KEYBOARD_ESCAPE || em.touch == MLV_KEYBOARD_p) {
     keyboard_action(GM, em.touch, TM, time);
   }
   else if (em.event == MLV_MOUSE_BUTTON) {
     mouse_action(GM, em.mouseX, em.mouseY);
+  }
+
+  if (em.btn_state == MLV_PRESSED) {
+    em.btn_state = MLV_RELEASED;
   }
 
   /* S'auto-appel tant que le jeu continue. */

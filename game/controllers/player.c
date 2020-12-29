@@ -7,8 +7,8 @@
 
 /* Convertit le montant de l'or (int) en string. */
 /* GLOBAL */
-void set_player_money_str(int money, char money_str[10]) {
-  sprintf(money_str, "%d", money);
+void set_player_money_str(long money, char money_str[10]) {
+  sprintf(money_str, "%ld", money);
 }
 
 
