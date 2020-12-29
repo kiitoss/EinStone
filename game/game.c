@@ -56,6 +56,8 @@ void pause(Window *window, Game_Manager *GM, Pause_Screen *ps, int time) {
   Button *hover_btn;
   em.event = MLV_NONE;
 
+  unset_hover_btn(ps->hover_btn);
+  
   ps->hover_btn = NULL;
 
   /* Mise en palce d'un filtre sur le jeu et dessin des boutons de l'écran de pause. */
@@ -314,17 +316,19 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
 
 /* Libère des images et des sons du jeu avant de retourner au menu */
 /* GLOBAL */
-void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
+void quit_game(Texture_Manager *TM, Sound_Manager *SM) {
+  unsigned int win_width, win_height;
+  
   /* Libération des images. */
   free_TM(TM);
 
   MLV_free_font(TM->font);
 
-  
-  MLV_change_window_size(GM->window.width/2, GM->window.height/2);
-  
-  launch_main_page(GM->window.width/2, GM->window.height/2, SM);
-  
+  MLV_get_desktop_size(&win_width, &win_height);
+  MLV_change_window_size(3*win_width/4, 3*win_height/4);
+
+  launch_main_page(3*win_width/4, 3*win_height/4, SM);
+
   MLV_free_window();
   
   exit(0);
@@ -349,6 +353,11 @@ void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, cha
   printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
   
   MLV_get_desktop_size(&win_width, &win_height);
+
+  if (!FULL_SCREEN) {
+    win_width = (int)3*win_width/4;
+    win_height = (int)3*win_height/4;
+  }
   
   window = init_window(win_width, win_height, gamemode);
   
@@ -363,7 +372,7 @@ void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, cha
 
   update_game(&GM, &TM, SM);
 
-  quit_game(&GM, &TM, SM);
+  quit_game(&TM, SM);
 }
 
 
@@ -413,6 +422,11 @@ void launch_resume(Game_Manager *GM, Sound_Manager *SM) {
   
   MLV_get_desktop_size(&win_width, &win_height);
 
+  if (!FULL_SCREEN) {
+    win_width = (int)3*win_width / 4;
+    win_height = (int)3*win_height / 4;
+  }
+  
   window = init_window(win_width, win_height, GM->gamemode);
   
   MLV_change_window_size(window.width, window.height);
@@ -430,5 +444,5 @@ void launch_resume(Game_Manager *GM, Sound_Manager *SM) {
   
   update_game(GM, &TM, SM);
 
-  quit_game(GM, &TM, SM);
+  quit_game(&TM, SM);
 }

@@ -7,12 +7,17 @@ int main(int argc, char *argv[]) {
   
   printf("%d, %s\n", argc, *argv);
   MLV_get_desktop_size(&win_width, &win_height);
-  width = win_width / 2;
-  height = win_height / 2;
-  MLV_create_window("EinStone", "EinStone", width, height);
+  width = 3 * win_width / 4;
+  height = 3 * win_height / 4;
   
-  MLV_enable_full_screen();
-
+  if (FULL_SCREEN) {
+    MLV_create_full_screen_window("EinStone", "EinStone", width, height);
+  }
+  else {
+    MLV_create_window("EinStone", "EinStone", width, height);
+  }
+  
+  
   play_music(&SM, &SM.menu);
   SM.menu_music_playing = true;
   
@@ -20,6 +25,7 @@ int main(int argc, char *argv[]) {
 
   /* Libération des sons */
   free_SM(&SM);
+  
   MLV_free_window();
   exit(0);
 }

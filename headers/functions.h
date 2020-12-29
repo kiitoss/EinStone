@@ -131,7 +131,7 @@ Texture_Manager init_TM(Window window);
 void free_TM(Texture_Manager *this);
 
 /* game/game.c */
-void quit_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM);
+void quit_game(Texture_Manager *TM, Sound_Manager *SM);
 void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, char *p2_name, Sound_Manager *SM);
 void launch_resume(Game_Manager *GM, Sound_Manager *SM);
 

@@ -22,6 +22,7 @@
 
 #define SAVED_GAMES 5
 #define SAVED_SCORES 10
+#define FULL_SCREEN true
 
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
