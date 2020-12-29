@@ -1,6 +1,8 @@
 #include "../headers/global_header.h"
 
-/* GLOBAL */
+
+
+/* Affecte les parties sauvegardées, depuis le fichier binaire, à la liste GMG. */
 void set_GMG(GM_list_games GMG) {
   int i;
   FILE *games = fopen("./resources/games.bin", "rb");
@@ -23,8 +25,7 @@ void set_GMG(GM_list_games GMG) {
 
 
 
-
-/* GLOBAL */
+/* Ecrit la liste GMG dans le fichier binaire des parties sauvegardées. */
 void write_GMG(GM_list_games GMG) {
   int i;
   FILE *games = fopen("./resources/games.bin", "wb");
@@ -35,7 +36,8 @@ void write_GMG(GM_list_games GMG) {
 }
 
 
-/* GLOBAL */
+
+/* Affecte les scores sauvegardés à la liste GMS. */
 void set_GMS(GM_list_scores GMS) {
   int i;
   FILE *scores = fopen("./resources/scores.bin", "rb");
@@ -59,8 +61,7 @@ void set_GMS(GM_list_scores GMS) {
 
 
 
-
-/* GLOBAL */
+/* Ecrit la liste GMS dans le fichier binaire des scores sauvegardés. */
 void write_GMS(GM_list_scores GMS) {
   int i;
   FILE *scores = fopen("./resources/scores.bin", "wb");
@@ -71,7 +72,8 @@ void write_GMS(GM_list_scores GMS) {
 }
 
 
-/* GLOBAL */
+
+/* Supprime la partie désirée des parties sauvegardées. */
 void remove_saved_game(int id_game) {
   GM_list_games GMG;
   int i;
@@ -95,7 +97,7 @@ void remove_saved_game(int id_game) {
 
 
 
-/* GLOBAL */
+/* Retourne un id unique, n'existant ni dans les scores sauvegardés, ni dans les parties sauvegardés. */
 int get_unique_id() {
   GM_list_scores GMS;
   GM_list_games GMG;
@@ -129,10 +131,7 @@ int get_unique_id() {
 
 
 
-
-
-/* Sauvegarde la partie en cours avant de quitter */
-/* GLOBAL */
+/* Sauvegarde la partie en cours avant de quitter. */
 void save_score(Game_Manager *GM, int time) {
   GM_list_scores GMS;
   Game_Manager temp_GM, temp_GM2;
@@ -162,8 +161,7 @@ void save_score(Game_Manager *GM, int time) {
 
 
 
-/* Sauvegarde la partie en cours avant de quitter */
-/* GLOBAL */
+/* Sauvegarde le score de la partie. */
 void save_game(Game_Manager *GM, int time) {
   GM_list_games GMG;
   int i;

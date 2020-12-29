@@ -1,5 +1,8 @@
 #include "../../headers/global_header.h"
 
+
+
+/* Met à jour le bouton survolé de la page. */
 static void update_hover_btn(Main_Page *mp, int posX, int posY) {
   Button *hover_btn = get_main_page_hover_btn(mp, posX, posY);
   if (mp->hover_btn != hover_btn) {
@@ -9,6 +12,9 @@ static void update_hover_btn(Main_Page *mp, int posX, int posY) {
   }
 }
 
+
+
+/* Change de page. */
 void change_page(Main_Page *mp, Sound_Manager *SM) {
   switch (mp->hover_btn->value) {
   case NEWGAME:
@@ -25,6 +31,9 @@ void change_page(Main_Page *mp, Sound_Manager *SM) {
   } 
 }
 
+
+
+/* Met à jour l'affichage de la page. */
 void update_main_page(Main_Page *mp, Sound_Manager *SM) {
   Event_Manager em;
   draw_main_page(mp);
@@ -45,7 +54,9 @@ void update_main_page(Main_Page *mp, Sound_Manager *SM) {
   }
 }
 
-/* GLOBAL */
+
+
+/* Lance la page principale. */
 void launch_main_page(int width, int height, Sound_Manager *SM) {
   Main_Page mp = init_main_page(width, height);
 

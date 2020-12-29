@@ -1,12 +1,17 @@
 #include "../../headers/global_header.h"
 
 
+
+/* Selectionne le bouton survolé de la page et change les paramètres en fonction. */
 void select_hover_section(Resume_Page *rp) {
   unset_select_resume_section(rp->select_section);
   set_select_resume_section(rp->hover_section);
   rp->select_section = rp->hover_section;
 }
 
+
+
+/* Met à jour le bouton et la section survolés de la page. */
 void update_hover_btn_and_section(Resume_Page *rp, int posX, int posY) {
   Button *hover_btn = get_resume_page_hover_btn(rp, posX, posY);
   Resume_Section *hover_section = get_resume_page_hover_section(rp, posX, posY);
@@ -24,6 +29,9 @@ void update_hover_btn_and_section(Resume_Page *rp, int posX, int posY) {
   }
 }
 
+
+
+/* Met à jour l'affichage de la page. */
 void update_resume_page(Resume_Page *rp, Sound_Manager *SM) {
   Event_Manager em;
   draw_resume_page(rp);
@@ -55,7 +63,9 @@ void update_resume_page(Resume_Page *rp, Sound_Manager *SM) {
   }
 }
 
-/* GLOBAL */
+
+
+/* Lance la page pour continuer une ancienne partie. */
 void launch_resume_page(int width, int height, Sound_Manager *SM) {
   GM_list_games GMG;
   Resume_Page rp;

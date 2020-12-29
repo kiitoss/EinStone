@@ -1,8 +1,12 @@
 #include "../../headers/global_header.h"
 
 
+
 void update_newgame_page(Newgame_Page *ngp, Sound_Manager *SM);
 
+
+
+/* Prépare le lancement de la partie. */
 void prepare_launching(Newgame_Page *ngp, Sound_Manager *SM) {
   btn_value gamemode, difficulty;
   char *p1_name, *p2_name;
@@ -20,6 +24,9 @@ void prepare_launching(Newgame_Page *ngp, Sound_Manager *SM) {
   launch_newgame(gamemode, difficulty, p1_name, p2_name, SM);
 }
 
+
+
+/* Selectionne le bouton survolé de la page et change les paramètres en fonction. */
 static void select_hover_btn(Newgame_Page *ngp, Sound_Manager *SM) {
   switch (ngp->hover_btn->value) {
   case BACK:
@@ -47,6 +54,9 @@ static void select_hover_btn(Newgame_Page *ngp, Sound_Manager *SM) {
   }
 }
 
+
+
+/* Met à jour le bouton survolé de la page. */
 static void update_hover_btn(Newgame_Page *ngp, int posX, int posY) {
   Button *hover_btn = get_newgame_page_hover_btn(ngp, posX, posY);
   if (ngp->hover_btn != hover_btn) {
@@ -56,6 +66,9 @@ static void update_hover_btn(Newgame_Page *ngp, int posX, int posY) {
   }
 }
 
+
+
+/* Met à jour l'affichage de la page. */
 void update_newgame_page(Newgame_Page *ngp, Sound_Manager *SM) {
   Event_Manager em;
   int launch_time = MLV_get_time();
@@ -91,7 +104,9 @@ void update_newgame_page(Newgame_Page *ngp, Sound_Manager *SM) {
   }
 }
 
-/* GLOBAL */
+
+
+/* Lance la page pour créer une nouvelle partie. */
 void launch_newgame_page(int width, int height, Sound_Manager *SM) {
   Newgame_Page ngp = init_newgame_page(width, height);
   set_gamemode(&ngp, SOLO);

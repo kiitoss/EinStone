@@ -2,6 +2,7 @@
 
 
 
+/* Met à jour le bouton  survolé de la page. */
 static void update_hover_btn(Score_Page *sp, int posX, int posY) {
   Button *hover_btn = get_score_page_hover_btn(sp, posX, posY);
   if (sp->hover_btn != hover_btn) {
@@ -12,6 +13,8 @@ static void update_hover_btn(Score_Page *sp, int posX, int posY) {
 }
 
 
+
+/* Met à jour l'affichage de la page. */
 void update_score_page(Score_Page *sp, Sound_Manager *SM) {
   Event_Manager em;
   draw_score_page(sp);
@@ -32,7 +35,9 @@ void update_score_page(Score_Page *sp, Sound_Manager *SM) {
   }
 }
 
-/* GLOBAL */
+
+
+/* Lance la page des meilleurs scores. */
 void launch_score_page(int width, int height, Sound_Manager *SM) {
   GM_list_scores GMS;
   Score_Page sp;
