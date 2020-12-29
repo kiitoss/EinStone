@@ -1,6 +1,8 @@
 #include "../headers/global_header.h"
 
-/* GLOBAL */
+
+
+/* Dessine un label. */
 void draw_label(Label *this) {
   MLV_Font* font;
 
@@ -11,7 +13,9 @@ void draw_label(Label *this) {
   MLV_free_font(font);
 }
 
-/* GLOBAL */
+
+
+/* Retourne un nouveau label. */
 Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path) {
   Label lbl;
   lbl.text = text;
@@ -29,19 +33,24 @@ Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path) {
 }
 
 
-/* GLOBAL */
+
+/* Affecte la valeur vrai à la variable is_hidden du label. */
 void set_hidden_lbl(Label *this) {
   if (this->is_hidden) {return;}
   this->is_hidden = true;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur faux à la variable is_hidden du label. */
 void unset_hidden_lbl(Label *this) {
   if (!this->is_hidden) {return;}
   this->is_hidden = false;
 }
 
-/* GLOBAL */
+
+
+/* Modifie la geometrie du label. */
 void set_label_geometry(Label *this, int posX) {
   if (this->is_hidden) {return;}
   this->posX = posX;

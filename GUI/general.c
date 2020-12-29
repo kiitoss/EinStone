@@ -1,5 +1,12 @@
 #include "../headers/global_header.h"
 
+
+
+/*
+  Redefinition des structures MLV_List et _MLV_Input_box,
+  cela servira pour récupérer la valeur de l'input box sans
+  qu'il soit nécessaire de cliquer sur la touche <Entree>.
+*/
 typedef struct _MLV_List MLV_List;
 
 struct _MLV_List {
@@ -37,7 +44,7 @@ struct _MLV_Input_box {
 
 
 
-/* GLOBAL */
+/* Dessine l'input box s'il existe, le label corrrespondant sinon. */
 void draw_input_or_label(Input *input, Label *label) {
   if (exist_input(input)) {
     draw_input(input);
@@ -49,7 +56,7 @@ void draw_input_or_label(Input *input, Label *label) {
 
 
 
-/* GLOBAL */
+/* Retourne la valeur de l'input box s'il existe, le label correspondant sinon. */
 char *get_input_or_label_value(Input *input, Label *label) {
   char *value;
   if (exist_input(input)) {
@@ -62,14 +69,17 @@ char *get_input_or_label_value(Input *input, Label *label) {
 }
 
 
-/* GLOBAL */
+
+/* Affecte les dimensions du bouton/label/input. */
 void set_object_dimension(char *text, char *font_path, int font_size, int *object_width, int *object_height) {
   MLV_Font *font = MLV_load_font(font_path, font_size);
   MLV_get_size_of_adapted_text_box_with_font(text, font, 0, object_width, object_height);
   MLV_free_font(font);
 }
 
-/* GLOBAL */
+
+
+/* Génère et retourne la taille optimale pour la police de caractère. */
 int get_object_font_size(char *text, char *font_path, int max_width, int max_height){
   MLV_Font *font;
   int font_size = 1;

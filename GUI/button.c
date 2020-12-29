@@ -1,6 +1,8 @@
 #include "../headers/global_header.h"
 
-/* GLOBAL */
+
+
+/* Dessine un bouton. */
 void draw_button(Button *this) {
   MLV_Font* font;
   MLV_Color background_color;
@@ -29,7 +31,9 @@ void draw_button(Button *this) {
   MLV_free_font(font);
 }
 
-/* GLOBAL */
+
+
+/* Retourne vrai si le bouton est survolé, faux sinon. */
 bool is_btn_hover(Button *this, int posX, int posY) {
   if (this != NULL && posX >= this->container.posX && posX <= this->container.posX + this->container.width && posY >= this->container.posY && posY <= this->container.posY + this->container.height) {
     return true;
@@ -37,12 +41,16 @@ bool is_btn_hover(Button *this, int posX, int posY) {
   return false;
 }
 
-/* GLOBAL */
+
+
+/* Retourne vrai si le bouton est selectionné, faux sinon. */
 bool is_btn_select(Button *this) {
   return (this != NULL && this->is_select) ? true : false;
 }
 
-/* GLOBAL */
+
+
+/* Retourne un nouveau bouton. */
 Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color background_color, char *font_path, btn_value value) {
   Button btn;
   btn.container = g;
@@ -65,37 +73,49 @@ Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color backgro
   return btn;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur vrai à la variable is_hover du bouton. */
 void set_hover_btn(Button *this) {
   if (this == NULL || this->is_hover) {return;}
   this->is_hover = true;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur faux à la variable is_hover du bouton. */
 void unset_hover_btn(Button *this) {
   if (this == NULL || !this->is_hover) {return;}
   this->is_hover = false;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur vrai à la variable is_select du bouton. */
 void set_select_btn(Button *this) {
   if (this == NULL || this->is_select) {return;}
   this->is_select = true;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur faux à la variable is_select du bouton. */
 void unset_select_btn(Button *this) {
   if (this == NULL || !this->is_select) {return;}
   this->is_select = false;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur vrai à la variable is_hidden du bouton. */
 void set_hidden_btn(Button *this) {
   if (this == NULL || this->is_hidden) {return;}
   this->is_hidden = true;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur faux à la variable is_hidden du bouton. */
 void unset_hidden_btn(Button *this) {
   if (this == NULL || !this->is_hidden) {return;}
   this->is_hidden = false;
