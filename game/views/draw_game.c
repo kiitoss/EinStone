@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 /* GLOBAL */
 void draw_game(Game_Manager *GM, Texture_Manager *TM, int time) {

@@ -9,9 +9,10 @@
 enum bool {false, true};
 typedef enum bool bool;
 
+#include "headers/GUI.h"
+#include "headers/game.h"
+#include "headers/menu.h"
+
+#include "headers/functions.h"
+
 #endif
-
-
-
-
-

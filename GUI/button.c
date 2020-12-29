@@ -1,4 +1,4 @@
-#include "GUI_header.h"
+#include "../headers/global_header.h"
 
 /* GLOBAL */
 void draw_button(Button *this) {

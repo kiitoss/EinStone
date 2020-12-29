@@ -1,5 +1,5 @@
-#include "../menu_structures.h"
-#include "../menu_functions.h"
+#include "../../headers/global_header.h"
+
 
 /* GLOBAL */
 bool is_resume_section_hover(Resume_Section *this, int posX, int posY) {

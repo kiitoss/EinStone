@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 /* GLOBAL */
 void play_sound(Sound_Manager *SM, Sound *this) {

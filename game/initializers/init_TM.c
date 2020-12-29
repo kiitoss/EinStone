@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 MLV_Image *get_image_with_path(char *path) {
   MLV_Image *img = MLV_load_image(path);
@@ -69,9 +69,9 @@ void set_img_proportional_size(MLV_Image *img, int width, int height){
   MLV_resize_image_with_proportions(img, width, height);
 }
 
-pauseScreen get_pause_screen(Window window) {
+Pause_Screen get_pause_screen(Window window) {
   Geometry g;
-  pauseScreen pause_screen;
+  Pause_Screen pause_screen;
   g.posX = 3*window.width/8;
   g.posY = 4*window.height/12;
   g.width = window.width/4;
@@ -85,9 +85,9 @@ pauseScreen get_pause_screen(Window window) {
   return pause_screen;
 }
 
-gameOver get_game_over_screen(Window window) {
+Game_Over get_game_over_screen(Window window) {
   Geometry g;
-  gameOver GO_screen;
+  Game_Over GO_screen;
   g.posX = 3*window.width/8;
   g.posY = 4*window.height/12;
   g.width = window.width/4;

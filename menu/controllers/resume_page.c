@@ -1,5 +1,5 @@
-#include "../menu_structures.h"
-#include "../menu_functions.h"
+#include "../../headers/global_header.h"
+
 
 void select_hover_section(Resume_Page *rp) {
   unset_select_resume_section(rp->select_section);

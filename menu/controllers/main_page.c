@@ -1,5 +1,5 @@
-#include "../menu_structures.h"
-#include "../menu_functions.h"
+#include "../../headers/global_header.h"
+
 
 
 static void update_hover_btn(Main_Page *mp, int posX, int posY) {

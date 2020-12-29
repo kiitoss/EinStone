@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 void draw_shot(Shot *this, MLV_Image *shot_img, Window *window) {
   MLV_draw_image(shot_img, this->posX + window->field.posX, this->posY + window->field.posY);

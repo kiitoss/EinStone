@@ -1,4 +1,4 @@
-#include "GUI_header.h"
+#include "../headers/global_header.h"
 
 typedef struct _MLV_List MLV_List;
 

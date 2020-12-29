@@ -1,5 +1,5 @@
-#include "../menu_structures.h"
-#include "../menu_functions.h"
+#include "../../headers/global_header.h"
+
 
 /* GLOBAL */
 Button *get_main_page_hover_btn(Main_Page *this, int posX, int posY) {

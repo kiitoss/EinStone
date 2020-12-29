@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 int get_rectsize(unsigned int win_width, unsigned int win_height, btn_value gamemode) {
   int rectsize;

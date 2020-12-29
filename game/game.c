@@ -1,8 +1,7 @@
-#include "game_header.h"
+#include "../headers/global_header.h"
 
 
-
-void game_over(Window *window, Game_Manager *GM, gameOver *go) {
+void game_over(Window *window, Game_Manager *GM, Game_Over *go) {
   Event_Manager em;
   Button *hover_btn;
   em.event = MLV_NONE;
@@ -52,7 +51,7 @@ void game_over(Window *window, Game_Manager *GM, gameOver *go) {
   
 
 /* Mise en pause du jeu */
-void pause(Window *window, Game_Manager *GM, pauseScreen *ps, int time) {
+void pause(Window *window, Game_Manager *GM, Pause_Screen *ps, int time) {
   Event_Manager em;
   Button *hover_btn;
   em.event = MLV_NONE;

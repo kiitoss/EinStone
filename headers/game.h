@@ -1,6 +1,3 @@
-#include "global_header.h"
-#include "GUI/GUI_header.h"
-
 #define NB_FRIENDS 4
 #define NB_ENEMIES 3
 #define NB_ROWS 5
@@ -200,13 +197,13 @@ typedef struct {
   Button save_quit_btn;
   Button quit_btn;
   Button *hover_btn;
-} pauseScreen;
+} Pause_Screen;
 
 typedef struct {
   Button quit_btn;
   Button restart_btn;
   Button *hover_btn;
-} gameOver;
+} Game_Over;
 
 typedef struct {
   MLV_Image *field_light_grass_img;
@@ -226,6 +223,6 @@ typedef struct {
   MLV_Image *score_img;
   MLV_Font *font;
   int font_size;
-  pauseScreen pause_screen;
-  gameOver game_over_screen;
+  Pause_Screen pause_screen;
+  Game_Over game_over_screen;
 } Texture_Manager;

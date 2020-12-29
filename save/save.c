@@ -1,5 +1,4 @@
-#include "../global_structures.h"
-#include "../global_functions.h"
+#include "../headers/global_header.h"
 
 /* GLOBAL */
 void set_GMG(GM_list_games GMG) {

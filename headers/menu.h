@@ -1,6 +1,3 @@
-#include "../global_structures.h"
-#include "../global_functions.h"
-
 #define MAX_BUTTONS 10
 #define MAX_INPUTS 10
 #define MAX_LABELS 10

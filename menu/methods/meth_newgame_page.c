@@ -1,5 +1,5 @@
-#include "../menu_structures.h"
-#include "../menu_functions.h"
+#include "../../headers/global_header.h"
+
 
 /* GLOBAL */
 void set_player_name(Newgame_Page *this, MLV_Input_box *input_box, char *text_input) {

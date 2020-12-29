@@ -1,5 +1,5 @@
-#include "../menu_structures.h"
-#include "../menu_functions.h"
+#include "../../headers/global_header.h"
+
 
 
 static void update_hover_btn(Score_Page *sp, int posX, int posY) {

@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 
 /* Retourne le joueur 1 initialisé. */

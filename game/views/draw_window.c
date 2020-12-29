@@ -1,4 +1,4 @@
-#include "../game_header.h"
+#include "../../headers/global_header.h"
 
 /* GLOBAL */
 void draw_time(int time, Window *window) {
@@ -11,7 +11,7 @@ void draw_time(int time, Window *window) {
 }
 
 /* GLOBAL */
-void draw_pause_screen(pauseScreen *this) {
+void draw_pause_screen(Pause_Screen *this) {
   draw_button(&this->play_btn);
   draw_button(&this->save_quit_btn);
   draw_button(&this->quit_btn);
@@ -20,7 +20,7 @@ void draw_pause_screen(pauseScreen *this) {
 }
 
 /* GLOBAL */
-void draw_game_over_screen(gameOver *this,Game_Manager *GM) {
+void draw_game_over_screen(Game_Over *this,Game_Manager *GM) {
   MLV_Font *font;
   int textbox_width = 0;
   int textbox_height=0;
