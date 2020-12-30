@@ -1,14 +1,17 @@
 #include "../../headers/global_header.h"
 
 
-/* GLOBAL */
+
+/* Retourne l'action de l'utilisateur sur la page. */
 Event_Manager get_event() {
   Event_Manager em;
   em.event = MLV_get_event(&em.touch, NULL, NULL, &em.text_input, &em.input_box, &em.mouseX, &em.mouseY, NULL, &em.btn_state);
   return em;
 }
 
-/* GLOBAL */
+
+
+/* Dessine la page principale. */
 void draw_main_page(Main_Page *mp) {
   MLV_clear_window(MLV_COLOR_BLACK);
   draw_label(&mp->title_lbl);
@@ -19,7 +22,9 @@ void draw_main_page(Main_Page *mp) {
   MLV_update_window();
 }
 
-/* GLOBAL */
+
+
+/* Dessine la page de nouvelle partie. */
 void draw_newgame_page(Newgame_Page *ngp) {
   MLV_clear_window(MLV_COLOR_BLACK);
 
@@ -39,7 +44,8 @@ void draw_newgame_page(Newgame_Page *ngp) {
 }
 
 
-/* GLOBAL */
+
+/* Dessine une section correspondant à une partie sauvegardée. */
 void draw_resume_section(Resume_Section *this) {
   MLV_Color border_color = MLV_rgba(0,0,0,0);
   if (!this->exist) {return;}
@@ -58,7 +64,9 @@ void draw_resume_section(Resume_Section *this) {
   draw_label(&this->p2_name_lbl);
 }
 
-/* GLOBAL */
+
+
+/* Dessine la page des parties sauvegardées. */
 void draw_resume_page(Resume_Page *rp) {
   int i;
   MLV_clear_window(MLV_COLOR_BLACK);
@@ -74,7 +82,9 @@ void draw_resume_page(Resume_Page *rp) {
   MLV_update_window();
 }
 
-/* GLOBAL */
+
+
+/* Dessine une section correspondant à un score sauvegardé. */
 void draw_score_section(Score_Section *this) {
   if (!this->exist) {return;}
 
@@ -84,7 +94,9 @@ void draw_score_section(Score_Section *this) {
   draw_label(&this->time_lbl);
 }
 
-/* GLOBAL */
+
+
+/* Dessine la page des scores. */
 void draw_score_page(Score_Page *sp) {
   int i;
   MLV_clear_window(MLV_COLOR_BLACK);

@@ -1,7 +1,8 @@
 #include "../../headers/global_header.h"
 
 
-/* GLOBAL */
+
+/* Transforme l'input de saisie du nom en label. */
 void set_player_name(Newgame_Page *this, MLV_Input_box *input_box, char *text_input) {
   char *font_path = "./resources/font/Amatic-Bold.ttf";
   Geometry g;
@@ -28,7 +29,9 @@ void set_player_name(Newgame_Page *this, MLV_Input_box *input_box, char *text_in
   }
 }
 
-/* GLOBAL */
+
+
+/* Met à jour le bouton de difficulté du jeu. */
 void set_difficulty(Newgame_Page *this, btn_value btn_value) {
   if (this->select_difficulty != NULL && this->select_difficulty->value == btn_value) {return;}
 
@@ -52,7 +55,9 @@ void set_difficulty(Newgame_Page *this, btn_value btn_value) {
   }
 }
 
-/* GLOBAL */
+
+
+/* Met à jour le bouton du mode de jeu. */
 void set_gamemode(Newgame_Page *this, btn_value btn_value) {
   if (this->select_gamemode != NULL && this->select_gamemode->value == btn_value) {return;}
 
@@ -119,7 +124,9 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
   }
 }
 
-/* GLOBAL */
+
+
+/* Retourne un objet Newgame_Page initialisé. */
 Newgame_Page init_newgame_page(int width, int height) {
   Newgame_Page ngp;
   Geometry g;
@@ -180,7 +187,8 @@ Newgame_Page init_newgame_page(int width, int height) {
 }
 
 
-/* GLOBAL */
+
+/* Retourne un pointeur sur le bouton survvolé de la page de nouvelle partie. */
 Button *get_newgame_page_hover_btn(Newgame_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->solo_btn, posX, posY)) {

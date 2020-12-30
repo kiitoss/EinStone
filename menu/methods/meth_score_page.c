@@ -1,7 +1,8 @@
 #include "../../headers/global_header.h"
 
 
-/* GLOBAL */
+
+/* Retourne un pointeur sur le bouton survvolé de la page des scores. */
 Button *get_score_page_hover_btn(Score_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->back_btn, posX, posY)) {
@@ -10,7 +11,9 @@ Button *get_score_page_hover_btn(Score_Page *this, int posX, int posY) {
   return hover_btn;
 }
 
-/* GLOBAL */
+
+
+/* Retourne une nouvelle section avec les données d'une ancienne partie terminée. */
 Score_Section get_new_score_section(Game_Manager *GM, Geometry container, char *font_path) {
   Score_Section ss;
   Geometry g;
@@ -55,7 +58,9 @@ Score_Section get_new_score_section(Game_Manager *GM, Geometry container, char *
   return ss;
 }
 
-/* GLOBAL */
+
+
+/* Retourne un objet Score_Page initialisé. */
 Score_Page init_score_page(int width, int height, GM_list_scores GMS) {
   Score_Page sp;
   Geometry g;

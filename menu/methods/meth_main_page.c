@@ -2,7 +2,7 @@
 
 
 
-/* GLOBAL */
+/* Retourne un pointeur sur le bouton survvolé de la page principale. */
 Button *get_main_page_hover_btn(Main_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->newgame_btn, posX, posY)) {
@@ -20,7 +20,9 @@ Button *get_main_page_hover_btn(Main_Page *this, int posX, int posY) {
   return hover_btn;
 }
 
-/* GLOBAL */
+
+
+/* Retourne un objet Main_Page initialisé. */
 Main_Page init_main_page(int width, int height) {
   Main_Page mp;
   Geometry g;

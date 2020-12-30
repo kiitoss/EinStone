@@ -1,5 +1,14 @@
 #include "../headers/global_header.h"
 
+
+
+/*
+  Fonction première du programme:
+    initialise les sons,
+    créé la fenetre,
+    joue la musique d'accueil,
+    lance la page d'accueil du menu.
+*/
 int main(int argc, char *argv[]) {
   unsigned int win_width, win_height;
   int width, height;

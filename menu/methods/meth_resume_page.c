@@ -1,7 +1,8 @@
 #include "../../headers/global_header.h"
 
 
-/* GLOBAL */
+
+/* Retourne vrai si la section est survolée, faux sinon. */
 bool is_resume_section_hover(Resume_Section *this, int posX, int posY) {
   if (this != NULL && this->exist && posX >= this->posX && posX <= this->posX + this->width && posY >= this->posY && posY <= this->posY + this->height) {
     return true;
@@ -11,7 +12,7 @@ bool is_resume_section_hover(Resume_Section *this, int posX, int posY) {
 
 
 
-/* GLOBAL */
+/* Retourne une nouvelle section avec les données d'une ancienne partie. */
 Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char *font_path) {
   Resume_Section rs;
   Geometry g;
@@ -60,32 +61,40 @@ Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char
 }
 
 
-/* GLOBAL */
+
+/* Affecte la valeur vrai à la variable is_hover de la section. */
 void set_hover_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || this->is_hover) {return;}
   this->is_hover = true;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur faux à la variable is_hover de la section. */
 void unset_hover_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || !this->is_hover) {return;}
   this->is_hover = false;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur vrai à la variable is_select de la section. */
 void set_select_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || this->is_select) {return;}
   this->is_select = true;
 }
 
-/* GLOBAL */
+
+
+/* Affecte la valeur faux à la variable is_select de la section. */
 void unset_select_resume_section(Resume_Section *this) {
   if (this == NULL || !this->exist || !this->is_select) {return;}
   this->is_select = false;
 }
 
 
-/* GLOBAL */
+
+/* Retourne un objet Resume_Page initialisé. */
 Resume_Page init_resume_page(int width, int height, GM_list_games GMG) {
   Resume_Page rp;
   Geometry g;
@@ -134,7 +143,8 @@ Resume_Page init_resume_page(int width, int height, GM_list_games GMG) {
 }
 
 
-/* GLOBAL */
+
+/* Retourne un pointeur sur le bouton survvolé de la page des anciennes parties. */
 Button *get_resume_page_hover_btn(Resume_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->back_btn, posX, posY)) {
@@ -146,7 +156,9 @@ Button *get_resume_page_hover_btn(Resume_Page *this, int posX, int posY) {
   return hover_btn;
 }
 
-/* GLOBAL */
+
+
+/* Retourne un pointeur sur la section survvolée de la page des anciennes parties. */
 Resume_Section *get_resume_page_hover_section(Resume_Page *this, int posX, int posY) {
   Resume_Section *hover_section = NULL;
   int i;
