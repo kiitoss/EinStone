@@ -114,7 +114,7 @@ Nous n'expliquerons pas les structures des boutons, inputs, label ou encore les 
 ### Event_Manager
 <img src="resources/doc/Event_Manager.png"
      alt="Image représentant la structure Event_Manager."
-     style="text-align: center;" />
+     style="text-align: center;" /></br>
 Cette structure très simpliste est très utilisé tout au long du programme, non seulement dans le jeu, mais aussi dans le menu.
 C'est cette structure qui va permettre de récupérer toutes les informations à la suite d'une action de l'utilisateur.
 
@@ -123,7 +123,7 @@ C'est cette structure qui va permettre de récupérer toutes les informations à
 ### Sound_Manager
 <img src="resources/doc/Sound_Manager.png"
      alt="Image représentant la structure Sound_Manager."
-     style="text-align: center;" />
+     style="text-align: center;" /></br>
 Le Sound_Manager est, comme son nom l'indique, le gestionnaire de sons.
 Le variable booléenne "sound_works" est primordiale, elle permet de s'assurer lorsque le jeu est lancé que le son fonctionne bien, sans quoi le programme renverrai une erreur de segmentation lorsqu'un son voudra être joué (sur WSL tout particulièrement, le son ne marche pas sans télécharger d'autres plugins).
 
@@ -132,14 +132,15 @@ Le variable booléenne "sound_works" est primordiale, elle permet de s'assurer l
 ### Texture_Manager
 <img src="resources/doc/Texture_Manager.png"
      alt="Image représentant la structure Texture_Manager."
-     style="text-align: center;" />
+     style="text-align: center;" /></br>
 Le Texture_Manager est constitué d'une multitude d'images, toutes utiles lors du dessin du jeu. Nous avons ensuite une police d'écriture qui est chargée en débt de partie et sauvegardé, c'est celle-ci qui est utilisée pour écrire les noms des joueurs sans avori besoin de charger une font à chaque actualisation.
+
 ------------
 
 ### Game_Manager
 <img src="resources/doc/Game_Manager.png"
      alt="Image représentant la structure Game_Manager."
-     style="text-align: center;" />
+     style="text-align: center;" /></br>
 Enfin, la structure la plus imposante: le Game_Manager.
 Cette structure possède:
 * une variable permettant de savoir si le jeu est terminée ou en cours,
