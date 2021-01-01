@@ -9,13 +9,6 @@ typedef struct {
 } Geometry;
 
 typedef struct {
-  int posX;
-  int posY;
-  int width;
-  int height;
-} Container;
-
-typedef struct {
   int width;
   int height;
   int posX;

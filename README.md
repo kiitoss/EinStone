@@ -20,7 +20,7 @@ Chaque partie est développé dans la même logique, mais l'organisation des dif
      alt="Image représentant l'organisation des dossiers."
      style="text-align: center;" />
 
------------------------------
+------------
 
 ### GUI
 La partie GUI comporte simplement 4 fichiers: button.c, input.c, label.c et general.c.
@@ -29,7 +29,7 @@ C'est ici qu'on trouvera les fonctions permettant de rendre un élément *hover*
 Le fichier general.c est légerement différent, il comporte les fonctions affectant plusieurs éléments différents. On aura par exemple ici la fonction permettant d'affecter une taille de police optimale pour un objet donné, ou encore la fonction permettant de dessiner soit un input, soit son label correspondant selon les action de l'utilisateur.
 C'est aussi dans le fichier general.c que l'on retrouve la redefinition des structures MLV_List, _MLV_list, _MLV_Input_box. Cela nous permet de récupérer la valeur d'un input sans que le joueur n'ai besoin de valider l'inptu en cliquant sur la touche <Entré>.
 
------------------------------
+------------
 
 ### MENU
 La partie MENU se décompose en 3 sous dossiers (controllers/methods/views) et un fichier menu.c.
@@ -52,7 +52,7 @@ C'est aussi dans la vue que l'on retrouve la fonction get_event() permettant de 
 #### menu.c
 Le fichier menu.c est le point d'entrée du programme. C'est ici que se trouve la fonction main(), que le gestionnaire de sons est initialisé et que la fenêtre est créée.
 
------------------------------
+------------
 
 ### GAME
 La partie GAME se décompose encore une fois en 3 sous dossiers (controllers/initializers/views) et d'un fichier game.c
@@ -72,7 +72,7 @@ Le dossier views comporte le fichier chargé de dessiner le jeu, qui va faire ap
 Le fichier game.c est le fichier principal du jeu. C'est ici que l'on retrouvera les fonctions en charge d'interpréter les actions de l'utilsiateurs et d'appeler les bonnes fonctions après un clique, une touche du clavier etc...
 C'est ce fichier qui met à jour les éléments du jeu en permanence.
 
------------------------------
+------------
 
 ### SAVE
 La partie SAVE permet de gérer les sauvegardes.

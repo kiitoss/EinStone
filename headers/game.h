@@ -65,11 +65,11 @@ typedef struct {
   int width;
   int height;
   int rectsize;
-  Container field;
-  Container friend_spawner;
-  Container enemy_spawner;
-  Container friend_home;
-  Container enemy_home;
+  Geometry field;
+  Geometry friend_spawner;
+  Geometry enemy_spawner;
+  Geometry friend_home;
+  Geometry enemy_home;
   Label time_lbl;
 } Window;
 
