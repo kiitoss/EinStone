@@ -108,15 +108,48 @@ Vérifie une condition et retourne une variable booléenne vrai ou faux.
 
 ## Structures
 
+Nous allons voir ici les structures dont se ser le jeu pour fonctionner.
+Nous n'expliquerons pas les structures des boutons, inputs, label ou encore les pages du menu car cela semble suffisemment clair sans avoir besoin de rajouter des informations.
+
+### Event_Manager
 <img src="resources/doc/Event_Manager.png"
      alt="Image représentant la structure Event_Manager."
      style="text-align: center;" />
+Cette structure très simpliste est très utilisé tout au long du programme, non seulement dans le jeu, mais aussi dans le menu.
+C'est cette structure qui va permettre de récupérer toutes les informations à la suite d'une action de l'utilisateur.
+
+------------
+
+### Sound_Manager
 <img src="resources/doc/Sound_Manager.png"
      alt="Image représentant la structure Sound_Manager."
      style="text-align: center;" />
+Le Sound_Manager est, comme son nom l'indique, le gestionnaire de sons.
+Le variable booléenne "sound_works" est primordiale, elle permet de s'assurer lorsque le jeu est lancé que le son fonctionne bien, sans quoi le programme renverrai une erreur de segmentation lorsqu'un son voudra être joué (sur WSL tout particulièrement, le son ne marche pas sans télécharger d'autres plugins).
+
+------------
+
+### Texture_Manager
 <img src="resources/doc/Texture_Manager.png"
      alt="Image représentant la structure Texture_Manager."
      style="text-align: center;" />
+Le Texture_Manager est constitué d'une multitude d'images, toutes utiles lors du dessin du jeu. Nous avons ensuite une police d'écriture qui est chargée en débt de partie et sauvegardé, c'est celle-ci qui est utilisée pour écrire les noms des joueurs sans avori besoin de charger une font à chaque actualisation.
+------------
+
+### Game_Manager
 <img src="resources/doc/Game_Manager.png"
      alt="Image représentant la structure Game_Manager."
      style="text-align: center;" />
+Enfin, la structure la plus imposante: le Game_Manager.
+Cette structure possède:
+* une variable permettant de savoir si le jeu est terminée ou en cours,
+* deux variables pour le mode de jeu et la difficulté,
+* une structure Window pour conserver les positions et les géométries des éléments de la fenêtre (posX du terrain, rectsize notamment),
+* les informations des spawners alliés et ennemies (leur prix, leur attaque, leur vie etc..) dans lesquels on ira piocher pour créer de nouveaux alliés/ennemies,
+* des structures Row, chacune représentant une ligne du terrain, avec une liste d'alliés, une liste et un nombre d'ennemies, une liste et un nombre de pièces d'or et une liste et un nombre de flèches,
+* les informations sur les joueurs 1 et 2 (leur argent, le score du joueur 1, la dernière fois que le jeu leur a offert de l'or etc...),
+* une variable pour la date du dernier rafraichissement de partie,
+* une variable pour la durée de la partie,
+* deux variables pour gérer lorsque MLV détècte quand le bouton (de la souris ou du clavier) est relâché mais pas lorsqu'il est appuyé.
+
+Nous préciserons que dans le projet, nous utilisons fréquemment le terme de "pop" pour définir ensemble les pièces d'or et les flèches.
