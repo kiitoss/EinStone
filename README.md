@@ -16,7 +16,7 @@ Le projet se subdivise en 4 grandes parties:
 
 Chaque partie est développé dans la même logique, mais l'organisation des différents modules/dossiers est différente. Le but étant de limiter la taille des fichiers pour une lecture améliorée du code source.
 
-<img src="resources/folder_archi.png"
+<img src="resources/doc/folder_archi.png"
      alt="Image représentant l'organisation des dossiers."
      style="text-align: center;" />
 
@@ -107,3 +107,16 @@ Vérifie une condition et retourne une variable booléenne vrai ou faux.
 
 
 ## Structures
+
+<img src="resources/doc/Event_Manager.png"
+     alt="Image représentant la structure Event_Manager."
+     style="text-align: center;" />
+<img src="resources/doc/Sound_Manager.png"
+     alt="Image représentant la structure Sound_Manager."
+     style="text-align: center;" />
+<img src="resources/doc/Texture_Manager.png"
+     alt="Image représentant la structure Texture_Manager."
+     style="text-align: center;" />
+<img src="resources/doc/Game_Manager.png"
+     alt="Image représentant la structure Game_Manager."
+     style="text-align: center;" />
