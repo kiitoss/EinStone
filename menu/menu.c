@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
   Sound_Manager SM = init_SM();
   
   printf("%d, %s\n", argc, *argv);
+  
   MLV_get_desktop_size(&win_width, &win_height);
   width = 3 * win_width / 4;
   height = 3 * win_height / 4;

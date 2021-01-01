@@ -12,6 +12,7 @@ void draw_button(Button *this) {
   
   font = MLV_load_font(this->font_path , this->font_size);
 
+  /* Affectation d'une couleur différente si le bouton est survolé ou selectionné. */
   if (this->is_select || this->is_hover) {
     if (this->is_select) {
       background_color = MLV_COLOR_GREEN;
@@ -62,14 +63,22 @@ Button get_new_button(Geometry g, char *text, MLV_Color color, MLV_Color backgro
   btn.is_select = false;
   btn.value = value;
   btn.is_hidden = false;
+
+  /* On cherche à faire un bouton aussi grand que possible, centré, selon la géométrie g. */
+  /* Affectation d'une taille de police optimale (la plus grande possible). */
   btn.font_size = get_object_font_size(text, font_path, g.width, g.height);
+
+  /* Affectation de la taille du bouton, selon la taille de la police trouvée précédemment. */
   set_object_dimension(text, font_path, btn.font_size, &btn.width, &btn.height);
 
-
+  /* Affectation des posX et posY du bouton selon la taille trouvée précédemment. */
   btn.posX = g.posX + (g.width - btn.width)/2;
   btn.posY = g.posY + (g.height - btn.height)/2;
+
+  /* Réaffectation de la taille du bouton pour qu'il soit finalement de la taille originelle. */
   btn.width = g.width;
   btn.height = g.height;
+  
   return btn;
 }
 

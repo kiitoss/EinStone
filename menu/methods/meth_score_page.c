@@ -2,7 +2,7 @@
 
 
 
-/* Retourne un pointeur sur le bouton survvolé de la page des scores. */
+/* Retourne un pointeur correspondant au bouton survolé de la page des scores. */
 Button *get_score_page_hover_btn(Score_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->back_btn, posX, posY)) {
@@ -19,7 +19,8 @@ Score_Section get_new_score_section(Game_Manager *GM, Geometry container, char *
   Geometry g;
   char *p1_score_str, *time_str;
   int min, sec;
-  
+
+  /* Si l'ancienne partie n'existe pas, on créé un objet Score_Section vide avec un attribut exist = false pour ne pas le dessiner plus tard. */
   if (GM == NULL) {
     ss.exist = false;
     return ss;
@@ -27,6 +28,7 @@ Score_Section get_new_score_section(Game_Manager *GM, Geometry container, char *
 
   ss.exist = true;
 
+  /* Allocation de mémoire pour nos deux chaînes de caractères. */
   p1_score_str = malloc(21*sizeof(char));
   time_str = malloc(21*sizeof(char));
 
@@ -72,6 +74,7 @@ Score_Page init_score_page(int width, int height, GM_list_scores GMS) {
   int row_height = 2*height/3 * 0.7/(SAVED_SCORES+1);
   char *font_path = "./resources/font/Amatic-Bold.ttf";
 
+  /* Initialisation du pointeur permettant de savoir à tout moment le bouton survolé. */
   sp.hover_btn = NULL;
   
   g.width = width/2;
@@ -86,6 +89,8 @@ Score_Page init_score_page(int width, int height, GM_list_scores GMS) {
 
   g.height = row_height;
   g.posY += title_height + margin_title;
+
+  /* Création des sections comprenant les scores des anciennes parties. */
   for (i=0; i<SAVED_SCORES; i++) {
     if (GMS[i].id == 0) {
       sp.sections[i] = get_new_score_section(NULL, g, font_path);

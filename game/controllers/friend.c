@@ -120,6 +120,7 @@ void update_friend(Friend *this, Row *row, Sound_Manager *SM, int *p1_score) {
       }
     }
 
+    /* Si 'enemy_in_range && this->is_passive) || (!enemy_in_range && !this->is_passive) */
     if (enemy_in_range ^ !this->is_passive) {
       switch_friend_behavior(this);
     }

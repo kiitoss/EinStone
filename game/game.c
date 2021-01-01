@@ -364,21 +364,24 @@ void launch_newgame(btn_value gamemode, btn_value difficulty, char *p1_name, cha
   Window window;
   unsigned int win_width, win_height;
 
+  /* Stop toutes les musiques et lance la musique de jeu. */
   MLV_stop_music();
   play_music(SM, &SM->game);
   SM->menu_music_playing = false;
-  
-  printf("%d, %d, %s, %s\n", gamemode, difficulty, p1_name, p2_name);
-  
+
+  /* Récupère la taille de l'écran. */
   MLV_get_desktop_size(&win_width, &win_height);
 
+  /* Limite à 3/4 écran la taille de la fenêtre si le mode plein ecran est désactivé. */
   if (!FULL_SCREEN) {
     win_width = (int)3*win_width/4;
     win_height = (int)3*win_height/4;
   }
+
   
   window = init_window(win_width, win_height, gamemode);
-  
+
+  /* Change la taille de la fenêtre. */
   MLV_change_window_size(window.width, window.height);
 
   TM = init_TM(window);
@@ -429,25 +432,28 @@ void launch_resume(Game_Manager *GM, Sound_Manager *SM) {
   Window window;
   unsigned int win_width, win_height;
 
+  /* Stop toutes les musiques et lance la musique de jeu. */
   MLV_stop_music();
   play_music(SM, &SM->game);
   SM->menu_music_playing = false;
-  
+
+  /* Récupère la taille de l'écran. */
   MLV_get_desktop_size(&win_width, &win_height);
 
+  /* Limite à 3/4 écran la taille de la fenêtre si le mode plein ecran est désactivé. */
   if (!FULL_SCREEN) {
     win_width = (int)3*win_width / 4;
     win_height = (int)3*win_height / 4;
   }
   
   window = init_window(win_width, win_height, GM->gamemode);
-  
+
+  /* Change la taille de la fenêtre. */
   MLV_change_window_size(window.width, window.height);
   
   TM = init_TM(window);
 
-  reset_entities_animations(GM, &TM, &window);
-  
+  reset_entities_animations(GM, &TM, &window);  
   GM->window = window;
   GM->last_refresh = MLV_get_time();
   GM->in_game = true;

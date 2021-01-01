@@ -2,7 +2,7 @@
 
 
 
-/* Retourne un pointeur sur le bouton survvolé de la page principale. */
+/* Retourne un pointeur correspondant au bouton survolé de la page principale. */
 Button *get_main_page_hover_btn(Main_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->newgame_btn, posX, posY)) {
@@ -33,6 +33,7 @@ Main_Page init_main_page(int width, int height) {
   int row_height = (2*height/3 * 0.8)/4;
   char *font_path = "resources/font/Amatic-Bold.ttf";
 
+  /* Initialisation du pointeur permettant de savoir à tout moment le bouton survolé. */
   mp.hover_btn = NULL;
   
   g.width = width;

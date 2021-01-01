@@ -54,17 +54,26 @@ Row init_row(int rectsize) {
 Game_Manager init_GM(Window *window, Texture_Manager *TM, btn_value gamemode,btn_value difficulty,char *p1_name,char *p2_name) {
   Game_Manager GM;
   int i;
+
+  /* On initialise l'id à 0 pour une nouvelle partie, un id définitif sera affecté quand l'utilisateur quittera la partie. */
   GM.id = 0;
+  
   GM.in_game = true;
+  
   GM.gamemode = gamemode;
+  
   GM.difficulty = difficulty;
+  
   GM.window = *window;
+  
   for (i=0; i<NB_FRIENDS; i++) {
     GM.friend_spawners[i] = init_FS(i, TM, window);
   }
+  
   for (i=0; i<NB_ENEMIES; i++) {
     GM.enemy_spawners[i] = init_ES(i, TM, window);
   }
+  
   GM.p1 = init_p1(p1_name);
   GM.p2 = init_p2(p2_name);
   
@@ -73,8 +82,10 @@ Game_Manager init_GM(Window *window, Texture_Manager *TM, btn_value gamemode,btn
   }
   
   GM.last_refresh = MLV_get_time();
-  
+
+  /* La durée de la partie est initialisé à -time(), une fois la fin de la partie, il suffira de faire duration += time() pour avoir le temps final. */
   GM.duration = -MLV_get_time();
+  
   GM.last_state_mouse = MLV_RELEASED;
   GM.last_state_key = MLV_RELEASED;
   return GM;

@@ -65,12 +65,14 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
   
   switch (btn_value) {
   case SOLO:
+    /* Selectionne le bouton correspondant et affiche les 3 niveaux de difficulté. */
     set_select_btn(&this->solo_btn);
     this->select_gamemode = &this->solo_btn;
     unset_hidden_btn(&this->easy_btn);
     unset_hidden_btn(&this->medium_btn);
     unset_hidden_btn(&this->hard_btn);
 
+    /* Masque l'input ou le label correspondant au nom du joueur 2. */
     if (exist_input(&this->p2_input)) {
       set_hidden_input(&this->p2_input);
     }
@@ -78,6 +80,7 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
       set_hidden_lbl(&this->p2_lbl);
     }
 
+    /* Déplace (centre) l'input ou le label correspondant au nom du joueur 1. */
     if (exist_input(&this->p1_input)) {
       set_input_geometry(&this->p1_input, 3*this->width/8, this->width/4);
     }
@@ -85,6 +88,7 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
       set_label_geometry(&this->p1_lbl, (this->width-this->p1_lbl.width)/2);
     }
 
+    /* Active l'input du nom du joueur 1 s'il existe. */
     if (exist_input(&this->p1_input)) {
       MLV_activate_input_box(this->p1_input.object);
     }
@@ -92,12 +96,14 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
 
     
   case MULTI:
+    /* Selectionne le bouton correspondant et masque les 3 niveaux de difficulté. */
     set_select_btn(&this->multi_btn);
     this->select_gamemode = &this->multi_btn;
     set_hidden_btn(&this->easy_btn);
     set_hidden_btn(&this->medium_btn);
     set_hidden_btn(&this->hard_btn);
 
+    /* Affiche l'input ou le label correspondant au nom du joueur 2. */
     if (exist_input(&this->p2_input)) {
       unset_hidden_input(&this->p2_input);
     }
@@ -105,6 +111,7 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
       unset_hidden_lbl(&this->p2_lbl);
     }
 
+    /* Déplace (décentre) l'input ou le label correspondant au nom du joueur 1. */
     if (exist_input(&this->p1_input)) {
       set_input_geometry(&this->p1_input, this->width/4 - 10, this->width/4);
     }
@@ -112,6 +119,7 @@ void set_gamemode(Newgame_Page *this, btn_value btn_value) {
       set_label_geometry(&this->p1_lbl, (this->width/2-this->p1_lbl.width)/2 - 10);
     }
 
+    /* Active l'input du nom du joueur 2 s'il existe, sinon du joueur 1 s'il existe. */
      if (exist_input(&this->p2_input)) {
        MLV_activate_input_box(this->p2_input.object);
      }
@@ -137,6 +145,7 @@ Newgame_Page init_newgame_page(int width, int height) {
   int row_height = 2*height/3 * 0.7/4;
   char *font_path = "./resources/font/Amatic-Bold.ttf";
 
+  /* Initialisation des pointeurs permettant de savoir à tout moment le bouton survolé, le gamemode et la difficulté. */
   ngp.hover_btn = NULL;
   ngp.select_gamemode = NULL;
   ngp.select_difficulty = NULL;
@@ -188,7 +197,7 @@ Newgame_Page init_newgame_page(int width, int height) {
 
 
 
-/* Retourne un pointeur sur le bouton survvolé de la page de nouvelle partie. */
+/* Retourne un pointeur correspondant au bouton survolé de la page de nouvelle partie. */
 Button *get_newgame_page_hover_btn(Newgame_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->solo_btn, posX, posY)) {

@@ -67,22 +67,47 @@ void draw_friend_spawner(Game_Manager *GM, Texture_Manager *TM) {
   int textbox_width = 0;
   int textbox_height=0;
   MLV_Color Color;
-  MLV_draw_image(TM->friend_spawner_background,GM->window.friend_spawner.posX, GM->window.friend_spawner.posY);
-  
-  if (GM->p1.is_deleting){MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), 0, GM->window.rectsize, GM->window.friend_spawner.height, MLV_COLOR_BLUE);}
 
-  MLV_draw_image(TM->delete_friend_img, GM->window.friend_spawner.posX + (NB_COLUMNS-1)*GM->window.rectsize+GM->window.rectsize/4 , GM->window.friend_spawner.posY+GM->window.rectsize/4);
+  /* Dessine l'arrière plan. */
+  MLV_draw_image(TM->friend_spawner_background,
+		 GM->window.friend_spawner.posX,
+		 GM->window.friend_spawner.posY);
+
+  /* Colorie la case <Supprimer allié> en bleu si le joueur est en cours de suppression. */
+  if (GM->p1.is_deleting){
+    MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1),
+			      0,
+			      GM->window.rectsize,
+			      GM->window.friend_spawner.height,
+			      MLV_COLOR_BLUE);
+  }
+
+  /* Dessine l'image de la case <Supprimer allié>. */
+  MLV_draw_image(TM->delete_friend_img,
+		 GM->window.friend_spawner.posX + (NB_COLUMNS-1)*GM->window.rectsize+GM->window.rectsize/4,
+		 GM->window.friend_spawner.posY+GM->window.rectsize/4);
+
   
   for (i=0;i<NB_FRIENDS;i++){
+    /* Dessine en vert ou en rouge la case de l'allié selectionné selon l'argent du joueur et le prix de l'allié. */
     Color = (GM->p1.money >= GM->friend_spawners[i].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
     if (GM->p1.chosen_friend == i) {
-      MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (i+1), 0, GM->window.rectsize, GM->window.friend_spawner.height, Color);
+      MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (i+1),
+				0, GM->window.rectsize,
+				GM->window.friend_spawner.height,
+				Color);
     }
-    
+
+    /* Dessine l'image de l'allié. */
     MLV_draw_image(TM->friend_spawners_imgs[i],GM->window.friend_spawner.posX + (i+1)*GM->window.rectsize,GM->window.friend_spawner.posY);
 
-    MLV_get_size_of_adapted_text_box(GM->friend_spawners[i].price_str,5,&textbox_width,&textbox_height);
+    /* Récupère la taille du texte indiquant le prix de l'allié. */
+    MLV_get_size_of_adapted_text_box(GM->friend_spawners[i].price_str,
+				     5,
+				     &textbox_width,
+				     &textbox_height);
 
+    /* Ecrite le prix de l'allié (en vert si l'argent est suffisant, rouge sinon). */
     MLV_draw_adapted_text_box((GM->window.friend_spawner.posX + (i+1)*GM->window.rectsize) + ((GM->window.rectsize) - textbox_width)/2,
 			      GM->window.friend_spawner.height - textbox_height,
 			      GM->friend_spawners[i].price_str,
@@ -103,9 +128,18 @@ void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
   int textbox_height=0;
   int i;
 
-  MLV_draw_image(TM->score_img,GM->window.friend_spawner.posX, GM->window.friend_spawner.height - GM->window.rectsize/4 );
-  
-  MLV_get_size_of_adapted_text_box (GM->p1.money_str,5,&textbox_width,&textbox_height);
+  /* Dessine une image de pièce d'or. */
+  MLV_draw_image(TM->score_img,
+		 GM->window.friend_spawner.posX,
+		 GM->window.friend_spawner.height - GM->window.rectsize/4);
+
+  /* Récupère la taille de la quantité d'or du joueur. */
+  MLV_get_size_of_adapted_text_box (GM->p1.money_str,
+				    5,
+				    &textbox_width,
+				    &textbox_height);
+
+  /* Ecrit l'argent du joueur. */
   MLV_draw_text_box((GM->window.friend_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
 		    GM->window.friend_spawner.height  - (textbox_height + textbox_height/4),
 		    GM->window.rectsize/2,
@@ -118,11 +152,16 @@ void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
 		    MLV_TEXT_LEFT,
 		    MLV_HORIZONTAL_CENTER,
 		    MLV_VERTICAL_CENTER);
-  
-  MLV_get_size_of_adapted_text_box_with_font(GM->p1.name,TM->font,5,&textbox_width,&textbox_height);
 
-  MLV_draw_adapted_text_box_with_font(
-				      (GM->window.friend_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
+  /* Récupère la taille du nom du joueur. */
+  MLV_get_size_of_adapted_text_box_with_font(GM->p1.name,
+					     TM->font,
+					     5,
+					     &textbox_width,
+					     &textbox_height);
+
+  /* Ecrit le nom du joueur. */
+  MLV_draw_adapted_text_box_with_font((GM->window.friend_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
 				      GM->window.friend_spawner.posY + textbox_height,
 				      GM->p1.name,
 				      TM->font,
@@ -131,9 +170,12 @@ void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
 				      MLV_COLOR_BLACK,
 				      MLV_rgba(0,0,0,0),
 				      MLV_TEXT_CENTER);
-  
+
+  /* Dessine les images de coeur correspondant au nombre de vie du joueur. */
    for(i=0;i<GM->p1.life;i++){
-     MLV_draw_image(TM->life_friend_img, (GM->window.friend_spawner.posX + ((GM->window.rectsize - (GM->p1.life * GM->window.rectsize)/6)/2) + (i*GM->window.rectsize)/6), GM->window.friend_spawner.height - (GM->window.rectsize/2));
+     MLV_draw_image(TM->life_friend_img,
+		    (GM->window.friend_spawner.posX + ((GM->window.rectsize - (GM->p1.life * GM->window.rectsize)/6)/2) + (i*GM->window.rectsize)/6),
+		    GM->window.friend_spawner.height - (GM->window.rectsize/2));
 
    }
 }
@@ -144,10 +186,18 @@ void draw_friend_stats(Game_Manager *GM,Texture_Manager *TM){
 void draw_enemy_stats(Game_Manager *GM,Texture_Manager *TM){
   int textbox_width = 0;
   int textbox_height=0;
-
-  MLV_draw_image(TM->score_img,GM->window.enemy_spawner.posX, GM->window.enemy_spawner.height - GM->window.rectsize/4 );
   
-  MLV_get_size_of_adapted_text_box (GM->p2.money_str,5,&textbox_width,&textbox_height);
+  /* Dessine une image de pièce d'or. */
+  MLV_draw_image(TM->score_img,
+		 GM->window.enemy_spawner.posX,
+		 GM->window.enemy_spawner.height - GM->window.rectsize/4);
+
+  /* Récupère la taille de la quantité d'or du joueur. */
+  MLV_get_size_of_adapted_text_box (GM->p2.money_str,
+				    5,&textbox_width,
+				    &textbox_height);
+  
+  /* Ecrit l'argent du joueur. */
   MLV_draw_adapted_text_box(GM->window.enemy_spawner.posX + ((GM->window.rectsize) - textbox_width)/2,
 			    GM->window.enemy_spawner.posY + GM->window.enemy_spawner.height - textbox_height,
 			    GM->p2.money_str,
@@ -157,10 +207,14 @@ void draw_enemy_stats(Game_Manager *GM,Texture_Manager *TM){
 			    MLV_COLOR_YELLOW,
 			    MLV_TEXT_CENTER);
   
-  MLV_get_size_of_adapted_text_box_with_font(GM->p2.name,TM->font,5,&textbox_width,&textbox_height);
-  
-  MLV_draw_adapted_text_box_with_font(
-				      (GM->window.enemy_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
+  /* Récupère la taille du nom du joueur. */
+  MLV_get_size_of_adapted_text_box_with_font(GM->p2.name,
+					     TM->font,
+					     5,
+					     &textbox_width,
+					     &textbox_height);
+  /* Ecrit le nom du joueur. */
+  MLV_draw_adapted_text_box_with_font((GM->window.enemy_spawner.posX) + ((GM->window.rectsize) - textbox_width)/2,
 				      GM->window.enemy_spawner.posY + textbox_height,
 				      GM->p2.name,
 				      TM->font,
@@ -179,15 +233,35 @@ void draw_enemy_spawner(Game_Manager *GM, Texture_Manager *TM) {
   int textbox_width =0;
   int textbox_height=0;
   MLV_Color Color;
-  MLV_draw_image(TM->enemy_spawner_background,GM->window.enemy_spawner.posX, GM->window.enemy_spawner.posY);
+  
+  /* Dessine l'arrière plan. */
+  MLV_draw_image(TM->enemy_spawner_background,
+		 GM->window.enemy_spawner.posX,
+		 GM->window.enemy_spawner.posY);
+  
   for (i=0;i<NB_ENEMIES;i++){
+    /* Dessine en vert ou en rouge la case de l'ennemie selectionné selon l'argent du joueur et le prix de l'ennemie. */
     Color = (GM->p2.money >= GM->enemy_spawners[i].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
     if (GM->p2.chosen_enemy == i) {
-      MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (i+1), GM->window.enemy_spawner.posY, GM->window.rectsize, GM->window.enemy_spawner.height, Color);
+      MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (i+1),
+				GM->window.enemy_spawner.posY,
+				GM->window.rectsize,
+				GM->window.enemy_spawner.height,
+				Color);
     }
-    MLV_draw_image(TM->enemy_spawners_imgs[i],GM->window.enemy_spawner.posX + (i+1)*GM->window.rectsize,GM->window.enemy_spawner.posY);
 
-    MLV_get_size_of_adapted_text_box (GM->enemy_spawners[i].price_str,5,&textbox_width,&textbox_height);    
+    /* Dessine l'image de l'ennemie. */
+    MLV_draw_image(TM->enemy_spawners_imgs[i],
+		   GM->window.enemy_spawner.posX + (i+1)*GM->window.rectsize,
+		   GM->window.enemy_spawner.posY);
+
+    /* Récupère la taille du texte indiquant le prix de l'ennemie. */
+    MLV_get_size_of_adapted_text_box (GM->enemy_spawners[i].price_str,
+				      5,
+				      &textbox_width,
+				      &textbox_height);
+    
+    /* Ecrite le prix de l'ennemie (en vert si l'argent est suffisant, rouge sinon). */
     MLV_draw_adapted_text_box((GM->window.enemy_spawner.posX + (i+1)*GM->window.rectsize) + ((GM->window.rectsize) - textbox_width)/2,
 			      GM->window.enemy_spawner.posY + GM->window.enemy_spawner.height - textbox_height,
 			      GM->enemy_spawners[i].price_str,
@@ -207,8 +281,12 @@ void draw_field(Game_Manager *GM, Texture_Manager *TM) {
   MLV_Image *img;
   for (i=0; i<NB_ROWS; i++) {
     for (j=0; j<NB_COLUMNS; j++) {
+      
       img = ((i+j)%2) ? TM->field_light_grass_img : TM->field_dark_grass_img;
-      MLV_draw_image(img, GM->window.field.posX + j*GM->window.rectsize, GM->window.field.posY + i*GM->window.rectsize);
+      
+      MLV_draw_image(img,
+		     GM->window.field.posX + j*GM->window.rectsize,
+		     GM->window.field.posY + i*GM->window.rectsize);
     }
   }
 }
@@ -231,6 +309,11 @@ void draw_window(Game_Manager *GM, Texture_Manager *TM) {
   draw_field(GM, TM);
   if(GM->gamemode == SOLO){return;}
 
+  /* Colorie la ligne du terrain choisie par le joueur 2, en vert si l'argent est suffisant pour l'ennemie choisit, en rouge sinon). */
   Color = (GM->p2.money >= GM->enemy_spawners[GM->p2.chosen_enemy].price) ? MLV_COLOR_GREEN : MLV_COLOR_RED;
-  MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1), GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row, GM->window.rectsize, GM->window.rectsize, Color);
+  MLV_draw_filled_rectangle(GM->window.field.posX + GM->window.rectsize * (NB_COLUMNS-1),
+			    GM->window.field.posY + GM->window.rectsize * GM->p2.chosen_row,
+			    GM->window.rectsize,
+			    GM->window.rectsize,
+			    Color);
 }

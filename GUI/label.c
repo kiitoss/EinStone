@@ -21,10 +21,15 @@ Label get_new_label(Geometry g, char *text, MLV_Color color, char *font_path) {
   lbl.text = text;
   lbl.color = color;
   lbl.font_path = font_path;
+
+  /* On cherche à faire un label aussi grand que possible, centré, selon la géométrie g. */
+  /* Affectation d'une taille de police optimale (la plus grande possible). */
   lbl.font_size = get_object_font_size(text, font_path, g.width, g.height);
+
+  /* Affectation des posX et posY du label selon la taille trouvée précédemment. */
   set_object_dimension(text, font_path, lbl.font_size, &lbl.width, &lbl.height);
 
-
+  /* Affectation des posX et posY du label selon la taille trouvée précédemment. */
   lbl.posX = g.posX + (g.width - lbl.width)/2;
   lbl.posY = g.posY + (g.height - lbl.height)/2;
 

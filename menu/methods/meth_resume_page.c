@@ -18,7 +18,8 @@ Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char
   Geometry g;
   char *p1_score_str, *time_str;
   int min, sec;
-  
+
+  /* Si l'ancienne partie n'existe pas, on créé un objet Resume_Section vide avec un attribut exist = false pour ne pas le dessiner plus tard. */
   if (GM == NULL) {
     rs.exist = false;
     return rs;
@@ -27,6 +28,7 @@ Resume_Section get_new_resume_section(Game_Manager *GM, Geometry container, char
   rs.exist = true;
   rs.GM = GM;
 
+  /* Allocation de mémoire pour nos deux chaînes de caractères. */
   p1_score_str = malloc(21*sizeof(char));
   time_str = malloc(21*sizeof(char));
 
@@ -106,6 +108,7 @@ Resume_Page init_resume_page(int width, int height, GM_list_games GMG) {
   int row_height = 2*height/3 * 0.7/(SAVED_GAMES+1);
   char *font_path = "./resources/font/Amatic-Bold.ttf";
 
+  /* Initialisation des pointeurs permettant de savoir à tout moment le bouton survolé, la section survolée et la section selectionnée. */
   rp.hover_btn = NULL;
   rp.hover_section = NULL;
   rp.select_section = NULL;
@@ -122,6 +125,8 @@ Resume_Page init_resume_page(int width, int height, GM_list_games GMG) {
 
   g.height = row_height;
   g.posY += title_height + margin_title;
+
+  /* Création des sections comprenant les informations des anciennes parties. */
   for (i=0; i<SAVED_GAMES; i++) {
     if (GMG[i].id == 0) {
       rp.sections[i] = get_new_resume_section(NULL, g, font_path);
@@ -144,7 +149,7 @@ Resume_Page init_resume_page(int width, int height, GM_list_games GMG) {
 
 
 
-/* Retourne un pointeur sur le bouton survvolé de la page des anciennes parties. */
+/* Retourne un pointeur correspondant au bouton survolé de la page continuer. */
 Button *get_resume_page_hover_btn(Resume_Page *this, int posX, int posY) {
   Button *hover_btn = NULL;
   if (is_btn_hover(&this->back_btn, posX, posY)) {
@@ -158,7 +163,7 @@ Button *get_resume_page_hover_btn(Resume_Page *this, int posX, int posY) {
 
 
 
-/* Retourne un pointeur sur la section survvolée de la page des anciennes parties. */
+/* Retourne un pointeur correspondant à la section survolée de la page continuer. */
 Resume_Section *get_resume_page_hover_section(Resume_Page *this, int posX, int posY) {
   Resume_Section *hover_section = NULL;
   int i;

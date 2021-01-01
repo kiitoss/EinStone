@@ -21,31 +21,37 @@ Window init_window(unsigned int win_width, unsigned int win_height, btn_value ga
   Geometry g;
   char *font_path = "resources/font/Amatic-Bold.ttf";
 
+  /* Initialise les paramètres globaux de la fenêtre. */
   window.rectsize = get_rectsize(win_width, win_height, gamemode);
   window.width = win_width;
   window.height = win_height;
 
+  /* Initialise la base allié (partie gauche de la fenêtre). */
   window.friend_home.posX = 0;
   window.friend_home.posY = 0;
   window.friend_home.width = (win_width - NB_COLUMNS * window.rectsize) / 2;
   window.friend_home.height = win_height;
 
 
+  /* Initialise la zone des spawners alliés (partie haute de la fenêtre). */
   window.friend_spawner.posX = window.friend_home.posX + window.friend_home.width;
   window.friend_spawner.posY = 0;
   window.friend_spawner.width = NB_COLUMNS * window.rectsize;
   window.friend_spawner.height = window.rectsize;
 
+  /* Initialise le terrain (milieu de la fenêtre). */
   window.field.posX = window.friend_spawner.posX;
   window.field.posY = window.friend_spawner.height;
   window.field.width = NB_COLUMNS * window.rectsize;
   window.field.height = NB_ROWS * window.rectsize;
 
+  /* Initialise la base enemies (partie droite de la fenêtre). */
   window.enemy_home.posX = window.field.posX + window.field.width;
   window.enemy_home.posY = 0;
   window.enemy_home.width = (win_width - NB_COLUMNS * window.rectsize) / 2;
   window.enemy_home.height = win_height;
-  
+
+  /* Initialise la zone des spawners ennemies (partie basse de la fenêtre). */
   if (gamemode == MULTI) {
     window.enemy_spawner.posX = window.friend_spawner.posX;
     window.enemy_spawner.posY = window.field.posY + window.field.height;
@@ -53,10 +59,12 @@ Window init_window(unsigned int win_width, unsigned int win_height, btn_value ga
     window.enemy_spawner.height = window.rectsize;
   }
 
+  /* Initialise le label indiquant le temps de jeu. */
   g.width = window.rectsize;
   g.height = window.rectsize/4;
   g.posX = window.field.posX + window.field.width - g.width;
   g.posY = window.field.posY - g.height;
   window.time_lbl = get_new_label(g, "0m : 0s", MLV_COLOR_WHITE, font_path);
+  
   return window;
 }

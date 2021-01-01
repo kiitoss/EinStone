@@ -91,7 +91,7 @@ void update_enemy(Enemy *this, Row *row, Sound_Manager *SM) {
     }
   }
 
-  
+  /* Si (friend_in_range && this->is_walking) || (!friend_in_range && !this->is_walking). */
   if (friend_in_range ^ !this->is_walking) {
     switch_enemy_behavior(this);
   }

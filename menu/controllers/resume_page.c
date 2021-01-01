@@ -34,19 +34,41 @@ void update_hover_btn_and_section(Resume_Page *rp, int posX, int posY) {
 /* Met à jour l'affichage de la page. */
 void update_resume_page(Resume_Page *rp, Sound_Manager *SM) {
   Event_Manager em;
+
+  /* Dessine la page des anciennes parties en cours. */
   draw_resume_page(rp);
+
+
+  /* Première récupération des actions de l'utilisateur. */
   em = get_event();
+
+
+  /*
+    Tant que l'utilisateur:
+      ne bouge pas la souris,
+      ne clique pas sur un bouton ou une section,
+      n'appuie pas sur <Echap>
+    on récupère les actions de l'utilisateur.
+  */
   while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || (rp->hover_btn == NULL && rp->hover_section == NULL)) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
+
+  
+  /* On purge la liste des evenements. */
   MLV_flush_event_queue();
+
+  /* Gestion du clique. */
   if (em.event == MLV_MOUSE_BUTTON && (rp->hover_btn != NULL || rp->hover_section != NULL)) {
+    /* Clique sur une section. */
     if (rp->hover_section != NULL) {
       select_hover_section(rp);
     }
+    /* Clique sur le bouton retour. */
     if (rp->hover_btn != NULL && rp->hover_btn->value == BACK) {
       launch_main_page(rp->width, rp->height, SM);
     }
+    /* Clique sur le bouton de lancement de partie. */
     else if (rp->hover_btn != NULL && rp->hover_btn->value == LAUNCH && rp->select_section != NULL) {
       launch_resume(rp->select_section->GM, SM);
     }
@@ -54,9 +76,13 @@ void update_resume_page(Resume_Page *rp, Sound_Manager *SM) {
       update_resume_page(rp, SM);
     }
   }
+
+  /* Gestion de l'appuie sur la touche <Echap>. */
   else if (em.event == MLV_KEY && em.touch == MLV_KEYBOARD_ESCAPE) {
     launch_main_page(rp->width, rp->height, SM);
   }
+
+  /* Gestion du mouvement de la souris. */
   else if (em.event == MLV_MOUSE_MOTION) {
     update_hover_btn_and_section(rp, em.mouseX, em.mouseY);
     update_resume_page(rp, SM);
@@ -70,10 +96,10 @@ void launch_resume_page(int width, int height, Sound_Manager *SM) {
   GM_list_games GMG;
   Resume_Page rp;
 
+  /* Récupère les anciennes parties. */
   set_GMG(GMG);
   
   rp = init_resume_page(width, height, GMG);
-  draw_resume_page(&rp);
-  MLV_flush_event_queue();
+  
   update_resume_page(&rp, SM);
 }

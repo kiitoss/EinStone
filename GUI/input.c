@@ -29,17 +29,26 @@ Input get_new_input(Geometry g, char *placeholder, MLV_Color color, char *font_p
 
   input.font_path = font_path;
 
+  /* On cherche à faire un input aussi grand que possible, centré, selon la géométrie g. */
+  /* Affectation d'une taille de police optimale (la plus grande possible). */
   input.font_size = get_object_font_size(input_text, font_path, g.width, g.height);
+
+  /* Affectation de la taille de l'input, selon la taille de la police trouvée précédemment. */
   set_object_dimension(input_text, font_path, input.font_size, &input.width, &input.height);
-  
+
+  /* Affectation des posX et posY de l'input selon la taille trouvée précédemment. */
   input.posX = g.posX + (g.width - input.width)/2;
   input.posY = g.posY;
+
+  /* Réaffectation de la taille de l'input pour qu'il soit finalement de la taille originelle. */
   input.width = g.width;
   input.height = g.height;
 
   input.is_hidden = false;
-  
+
+  /* Création de l'objet MLV_Input_box, associé à l'input. */
   set_input_object(&input);
+  
   return input;
 }
 

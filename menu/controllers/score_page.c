@@ -17,21 +17,39 @@ static void update_hover_btn(Score_Page *sp, int posX, int posY) {
 /* Met à jour l'affichage de la page. */
 void update_score_page(Score_Page *sp, Sound_Manager *SM) {
   Event_Manager em;
+
+  /* Dessine la page des scores. */
   draw_score_page(sp);
+
+  /* Première récupération des actions de l'utilisateur. */
   em = get_event();
+
+  /*
+    Tant que l'utilisateur:
+      ne bouge pas la souris,
+      ne clique pas sur un bouton (un seul bouton sur cette page: BACK),
+      n'appuie pas sur <Echap>
+    on récupère les actions de l'utilisateur.
+  */
   while (em.event != MLV_MOUSE_MOTION && (em.event != MLV_MOUSE_BUTTON || sp->hover_btn == NULL) && (em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE)) {
     em = get_event();
   }
+
+  /* On purge la liste des evenements. */
   MLV_flush_event_queue();
+  
+  /* Gestion du mouvement de la souris. */
   if (em.event == MLV_MOUSE_MOTION) {
     update_hover_btn(sp, em.mouseX, em.mouseY);
     update_score_page(sp, SM);
   }
-  else if ((em.event != MLV_KEY || em.touch != MLV_KEYBOARD_ESCAPE) && (em.event != MLV_MOUSE_BUTTON || sp->hover_btn == NULL)) {
-    update_score_page(sp, SM);
+
+  /* Gestion du clique sur le bouton BACK ou de l'appuie sur la touche <Echap>. */
+  else if ((em.event == MLV_KEY && em.touch == MLV_KEYBOARD_ESCAPE) || (em.event == MLV_MOUSE_BUTTON && sp->hover_btn != NULL)) {
+    launch_main_page(sp->width, sp->height, SM);
   }
   else {
-    launch_main_page(sp->width, sp->height, SM);
+    update_score_page(sp, SM);
   }
 }
 
