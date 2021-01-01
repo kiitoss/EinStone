@@ -3,7 +3,7 @@
 Ein Stone est un jeu inspiré du célèbre Plants VS Zombies. Un joueur affronte au choix, soit l'ordinateur, soit un autre joueur, le but est de survivre le maximum de temps à l'invasion ennemie en achetant des alliés et en les posant sur le terrain.
 
 
-
+----------------------------------------------------------------------------------------------------------
 
 
 ## Architecture des fichiers
@@ -14,9 +14,13 @@ Le projet se subdivise en 4 grandes parties:
 * game: la partie qui gère le jeu.
 * save: la partie qui gère la sauvegarde des scores et des parties sauvegardées.
 
-Chaque partie est développé dans la même logique, mais l'organisation des différents modules/dossiers estt différente. Le but étant de limiter la taille des fichiers pour une lecture améliorée du code source.
+Chaque partie est développé dans la même logique, mais l'organisation des différents modules/dossiers est différente. Le but étant de limiter la taille des fichiers pour une lecture améliorée du code source.
 
+<img src="resources/folder_archi.png"
+     alt="Image représentant l'organisation des dossiers."
+     style="text-align: center;" />
 
+-----------------------------
 
 ### GUI
 La partie GUI comporte simplement 4 fichiers: button.c, input.c, label.c et general.c.
@@ -25,7 +29,7 @@ C'est ici qu'on trouvera les fonctions permettant de rendre un élément *hover*
 Le fichier general.c est légerement différent, il comporte les fonctions affectant plusieurs éléments différents. On aura par exemple ici la fonction permettant d'affecter une taille de police optimale pour un objet donné, ou encore la fonction permettant de dessiner soit un input, soit son label correspondant selon les action de l'utilisateur.
 C'est aussi dans le fichier general.c que l'on retrouve la redefinition des structures MLV_List, _MLV_list, _MLV_Input_box. Cela nous permet de récupérer la valeur d'un input sans que le joueur n'ai besoin de valider l'inptu en cliquant sur la touche <Entré>.
 
-
+-----------------------------
 
 ### MENU
 La partie MENU se décompose en 3 sous dossiers (controllers/methods/views) et un fichier menu.c.
@@ -48,7 +52,7 @@ C'est aussi dans la vue que l'on retrouve la fonction get_event() permettant de 
 #### menu.c
 Le fichier menu.c est le point d'entrée du programme. C'est ici que se trouve la fonction main(), que le gestionnaire de sons est initialisé et que la fenêtre est créée.
 
-
+-----------------------------
 
 ### GAME
 La partie GAME se décompose encore une fois en 3 sous dossiers (controllers/initializers/views) et d'un fichier game.c
@@ -68,14 +72,14 @@ Le dossier views comporte le fichier chargé de dessiner le jeu, qui va faire ap
 Le fichier game.c est le fichier principal du jeu. C'est ici que l'on retrouvera les fonctions en charge d'interpréter les actions de l'utilsiateurs et d'appeler les bonnes fonctions après un clique, une touche du clavier etc...
 C'est ce fichier qui met à jour les éléments du jeu en permanence.
 
-
+-----------------------------
 
 ### SAVE
 La partie SAVE permet de gérer les sauvegardes.
 Constitué d'un seul et unique fichier, on y retrouve les fonctions permettant de sauvegarder une partie, l'ajouter dans les scores, retourner une liste d'objets Game_Manager correspondant aux parties sauvegardées.
 
 
-
+----------------------------------------------------------------------------------------------------------
 
 
 ## Convention de nommage des fonctions
@@ -99,7 +103,7 @@ Les fonctions de mise à jour se retrouvent dans les contrôleurs et vont appele
 Vérifie une condition et retourne une variable booléenne vrai ou faux.
 
 
-
+----------------------------------------------------------------------------------------------------------
 
 
 ## Structures
