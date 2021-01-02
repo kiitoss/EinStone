@@ -2,6 +2,9 @@
 ***
 Ein Stone est un jeu inspiré du célèbre Plants VS Zombies. Un joueur affronte au choix, soit l'ordinateur, soit un autre joueur, le but est de survivre le maximum de temps à l'invasion ennemie en achetant des alliés et en les posant sur le terrain.
 
+<img src="resources/doc/game.png"
+     alt="Image représentant le jeu."
+     style="text-align: center;" /></br>
 
 ----------------------------------------------------------------------------------------------------------
 
@@ -84,8 +87,8 @@ Constitué d'un seul et unique fichier, on y retrouve les fonctions permettant d
 
 ## Convention de nommage des fonctions
 
-### Les fonctions *...*_init(*paramètres*)
-Les fonctions *..._init(paramètres)* retourne une structure initialisée.
+### Les fonctions init_*...*(*paramètres*)
+Les fonctions init_*...*(*paramètres)* retourne une structure initialisée.
 
 ### Les fonctions get_new_*...*(*paramètres*)
 Ce type de fonctions créé et retourne une nouvelle structure initialisée.
