@@ -8,6 +8,7 @@ Ein Stone est un jeu inspiré du célèbre Plants VS Zombies. Un joueur affronte
 
 ## Architecture des fichiers
 Le projet est très largement inspiré du modèle MVC sans pour autant respecter strictement les conventions.
+Nous avons décidé de nous orienter sur un modèle similaire au MVC car il semblait important pour nous de séparer la vue (dessin des éléments, récupération des évenements) du contrôle (création de nouvel ennemie, allié, déplacement des flèches...).
 Le projet se subdivise en 4 grandes parties:
 * GUI: la partie qui concentre la création de boutons/inputs/labels et qui les gères.
 * menu: la partie qui se concentre sur la gestion du menu, en se servant notamment de la partie GUI.
