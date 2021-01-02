@@ -31,7 +31,7 @@ La partie GUI comporte simplement 4 fichiers: button.c, input.c, label.c et gene
 button.c, input.c et label.c contiennent les fonctions de dessin des éléments, mais aussi de création et de gestion.
 C'est ici qu'on trouvera les fonctions permettant de rendre un élément *hover* ou *select*.
 Le fichier general.c est légerement différent, il comporte les fonctions affectant plusieurs éléments différents. On aura par exemple ici la fonction permettant d'affecter une taille de police optimale pour un objet donné, ou encore la fonction permettant de dessiner soit un input, soit son label correspondant selon les action de l'utilisateur.
-C'est aussi dans le fichier general.c que l'on retrouve la redefinition des structures MLV_List, _MLV_list, _MLV_Input_box. Cela nous permet de récupérer la valeur d'un input sans que le joueur n'ai besoin de valider l'inptu en cliquant sur la touche <Entré>.
+C'est aussi dans le fichier general.c que l'on retrouve la redefinition des structures MLV_List, _MLV_List, _MLV_Input_box. Cela nous permet de récupérer la valeur d'un input sans que le joueur n'ai besoin de valider l'inptu en cliquant sur la touche <Entré>.
 
 ------------
 
@@ -116,7 +116,7 @@ On retrouvera par exemple la fonction update_row(Row **this**, ...) ou encore la
 
 ## Structures
 
-Nous allons voir ici les structures dont se ser le jeu pour fonctionner.
+Nous allons voir ici les structures dont se sert le jeu pour fonctionner.
 Nous n'expliquerons pas les structures des boutons, inputs, label ou encore les pages du menu car cela semble suffisemment clair sans avoir besoin de rajouter des informations.
 
 ### Event_Manager

@@ -2,9 +2,7 @@
 Event_Manager get_event();
 void draw_main_page(Main_Page *mp);
 void draw_newgame_page(Newgame_Page *ngp);
-void draw_resume_section(Resume_Section *this);
 void draw_resume_page(Resume_Page *rp);
-void draw_score_section(Score_Section *this);
 void draw_score_page(Score_Page *sp);
 
 /* menu/methods/meth_score_page.c */
