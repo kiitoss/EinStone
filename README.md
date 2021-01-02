@@ -101,10 +101,14 @@ Ce type de fonctions met à jour certaines valeurs d'une structure. Rien n'est r
 Similaire aux fonctions *get_new...(paramètres)* mais sans pour autant être spécifique aux structures. Retourne une structure, une variable, un pointeur...
 
 ### Les fonctions update_*...*(*paramètres*)
-Les fonctions de mise à jour se retrouvent dans les contrôleurs et vont appeler un certain nombre de fonctions. Rien n'es retourné.
+Les fonctions de mise à jour se retrouvent dans les contrôleurs et vont appeler un certain nombre de fonctions. Rien n'est retourné.
 
 ### Les fonctions is_*...*(*paramètres*)
 Vérifie une condition et retourne une variable booléenne vrai ou faux.
+
+### Le mot clé *this*
+On utilise le mot clé this dans beaucoup de fonctions. Lorsqu'une fonction a pour objectif la modification d'un structure, on utilisera le mot clé *this* pour identifier cette structure.
+On retrouvera par exemple la fonction update_row(Row **this**, ...) ou encore la fonction remove_friend_in_row(Friend **this**, ...) et bien d'autre encore...
 
 
 ----------------------------------------------------------------------------------------------------------
@@ -158,3 +162,46 @@ Cette structure possède:
 * deux variables pour gérer lorsque MLV détècte quand le bouton (de la souris ou du clavier) est relâché mais pas lorsqu'il est appuyé.
 
 Nous préciserons que dans le projet, nous utilisons fréquemment le terme de "pop" pour définir ensemble les pièces d'or et les flèches.
+
+
+----------------------------------------------------------------------------------------------------------
+
+
+## Fonctions principales
+
+### void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM)
+On trouve cette fonction dans **/game/game.c** Cette fonction met à jour le jeu.
+C'est à dire que:
+* elle attent un délai ou une action de l'utilisateur,
+* si la vie du joueur 1 est inférieure ou égale à 0, le jeu est perdu,
+* si un délai est dépassé, le jeu fait apparaître une pièce sur le terrain,
+* si un délai est dépassé, le jeu augmente l'or du joueur 2,
+* si le joueur 2 n'est pas un joueur réel, on met à jour l'IA (cf plus bas),
+* si un délai est dépassé, on met à jour toutes les lignes du plateau (cf plus bas),
+* si le joueur a cliqué sur la souris, la fonction *mouse_action* est appelée,
+* si le joueur a appuyé sur une touche, la fonction *keyboard_action* est appelée,
+* si la variable *in_game* est vraie, le jeu est redessiné et la fonction s'auto-appelle.
+
+### void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM)
+On trouve cette fonction dans **game/controllers/row.c**. Cette fonction met à jour une ligne du plateau.
+C'est à dire que:
+* elle met à jour tous les alliés de la ligne,
+* elle met à jour tous les ennemies de la ligne,
+* elle met à jour tous les tirs de la ligne,
+* elle met à jour les collisions de la ligne,
+* elle met à jour les pièces d'or.
+
+### void update_all_collisions_in_row(Row *this, Sound_Manager *SM, int *p1_score)
+On trouve cette fonction dans **game/controllers/row.c**. Cette fonction cherche toutes les collisions d'une ligne.
+C'est à dire que:
+* pour chaque tir sur une ligne,
+* la position du tir est comparée avec la positions des ennemies de la ligne,
+* si les positions coincident, le tir est supprimé, l'ennemie est blessé (tué si sa vie descend à 0).
+
+### void update_IA(Game_Manager *GM)
+On trouve cette fonction dans **game/controllers/IA.c**. Cette fonction met à jour l'IA.
+C'est à dire que:
+* elle récupère les lignes avec la plus faible densité d'allié,
+* elle récupère la somme des points de vie des alliés par ligne,
+* elle récupère le nombre minimal d'alliés par ligne,
+* celon son nombre minimal, un ennemie est choisit au hasard et envoyé sur une ligne considérée comme faible.
