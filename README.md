@@ -183,7 +183,7 @@ C'est à dire que:
 * si la variable *in_game* est vraie, le jeu est redessiné et la fonction s'auto-appelle.
 
 ### void update_row(Row *this, Game_Manager *GM, Sound_Manager *SM)
-On trouve cette fonction dans **game/controllers/row.c**. Cette fonction met à jour une ligne du plateau.
+On trouve cette fonction dans **/game/controllers/row.c**. Cette fonction met à jour une ligne du plateau.
 C'est à dire que:
 * elle met à jour tous les alliés de la ligne,
 * elle met à jour tous les ennemies de la ligne,
@@ -192,14 +192,14 @@ C'est à dire que:
 * elle met à jour les pièces d'or.
 
 ### void update_all_collisions_in_row(Row *this, Sound_Manager *SM, int *p1_score)
-On trouve cette fonction dans **game/controllers/row.c**. Cette fonction cherche toutes les collisions d'une ligne.
+On trouve cette fonction dans **/game/controllers/row.c**. Cette fonction cherche toutes les collisions d'une ligne.
 C'est à dire que:
 * pour chaque tir sur une ligne,
 * la position du tir est comparée avec la positions des ennemies de la ligne,
 * si les positions coincident, le tir est supprimé, l'ennemie est blessé (tué si sa vie descend à 0).
 
 ### void update_IA(Game_Manager *GM)
-On trouve cette fonction dans **game/controllers/IA.c**. Cette fonction met à jour l'IA.
+On trouve cette fonction dans **/game/controllers/IA.c**. Cette fonction met à jour l'IA.
 C'est à dire que:
 * elle récupère les lignes avec la plus faible densité d'allié,
 * elle récupère la somme des points de vie des alliés par ligne,
