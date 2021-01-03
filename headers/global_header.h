@@ -13,10 +13,10 @@ typedef enum bool bool;
 #define SAVED_SCORES 10
 #define FULL_SCREEN true
 
-#include "headers/GUI.h"
-#include "headers/game.h"
-#include "headers/menu.h"
+#include "./GUI.h"
+#include "./game.h"
+#include "./menu.h"
 
-#include "headers/functions.h"
+#include "./functions.h"
 
 #endif
