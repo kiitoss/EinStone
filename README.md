@@ -8,10 +8,16 @@ Ein Stone est un jeu inspiré du célèbre Plants VS Zombies. Un joueur affronte
 
 ----------------------------------------------------------------------------------------------------------
 
+## Précisions générales:
+* Il est parfois nécessaire de relancer l'exécutable de jeu lorsque le jeu est  en plein écran. En effet, MLV fait souvent apparaître une fenêtre noire au milieu du jeu pendant la phase de lancement.
+* Il est possible de changer les valeurs correspondant au nombre de sauvegardes de parties, de scores ainsi que la valeur "FULL_SCREEN" dans les define dans **headers/global_header.h**. En revanche, si le nombre de sauvegarde est modifié, il est fortement conseillé de **supprimer** les fichiers **resources/games.bin** et **resources/scores.bin** pour éviter des bugs. Si le nombre de scores passe de 10 à 100, pendant la sauvegarde, le jeu va tenter de lire 100 scores là où il n'y en a que 10, cela provoquer une erreur. Si les fichiers n'existe pas, ils seront automatiquement créés.
+* Il n'est pas nécessaire, au lancement d'une nouvelle partie, d'appuyer sur la touche <Entrée> après avoir saisie les noms des joueurs, le programme se charge de lire le contenue des inputs même sans validation.
+
+----------------------------------------------------------------------------------------------------------
 
 ## Architecture des fichiers
 Le projet est très largement inspiré du modèle MVC sans pour autant respecter strictement les conventions.
-Nous avons décidé de nous orienter sur un modèle similaire au MVC car il semblait important pour nous de séparer la vue (dessin des éléments, récupération des évenements) du contrôle (création de nouvel ennemie, allié, déplacement des flèches...).
+Nous avons décidé de nous orienter sur un modèle similaire au MVC car il semblait important pour nous de séparer la vue (dessin des éléments, récupération des évènements) du contrôle (création de nouvel ennemi, allié, déplacement des flèches...).
 Le projet se subdivise en 4 grandes parties:
 * GUI: la partie qui concentre la création de boutons/inputs/labels et qui les gères.
 * menu: la partie qui se concentre sur la gestion du menu, en se servant notamment de la partie GUI.
@@ -30,8 +36,8 @@ Chaque partie est développé dans la même logique, mais l'organisation des dif
 La partie GUI comporte simplement 4 fichiers: button.c, input.c, label.c et general.c.
 button.c, input.c et label.c contiennent les fonctions de dessin des éléments, mais aussi de création et de gestion.
 C'est ici qu'on trouvera les fonctions permettant de rendre un élément *hover* ou *select*.
-Le fichier general.c est légerement différent, il comporte les fonctions affectant plusieurs éléments différents. On aura par exemple ici la fonction permettant d'affecter une taille de police optimale pour un objet donné, ou encore la fonction permettant de dessiner soit un input, soit son label correspondant selon les action de l'utilisateur.
-C'est aussi dans le fichier general.c que l'on retrouve la redefinition des structures MLV_List, _MLV_List, _MLV_Input_box. Cela nous permet de récupérer la valeur d'un input sans que le joueur n'ai besoin de valider l'inptu en cliquant sur la touche <Entré>.
+Le fichier general.c est légèrement différent, il comporte les fonctions affectant plusieurs éléments différents. On aura par exemple ici la fonction permettant d'affecter une taille de police optimale pour un objet donné, ou encore la fonction permettant de dessiner soit un input, soit son label correspondant selon les actions de l'utilisateur.
+C'est aussi dans le fichier general.c que l'on retrouve la redéfinition des structures MLV_List, _MLV_List, _MLV_Input_box. Cela nous permet de récupérer la valeur d'un input sans que le joueur n'ai besoin de valider l'input en cliquant sur la touche <Entrée>.
 
 ------------
 
@@ -60,20 +66,20 @@ Le fichier menu.c est le point d'entrée du programme. C'est ici que se trouve l
 
 ### GAME
 La partie GAME se décompose encore une fois en 3 sous dossiers (controllers/initializers/views) et d'un fichier game.c
-Le jeu est logiquement composé d'une multitudes de structures différentes, reliés entres-elles dans une structure très importante: Game_Manager.
-Une partie entière est consacré aux structure plus bas dans le document.
+Le jeu est logiquement composé d'une multitudes de structures différentes, reliés entre elles dans une structure très importante: Game_Manager.
+Une partie entière est consacré aux structures plus bas dans le document.
 
 #### controllers
-Dans le dossier controllers se trouve les fichiers permettant de gérer les principales structures du projet, notamment les alliés avec le fichier friend.c, les ennemies avec enemy.c, le joueurs, les lignes du terrain etc...
+Dans le dossier controllers se trouve les fichiers permettant de gérer les principales structures du projet, notamment les alliés avec le fichier friend.c, les ennemis avec enemy.c, le joueurs, les lignes du terrain etc...
 
 #### initializers
 Comme son nom l'indique, le dossier initializers contient les fonctions d'initialisation des structures.
 
 #### views
-Le dossier views comporte le fichier chargé de dessiner le jeu, qui va faire appel aux fonctions des deux autres fichiers de la vue, draw_objects pour dessiner les alliés, les ennemies, les flèches etc.. et draw_window pour dessiner la fenêtre, les spawners, le terrain etc...
+Le dossier views comporte le fichier chargé de dessiner le jeu, qui va faire appel aux fonctions des deux autres fichiers de la vue, draw_objects pour dessiner les alliés, les ennemis, les flèches etc.. et draw_window pour dessiner la fenêtre, les spawners, le terrain etc...
 
 #### game.c
-Le fichier game.c est le fichier principal du jeu. C'est ici que l'on retrouvera les fonctions en charge d'interpréter les actions de l'utilsiateurs et d'appeler les bonnes fonctions après un clique, une touche du clavier etc...
+Le fichier game.c est le fichier principal du jeu. C'est ici que l'on retrouvera les fonctions en charge d'interpréter les actions de l'utilisateur et d'appeler les bonnes fonctions après un clique, une touche du clavier etc...
 C'est ce fichier qui met à jour les éléments du jeu en permanence.
 
 ------------
@@ -117,13 +123,13 @@ On retrouvera par exemple la fonction update_row(Row **this**, ...) ou encore la
 ## Structures
 
 Nous allons voir ici les structures dont se sert le jeu pour fonctionner.
-Nous n'expliquerons pas les structures des boutons, inputs, label ou encore les pages du menu car cela semble suffisemment clair sans avoir besoin de rajouter des informations.
+Nous n'expliquerons pas les structures des boutons, inputs, label ou encore les pages du menu car cela semble suffisamment clair sans avoir besoin de rajouter des informations.
 
 ### Event_Manager
 <img src="resources/doc/Event_Manager.png"
      alt="Image représentant la structure Event_Manager."
      style="text-align: center;" /></br>
-Cette structure très simpliste est très utilisé tout au long du programme, non seulement dans le jeu, mais aussi dans le menu.
+Cette structure très simpliste est très utilisée tout au long du programme, non seulement dans le jeu, mais aussi dans le menu.
 C'est cette structure qui va permettre de récupérer toutes les informations à la suite d'une action de l'utilisateur.
 
 ------------
@@ -133,7 +139,7 @@ C'est cette structure qui va permettre de récupérer toutes les informations à
      alt="Image représentant la structure Sound_Manager."
      style="text-align: center;" /></br>
 Le Sound_Manager est, comme son nom l'indique, le gestionnaire de sons.
-Le variable booléenne "sound_works" est primordiale, elle permet de s'assurer lorsque le jeu est lancé que le son fonctionne bien, sans quoi le programme renverrai une erreur de segmentation lorsqu'un son voudra être joué (sur WSL tout particulièrement, le son ne marche pas sans télécharger d'autres plugins).
+Le variable booléenne "sound_works" est primordiale, elle permet de s'assurer lorsque le jeu est lancé que le son fonctionne bien, sans quoi le programme renverra une erreur de segmentation lorsqu'un son voudra être joué (sur WSL tout particulièrement, le son ne marche pas sans télécharger d'autres plugins).
 
 ------------
 
@@ -141,7 +147,7 @@ Le variable booléenne "sound_works" est primordiale, elle permet de s'assurer l
 <img src="resources/doc/Texture_Manager.png"
      alt="Image représentant la structure Texture_Manager."
      style="text-align: center;" /></br>
-Le Texture_Manager est constitué d'une multitude d'images, toutes utiles lors du dessin du jeu. Nous avons ensuite une police d'écriture qui est chargée en débt de partie et sauvegardé, c'est celle-ci qui est utilisée pour écrire les noms des joueurs sans avori besoin de charger une font à chaque actualisation.
+Le Texture_Manager est constitué d'une multitude d'images, toutes utiles lors du dessin du jeu. Nous avons ensuite une police d'écriture qui est chargée en début de partie et sauvegardé, c'est celle-ci qui est utilisée pour écrire les noms des joueurs sans avoir besoin de charger une Font à chaque actualisation.
 
 ------------
 
@@ -151,15 +157,15 @@ Le Texture_Manager est constitué d'une multitude d'images, toutes utiles lors d
      style="text-align: center;" /></br>
 Enfin, la structure la plus imposante: le Game_Manager.
 Cette structure possède:
-* une variable permettant de savoir si le jeu est terminée ou en cours,
+* une variable permettant de savoir si le jeu est terminé ou en cours,
 * deux variables pour le mode de jeu et la difficulté,
 * une structure Window pour conserver les positions et les géométries des éléments de la fenêtre (posX du terrain, rectsize notamment),
-* les informations des spawners alliés et ennemies (leur prix, leur attaque, leur vie etc..) dans lesquels on ira piocher pour créer de nouveaux alliés/ennemies,
-* des structures Row, chacune représentant une ligne du terrain, avec une liste d'alliés, une liste et un nombre d'ennemies, une liste et un nombre de pièces d'or et une liste et un nombre de flèches,
+* les informations des spawners alliés et ennemis (leur prix, leur attaque, leur vie etc..) dans lesquels on ira piocher pour créer de nouveaux alliés/ennemis,
+* des structures Row, chacune représentant une ligne du terrain, avec une liste d'alliés, une liste et un nombre d'ennemis, une liste et un nombre de pièces d'or et une liste et un nombre de flèches,
 * les informations sur les joueurs 1 et 2 (leur argent, le score du joueur 1, la dernière fois que le jeu leur a offert de l'or etc...),
 * une variable pour la date du dernier rafraichissement de partie,
 * une variable pour la durée de la partie,
-* deux variables pour gérer lorsque MLV détècte quand le bouton (de la souris ou du clavier) est relâché mais pas lorsqu'il est appuyé.
+* deux variables pour gérer lorsque MLV détecte quand le bouton (de la souris ou du clavier) est relâché mais pas lorsqu'il est appuyé.
 
 Nous préciserons que dans le projet, nous utilisons fréquemment le terme de "pop" pour définir ensemble les pièces d'or et les flèches.
 
@@ -172,7 +178,7 @@ Nous préciserons que dans le projet, nous utilisons fréquemment le terme de "p
 ### void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM)
 On trouve cette fonction dans **/game/game.c** Cette fonction met à jour le jeu.
 C'est à dire que:
-* elle attent un délai ou une action de l'utilisateur,
+* elle attend un délai ou une action de l'utilisateur,
 * si la vie du joueur 1 est inférieure ou égale à 0, le jeu est perdu,
 * si un délai est dépassé, le jeu fait apparaître une pièce sur le terrain,
 * si un délai est dépassé, le jeu augmente l'or du joueur 2,
@@ -188,7 +194,7 @@ C'est à dire que:
 On trouve cette fonction dans **/game/controllers/row.c**. Cette fonction met à jour une ligne du plateau.
 C'est à dire que:
 * elle met à jour tous les alliés de la ligne,
-* elle met à jour tous les ennemies de la ligne,
+* elle met à jour tous les ennemis de la ligne,
 * elle met à jour tous les tirs de la ligne,
 * elle met à jour les collisions de la ligne,
 * elle met à jour les pièces d'or.
@@ -199,8 +205,8 @@ C'est à dire que:
 On trouve cette fonction dans **/game/controllers/row.c**. Cette fonction cherche toutes les collisions d'une ligne.
 C'est à dire que:
 * pour chaque tir sur une ligne,
-* la position du tir est comparée avec la positions des ennemies de la ligne,
-* si les positions coincident, le tir est supprimé, l'ennemie est blessé (tué si sa vie descend à 0).
+* la position du tir est comparée avec la position des ennemis de la ligne,
+* si les positions coincident, le tir est supprimé, l'ennemi est blessé (tué si sa vie descend à 0).
 
 ------------
 
@@ -210,4 +216,5 @@ C'est à dire que:
 * elle récupère les lignes avec la plus faible densité d'allié,
 * elle récupère la somme des points de vie des alliés par ligne,
 * elle récupère le nombre minimal d'alliés par ligne,
-* celon son nombre minimal, un ennemie est choisit au hasard et envoyé sur une ligne considérée comme faible.
+* selon son nombre minimal, un ennemi est choisi au hasard et envoyé sur une ligne considérée comme faible.
+

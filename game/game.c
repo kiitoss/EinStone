@@ -260,6 +260,18 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   while (MLV_get_time() < GM->last_refresh + DELAY_REFRESH && (em.event != MLV_KEY) && (em.event != MLV_MOUSE_BUTTON)) {
     em = get_game_event();
   }
+  
+  time = MLV_get_time();
+
+  /* Mise à jour des lignes du terrain de jeu. */
+  if (em.event != MLV_MOUSE_BUTTON && em.event != MLV_KEY) {
+    for (i=0; i<NB_ROWS; i++) {
+      update_row(&GM->rows[i], GM, SM);
+    }
+    GM->last_refresh = time;
+  }
+
+  MLV_flush_event_queue();
 
   /*
     Subterfuge permettant de valider un clique de souris lorsque MLV_get_event() ne le détecte pas.
@@ -281,10 +293,6 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
   else if (em.event == MLV_KEY) {
     GM->last_state_key = em.btn_state;
   }
-  
-  MLV_flush_event_queue();
-
-  time = MLV_get_time();
 
   /* Affichage du Game Over */
   if(GM->p1.life <= 0 && GM->in_game){
@@ -312,14 +320,6 @@ void update_game(Game_Manager *GM, Texture_Manager *TM, Sound_Manager *SM) {
       /* Mise à jour de l'IA. */
       update_IA(GM);
     }
-  }
-
-  /* Mise à jour des lignes du terrain de jeu. */
-  if (time >= GM->last_refresh + DELAY_REFRESH) {
-    for (i=0; i<NB_ROWS; i++) {
-      update_row(&GM->rows[i], GM, SM);
-    }
-    GM->last_refresh = time;
   }
 
 

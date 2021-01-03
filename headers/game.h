@@ -20,10 +20,6 @@
 #define INIT_GOLD_P1 100
 #define INIT_GOLD_P2 100
 
-#define SAVED_GAMES 5
-#define SAVED_SCORES 10
-#define FULL_SCREEN true
-
 enum friend_abilities {ATTACK, DEFENSE, MONEY};
 enum enemy_type_attacks {CAC, DISTANCE};
 typedef enum enemy_type_attacks enemy_type_attacks;

@@ -9,6 +9,10 @@
 enum bool {false, true};
 typedef enum bool bool;
 
+#define SAVED_GAMES 5
+#define SAVED_SCORES 10
+#define FULL_SCREEN true
+
 #include "headers/GUI.h"
 #include "headers/game.h"
 #include "headers/menu.h"
