@@ -9,7 +9,8 @@ Ein Stone est un jeu inspiré du célèbre Plants VS Zombies. Un joueur affronte
 ----------------------------------------------------------------------------------------------------------
 
 ## Précisions générales:
-* Il est parfois nécessaire de relancer l'exécutable de jeu lorsque le jeu est  en plein écran. En effet, MLV fait souvent apparaître une fenêtre noire au milieu du jeu pendant la phase de lancement.
+* Avec WSL: Il est parfois nécessaire de relancer l'exécutable de jeu lorsque le jeu est en plein écran. En effet, MLV fait souvent apparaître une fenêtre noire au milieu du jeu pendant la phase de lancement.
+* Avec VirtualBox: Le jeu met parfois du temps à se redimensionner en plein écran, il se peut que MLV mette du temps à adapter la taille de la fenêtre et laisse des bandes noires pendant le début de partie.
 * Il est possible de changer les valeurs correspondant au nombre de sauvegardes de parties, de scores ainsi que la valeur "FULL_SCREEN" dans les define dans **headers/global_header.h**. En revanche, si le nombre de sauvegarde est modifié, il est fortement conseillé de **supprimer** les fichiers **resources/games.bin** et **resources/scores.bin** pour éviter des bugs. Si le nombre de scores passe de 10 à 100, pendant la sauvegarde, le jeu va tenter de lire 100 scores là où il n'y en a que 10, cela provoquer une erreur. Si les fichiers n'existe pas, ils seront automatiquement créés.
 * Il n'est pas nécessaire, au lancement d'une nouvelle partie, d'appuyer sur la touche <Entrée> après avoir saisie les noms des joueurs, le programme se charge de lire le contenue des inputs même sans validation.
 

@@ -87,6 +87,7 @@ void launch_main_page(int width, int height, Sound_Manager *SM) {
   if (!SM->menu_music_playing) {
     MLV_stop_music();
     play_music(SM, &SM->menu);
+    SM->menu_music_playing = true;
   }
     
   update_main_page(&mp, SM);
